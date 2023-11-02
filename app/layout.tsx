@@ -1,18 +1,20 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import { montserrat } from "@/styles/fonts";
-import "@/styles/global.css";
 import EnsureLogin from "./components/EnsureLogin";
+import "@/styles/global.css";
 
 export const metadata: Metadata = {
   title: "Compass Video",
 };
 
-export default function RootLayout({ children }: React.PropsWithChildren) {
+export default function RootLayout() {
   return (
     <Provider>
       <html lang="en" className={montserrat.className}>
-        <body>{children}</body>
+        <body>
+          <EnsureLogin></EnsureLogin>
+        </body>
       </html>
     </Provider>
   );
