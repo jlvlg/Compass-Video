@@ -18,10 +18,10 @@
   --colors-opacity-10: "#0000001A";
   --colors-opacity-12: "#FFFFFF1F";
   --colors-opacity-white-10: "#FFFFFF1A";
-  --colors-applications-link: var(--colors-primary-100);
-  --colors-applications-highEmphasis: var(--colors-neutral-100);
-  --colors-applications-mediumEmphasis: var(--colors-neutral-200);
-  --colors-applications-disabled: var(--colors-neutral-400);
+  --colors-applications-text-link: var(--colors-primary-100);
+  --colors-applications-text-highEmphasis: var(--colors-neutral-100);
+  --colors-applications-text-mediumEmphasis: var(--colors-neutral-200);
+  --colors-applications-text-disabled: var(--colors-neutral-400);
   --colors-applications-background: var(--colors-neutral-600);
   --colors-applications-border: var(--colors-opacity-12);
   --colors-applications-hoverButtonOutline: var(--colors-opacity-10);

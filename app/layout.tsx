@@ -1,7 +1,7 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import { montserrat } from "@/styles/fonts";
-import EnsureLogin from "./components/EnsureLogin";
+import EnsureLogin from "./components/loose-pages/EnsureLogin";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSelector } from "@/store";
-import Login from "./loose-pages/Login";
+import Login from "./Login";
 
 type Props = {};
 
