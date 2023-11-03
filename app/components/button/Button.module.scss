@@ -1,0 +1,10 @@
+.button {
+  display: flex;
+  gap: 12px;
+  padding-inline: 24px;
+  align-items: center;
+  justify-content: center;
+  color: $neutral-100;
+  font: $typography-button;
+  border-radius: 4px;
+}

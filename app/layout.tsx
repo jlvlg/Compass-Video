@@ -1,19 +1,27 @@
+import { Provider } from "@/store";
 import type { Metadata } from "next";
-import { montserrat } from "@/styles/fonts";
-import "@/styles/global.css";
+import EnsureLogin from "./components/util/EnsureLogin";
+import { Montserrat } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Compass Video",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
+
+export default function RootLayout() {
   return (
-    <html lang="en" className={montserrat.className}>
-      <body>{children}</body>
-    </html>
+    <Provider>
+      <html className={`${montserrat.variable}`}
+        lang="en"
+        style={{ blockSize: "100%" }}>
+        <body style={{ margin: 0, blockSize: "100%" }}>
+          <EnsureLogin></EnsureLogin>
+        </body>
+      </html>
+    </Provider>
   );
 }
