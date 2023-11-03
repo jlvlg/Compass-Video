@@ -10,31 +10,26 @@ const basicFetch = async (endpoint: string) => {
 const getMedia = {
   getHomeList: async () => {
     try {
-      const originals = await basicFetch(`/movie/popular?language=en-US&page=1&api_key=${API_KEY}`);
-      const disneyPlus = await basicFetch(`/tv/popular?language=en-US&page=1&api_key=${API_KEY}`);
-      const moviePopular = await basicFetch(`/movie/top_rated?language=en-US&page=1&api_key=${API_KEY}`);
+      const hallowen = await basicFetch(`/movie/popular?language=en-US&page=1&api_key=${API_KEY}`);
+      const series = await basicFetch(`/tv/top_rated?language=en-US&page=1&api_key=${API_KEY}`);
+      const filmes = await basicFetch(`/movie/top_rated?language=en-US&page=1&api_key=${API_KEY}`);
       
       return [
         {
           slug: "hallowen",
           title: "Coleções de Hallowen",
-          items: originals.results
+          items: hallowen.results
         },
         {
           slug: "series",
           title: "Series em alta",
-          items: disneyPlus.results
+          items: series.results
         },
         {
           slug: "filmes",
           title: "Filmes em alta",
-          items: moviePopular.results
-        },
-        {
-            slug: "filmes",
-            title: "Filmes em alta",
-            items: moviePopular.results
-          }
+          items: filmes.results
+        }
       ];
     } catch (error) {
       console.error("Error fetching data:", error);
