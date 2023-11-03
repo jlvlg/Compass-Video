@@ -1,66 +1,61 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { actions, useDispatch, useSelector } from "@/store";
-import Login from "./components/loose-pages/login";
-import getMedia from "@/util/homeMedia";
-import Catalog from "./components/ui/catalog";
-import Header from "./components/navbar/Header";
+import React, { useEffect } from "react";
+import { actions, useDispatch } from "@/store";
+import Image from "next/image";
+import compass from "@/public/compass-negative.png";
+import Card from "./components/ui/card";
+import styles from "./Login.module.scss";
+import Button from "./components/button";
+import tmdb from "@/util/tmdb";
+import { useRouter } from "next/navigation";
 
 type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 
-export default function HomePage({ searchParams }: Props) {
-  const sessionId = useSelector((state) => state.users.sessionId);
+export default function Login({ searchParams }: Props) {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const localSessionId = localStorage.getItem("sessionId");
-    if (localSessionId) {
+
+    if (searchParams["request_token"]) {
+      dispatch(actions.users.login(searchParams["request_token"]));
+      router.push("/home");
+    } else if (localSessionId) {
       dispatch(actions.users.login(localSessionId));
+      router.push("/home");
     }
-  }, [actions, dispatch]);
+  }, [dispatch, searchParams, router]);
+
+  async function authenticate() {
+    try {
+      const requestToken = (await tmdb.get("authentication/token/new")).data[
+        "request_token"
+      ];
+      router.replace(
+        `/login/${requestToken}?redirect_to=http://localhost:3000`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-    <>
-      {sessionId ? (
-        <Home searchParams={searchParams} />
-      ) : (
-        <Login searchParams={searchParams} />
-      )}
-    </>
-  );
-}
-
-interface Media {
-  slug: string;
-  title: string;
-  items: {}[];
-}
-
-function Home({ searchParams }: Props) {
-
-    const [homeMediaList, setHomeMediaList] = useState<Media[]>([]);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const list = await getMedia.getHomeList();
-        setHomeMediaList(list);
-        console.log(list);
-      } catch (error) {
-        console.error("Erro:", error);
-      }
-    };
-
-    load();
-  }, []);
-
-  return (
-    <>
-      <div style={{ background: "#1A1D29" }}>
-        <Header/> 
-        <Catalog mediaList={homeMediaList} />
-      </div>
-    </>
+    <main className={styles.main}>
+      <Card className={styles.card}>
+        <h1>Compass Video</h1>
+        <p className={styles.subtitle}>
+          Acesse sua conta para ver nossos títulos
+        </p>
+        <Button className={styles.button} onClick={authenticate}>
+          Iniciar sessão com TMDB
+        </Button>
+        <p className={styles.guest}>
+          Não tem conta? <a>Acesse como convidado</a>
+        </p>
+        <Image src={compass} alt="Compass Logo" className={styles.compass} />
+      </Card>
+    </main>
   );
 }
