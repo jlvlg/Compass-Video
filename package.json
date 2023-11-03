@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "next": "14.0.1",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-id-swiper": "^4.0.0",
+    "swiper": "^11.0.3",
+    "swiper-react": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
