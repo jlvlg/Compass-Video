@@ -11,30 +11,38 @@ import { Pagination, Navigation } from "swiper/modules";
 export default function Carousel(props: any) {
   const title = props.title;
   const items = props.items;
-  console.log("Itens:", items);
+
   return (
     <div className={styles.maincontent}>
+      <h1 className={styles.title}>{title}</h1>
       <Swiper
-        slidesPerView={6.5}
+        breakpoints={{
+          320: {
+            slidesPerView: 1.6,
+          },
+          480: {
+            slidesPerView: 3,
+          },
+          640: {
+            slidesPerView: 6.5,
+          },
+        }}
         spaceBetween={20}
         grabCursor={true}
-        pagination={{
-          clickable: true,
-        }}>
-        <h1>{title}</h1>
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
         {items &&
           items.length > 0 &&
           items.map((item: any, key: any) => (
-            <>
-              <SwiperSlide>
-                <img
-                  className={styles.imagemovie}
-                  src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                  key={item.id}
-                  alt={item.title}
-                />
-              </SwiperSlide>
-            </>
+            <SwiperSlide key={item.id}>
+              <img
+                className={styles.imagemovie}
+                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                key={item.id}
+                alt={item.title}
+              />
+            </SwiperSlide>
           ))}
       </Swiper>
     </div>
