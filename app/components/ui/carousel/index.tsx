@@ -14,7 +14,7 @@ export default function Carousel(props: any) {
 
   return (
     <div className={styles.maincontent}>
-      <h1 className={styles.title}>{title}</h1>
+      <h4 className={styles.title}>{title}</h4>
       <Swiper
         breakpoints={{
           320: {
@@ -24,7 +24,7 @@ export default function Carousel(props: any) {
             slidesPerView: 3,
           },
           640: {
-            slidesPerView: 6.5,
+            slidesPerView: 6.8,
           },
         }}
         spaceBetween={20}

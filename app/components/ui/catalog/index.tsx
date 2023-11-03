@@ -13,10 +13,10 @@ interface CatalogMedia {
 
 export default function Catalog({ mediaList }: CatalogMedia) {
 
-    return <div>
+    return <div className={styles.container}>
         {mediaList && mediaList.length > 0
           ? mediaList.map((movie, index) => (
-              <div key={index} className={index === 0 ? "" : styles.carousel}>
+              <div key={index} className={index === 0 ? '' : styles.carousel}>
                 <Carousel items={movie.items} title={movie.title} />
               </div>
             ))
