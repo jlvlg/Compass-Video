@@ -1,21 +1,17 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import EnsureLogin from "./components/util/EnsureLogin";
-import { Montserrat } from "next/font/google";
+import * as fonts from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: "Compass Video",
 };
 
-export const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
-
 export default function RootLayout() {
   return (
     <Provider>
-      <html className={`${montserrat.variable}`}
+      <html
+        className={`${fonts.montserrat.variable} ${fonts.lato.variable}`}
         lang="en"
         style={{ blockSize: "100%" }}>
         <body style={{ margin: 0, blockSize: "100%" }}>
