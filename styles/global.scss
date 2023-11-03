@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $primary-100: #67bdff;
 $primary-200: #068dff;
 $primary-300: #037aeb;
@@ -36,3 +38,16 @@ $typography-body-large: normal 20px $montserrat;
 $typography-body-review: normal 16px $montserrat;
 $typography-body-small: normal min(14px, 4vw) $montserrat;
 $typography-caption: normal 12px $montserrat;
+
+@mixin button($color) {
+  background-color: $color;
+  transition: background 300ms;
+
+  &:hover {
+    background-color: color.adjust($color, $lightness: 10%);
+  }
+
+  &:active {
+    background-color: color.adjust($color, $lightness: 20%);
+  }
+}

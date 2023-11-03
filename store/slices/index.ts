@@ -1,9 +1,11 @@
-import { usersReducer, usersActions } from "./users";
+import * as user from "./users";
 
 export const reducer = {
-  users: usersReducer,
+  users: user.reducer,
 };
 
 export const actions = {
-  users: { ...usersActions },
+  users: { ...user.actions },
 };
+
+export const middlewares = [...user.middlewares];
