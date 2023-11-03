@@ -1,8 +1,12 @@
 import React from "react";
-import styles from "./card.module.css";
+import styles from "./Card.module.css";
 
-type Props = {};
+type Props = { style?: React.CSSProperties; className?: String };
 
-export default function Card({}: Props) {
-  return <div className={styles.card}>Card</div>;
+export default function Card({ style, className }: Props) {
+  return (
+    <div className={`${styles.card} ${className}`} style={style}>
+      Card
+    </div>
+  );
 }
