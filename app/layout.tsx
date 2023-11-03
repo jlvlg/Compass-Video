@@ -2,9 +2,7 @@ import { Provider } from "@/store";
 import type { Metadata } from "next";
 import EnsureLogin from "./components/util/EnsureLogin";
 import * as fonts from "@/styles/fonts";
-import Header from './components/navbar/Header'; // Suponha que o arquivo Header.tsx está em '../components/navbar' em relação ao diretório do seu layout.
-
-
+import Header from './components/navbar/Header'; 
 
 export const metadata: Metadata = {
   title: "Compass Video",
