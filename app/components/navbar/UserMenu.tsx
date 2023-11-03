@@ -20,7 +20,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ users, isOpen, onClose }) => {
 
   return (
     isOpen && (
-      <div className="svg">
+      <div className="svg" style={{position:'absolute'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
