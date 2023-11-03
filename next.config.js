@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  sassOptions: {
-    prependData: `@import "@/styles/global.scss";`,
-  },
+  redirects: async () => [
+    {
+      source: "/login/:token",
+      destination:
+        "https://www.themoviedb.org/authenticate/:token",
+      permanent: false,
+    },
+  ],
 };
 
 module.exports = nextConfig;

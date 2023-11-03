@@ -1,12 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createListenerMiddleware, createSlice } from "@reduxjs/toolkit";
+import { StartListening } from "..";
 
 const initialState: {
-  sessionId?: string;
+  sessionId?: string | null;
 } = {
   sessionId: undefined,
 };
 
-const usersSlice = createSlice({ name: "users", initialState, reducers: {} });
+const usersSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: {
+    login: (state, { payload }) => {
+      state.sessionId = payload;
+    },
+  },
+});
 
-export const usersActions = usersSlice.actions;
-export const usersReducer = usersSlice.reducer;
+export const actions = usersSlice.actions;
+export const reducer = usersSlice.reducer;
+
+const loginMiddleware = createListenerMiddleware();
+(loginMiddleware.startListening as StartListening)({
+  actionCreator: actions.login,
+  effect: (effect) => {
+    localStorage.setItem("sessionId", effect.payload);
+  },
+});
+
+export const middlewares = [loginMiddleware.middleware];
