@@ -1,6 +1,7 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import * as fonts from "@/styles/fonts";
+import Header from './components/navbar/Header'; 
 
 export const metadata: Metadata = {
   title: "Compass Video",
