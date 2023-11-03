@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Stack.module.css";
+import styles from "./Stack.module.scss";
 
 type Props = {
   align?: { horizontally?: string; vertically?: string };
@@ -20,7 +20,7 @@ export default function Stack({
 
   return (
     <div
-      className={`${styles.stack} ${align && styles.align} ${className}`}
+      className={`${styles.stack} ${align && styles.align} ${className ? className : ''}`}
       style={{ ...alignCss, ...style }}>
       {children}
     </div>

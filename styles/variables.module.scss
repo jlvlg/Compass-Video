@@ -1,0 +1,39 @@
+@import "./globals.scss";
+
+:export {
+  primary100: $primary-100;
+  primary200: $primary-200;
+  primary300: $primary-300;
+  primary400: $primary-400;
+  primary500: $primary-500;
+  secondary: $secondary;
+  accent: $accent;
+  neutral-100: $neutral--100;
+  neutral100: $neutral-100;
+  neutral200: $neutral-200;
+  neutral300: $neutral-300;
+  neutral400: $neutral-400;
+  neutral500: $neutral-500;
+  neutral600: $neutral-600;
+  neutral700: $neutral-700;
+  opacity04: $opacity-04;
+  opacity10: $opacity-10;
+  opacity12: $opacity-12;
+  opacitywhite10: $opacity-white-10;
+  textlink: $text-link;
+  texthighemphasis: $text-high-emphasis;
+  textmediumemphasis: $text-medium-emphasis;
+  textdisabled: $text-disabled;
+  background: $background;
+  border: $border;
+  hoverbuttonoutline: $hover-button-outline;
+  typographyh1: $typography-h1;
+  typographyh2: $typography-h2;
+  typographyh3: $typography-h3;
+  typographyh4: $typography-h4;
+  typographybutton: $typography-button;
+  typographybodylarge: $typography-body-large;
+  typographybodyreview: $typography-body-review;
+  typographybodysmall: $typography-body-small;
+  typographycaption: $typography-caption;
+}
