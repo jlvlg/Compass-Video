@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { actions, useDispatch, useSelector } from "@/store";
-import { useRouter } from "next/navigation";
 import Login from "./components/loose-pages/login";
+import getMedia from "@/util/homeMedia";
+import Catalog from "./components/ui/catalog";
+import Header from "./components/navbar/Header";
 
 type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 
@@ -29,6 +31,36 @@ export default function HomePage({ searchParams }: Props) {
   );
 }
 
+interface Media {
+  slug: string;
+  title: string;
+  items: {}[];
+}
+
 function Home({ searchParams }: Props) {
-  return <></>;
+
+    const [homeMediaList, setHomeMediaList] = useState<Media[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const list = await getMedia.getHomeList();
+        setHomeMediaList(list);
+        console.log(list);
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    };
+
+    load();
+  }, []);
+
+  return (
+    <>
+      <div style={{ background: "#1A1D29" }}>
+        <Header/> 
+        <Catalog mediaList={homeMediaList} />
+      </div>
+    </>
+  );
 }
