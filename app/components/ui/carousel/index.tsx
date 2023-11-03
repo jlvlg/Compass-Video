@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import styles from "./Carousel.module.css";
+import React from "react";
+import styles from "./Carousel.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,16 +14,13 @@ export default function Carousel(props: any) {
   console.log("Itens:", items);
   return (
     <div className={styles.maincontent}>
-      
       <Swiper
         slidesPerView={6.5}
         spaceBetween={20}
         grabCursor={true}
         pagination={{
           clickable: true,
-        }}
-       
-      >
+        }}>
         <h1>{title}</h1>
         {items &&
           items.length > 0 &&

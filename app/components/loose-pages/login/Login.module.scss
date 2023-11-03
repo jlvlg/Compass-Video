@@ -1,17 +1,35 @@
+.main {
+  box-sizing: border-box;
+  padding-inline: min(16px, 3vw);
+  block-size: 100%;
+  inline-size: 100%;
+  background-image: url('../../../../public/login-mural.png');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  * {
+    box-sizing: border-box;
+  }
+}
+
 .image {
   object-fit: cover;
   object-position: center;
   block-size: 100%;
-  max-inline-size: 100%;
+  inline-size: 100%;
 }
 
 .card {
-  background-color: #353843C9;
+  max-inline-size: 720px;
+  background-color: #353843c9;
   backdrop-filter: blur(8px);
-  padding-inline: 2rem;
-  padding-block: 2rem;
+  padding-inline: 32px;
+  padding-block: 32px;
   display: flex;
-  gap: 1.5rem;
+  flex: 1;
+  gap: 24px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -19,6 +37,41 @@
 
 .card h1 {
   all: unset;
+  text-align: center;
   font: $typography-h1;
   color: $text-high-emphasis;
+}
+
+.card p {
+  all: unset;
+}
+
+.button {
+  font-family: $lato;
+  block-size: 48px;
+  inline-size: 100%;
+  text-transform: uppercase;
+  background-color: $primary-300;
+}
+
+.compass {
+  object-fit: contain;
+  inline-size: 100%;
+}
+
+.card .subtitle {
+  max-width: 280px;
+  text-align: center;
+  color: white;
+  font: $typography-subtitle;
+}
+
+.card .guest {
+  font: $typography-body-small;
+  font-family: $lato;
+  color: #ffffff99;
+}
+
+.guest a {
+  color: white;
 }
