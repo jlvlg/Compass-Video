@@ -1,11 +1,13 @@
-.maincontent,.maincontent h1{
-    margin-left: 3rem;
-    background: #1A1D29;
-    width: 100%;
-    
+@import "@/styles/global.scss";
+
+.maincontent,
+.maincontent h1 {
+  margin-left: 3rem;
+  background: #1a1d29;
+  width: 100%;
 }
-.imagemovie{
-    width: 100%;
-    height: 300;
-    border-radius: 8px;
+.imagemovie {
+  width: 100%;
+  height: 300;
+  border-radius: 8px;
 }

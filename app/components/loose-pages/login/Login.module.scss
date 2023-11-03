@@ -1,9 +1,11 @@
+@import "@/styles/global.scss";
+
 .main {
   box-sizing: border-box;
   padding-inline: min(16px, 3vw);
   block-size: 100%;
   inline-size: 100%;
-  background-image: url('../../../../public/login-mural.png');
+  background-image: url("../../../../public/login-mural.png");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -50,13 +52,16 @@
   font-family: $lato;
   block-size: 48px;
   inline-size: 100%;
+  max-inline-size: 375px;
   text-transform: uppercase;
-  background-color: $primary-300;
+  @include button($primary-300);
 }
 
 .compass {
   object-fit: contain;
   inline-size: 100%;
+  max-inline-size: 330px;
+  block-size: auto;
 }
 
 .card .subtitle {
