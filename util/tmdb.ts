@@ -60,6 +60,23 @@ export class TMDB {
         (a, b) => b.popularity - a.popularity
       ))();
   }
+
+  async getSeasonInfo(seriesId: number, seasonNumber: number){
+    const path = `tv/${seriesId}/season/${seasonNumber}?language=en-US`;
+    try {
+      const response = await this.get(path);
+      const seasonData: Season = {
+        episodes: response.episodes,
+        season_number: response.season_number,
+      };
+      return seasonData;
+    } catch (error) {
+      console.error("Error getSeasonInfo", error);
+      return null;
+    }
+  }
+  
+  
 }
 
 export default TMDB.getInstance();

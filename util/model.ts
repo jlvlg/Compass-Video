@@ -20,4 +20,17 @@ interface Movie extends Media {
 
 interface Series extends Media {
   origin_country: string[];
+  number_of_seasons: number;
+}
+
+interface Episode{
+  id: number;
+  name: string;
+  still_path: string;
+  overview: string;
+}
+
+interface Season{
+  episodes: Episode[],
+  season_number: number,
 }
