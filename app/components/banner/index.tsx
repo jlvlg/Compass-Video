@@ -1,4 +1,3 @@
-import { Movie, Series } from "@/util/model";
 import React from "react";
 
 type Props = { popular: Movie | Series };
