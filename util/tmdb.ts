@@ -1,5 +1,3 @@
-import { Movie, Series } from "./model";
-
 export class TMDB {
   static instance?: TMDB;
   baseURL = new URL("https://api.themoviedb.org/3/");
@@ -33,15 +31,26 @@ export class TMDB {
 
   get popularMovies() {
     return (async () =>
-      (await this.popularMedia("movie")).map((movie: Movie) =>
-        Movie.fromMovie(movie)
-      ))() as Promise<Movie[]>;
+      (await this.popularMedia("movie")).map((movie: Movie) => ({
+        ...movie,
+      })))() as Promise<Movie[]>;
   }
 
   get popularSeries() {
     return (async () =>
-      (await this.popularMedia("tv")).map((series: Series) =>
-        Series.fromSeries(series)
+      (await this.popularMedia("tv")).map(
+        (
+          series: Omit<Series, "title" | "original_title" | "release_date"> & {
+            name: string;
+            original_name: string;
+            first_air_date: string;
+          }
+        ) => ({
+          ...series,
+          title: series.name,
+          original_title: series.original_name,
+          release_date: series.first_air_date,
+        })
       ))() as Promise<Series[]>;
   }
 

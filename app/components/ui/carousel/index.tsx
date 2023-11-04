@@ -3,14 +3,16 @@
 import React from "react";
 import styles from "./Carousel.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
 
-export default function Carousel(props: any) {
-  const title = props.title;
-  const items = props.items;
+type Props = {
+  title: string, items: Media[]
+}
+
+export default function Carousel({title, items}: Props) {
 
   return (
     <div className={styles.maincontent}>
@@ -34,7 +36,7 @@ export default function Carousel(props: any) {
       >
         {items &&
           items.length > 0 &&
-          items.map((item: any, key: any) => (
+          items.map((item) => (
             <SwiperSlide key={item.id}>
               <img
                 className={styles.imagemovie}

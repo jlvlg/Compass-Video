@@ -30,7 +30,7 @@ export default function Login({ searchParams }: Props) {
 
   async function authenticate() {
     try {
-      const requestToken = (await tmdb.get("authentication/token/new")).data[
+      const requestToken = (await tmdb.get("authentication/token/new"))[
         "request_token"
       ];
       router.replace(
