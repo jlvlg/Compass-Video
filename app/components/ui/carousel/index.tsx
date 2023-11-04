@@ -8,12 +8,12 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css";
 
+
 type Props = {
   title: string, items: Media[]
 }
 
 export default function Carousel({title, items}: Props) {
-
   return (
     <div className={styles.maincontent}>
       <h4 className={styles.title}>{title}</h4>
