@@ -11,6 +11,14 @@
     height: auto;
     border-radius: 8px;
     border: 1px solid var(--Border, #353843);
+    object-fit:  cover;
+    position: relative;
+}
+
+.imagemovie:hover{
+    transform: scale(1.08); 
+    transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .title{

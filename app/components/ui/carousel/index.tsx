@@ -31,6 +31,7 @@ export default function Carousel({title, items}: Props) {
         }}
         spaceBetween={20}
         grabCursor={true}
+        
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
