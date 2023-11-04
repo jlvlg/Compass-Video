@@ -12,7 +12,7 @@ export default async function Episodelist(props: Props) {
             <h2>Episodes</h2>
             {data && data.episodes.length > 0 && 
             data.episodes.map((item, index) => (
-                <Episode key={index}/>
+                <Episode key={index} episode={item}/>
             ))}
         </div>
     );

@@ -28,6 +28,8 @@ interface Episode{
   name: string;
   still_path: string;
   overview: string;
+  episode_number: number;
+  runtime: number;
 }
 
 interface Season{

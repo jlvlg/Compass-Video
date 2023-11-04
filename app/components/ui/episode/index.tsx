@@ -1,23 +1,29 @@
+/* eslint-disable @next/next/no-img-element */
+"use client"
 import React from "react";
 import style from "./Episode.module.scss";
 
-export default function Episode() {
+type Props = {
+  episode: Episode;
+}
+
+export default  function Episode(props: Props) {
+
   return (
     <div className={style.card}>
       <div className={style.episodeimg}>
         <img
-          src="https://cinepop.com.br/wp-content/uploads/2021/07/harry-potter-and-the-deathly-hallows.jpg"
-          alt="Episode Image"
+          src={`https://image.tmdb.org/t/p/w500${props.episode.still_path}`}
+          alt="Capa do episodio"
         />
       </div>
       <div className={style.containerinfor}>
         <div className={style.info}>
-          <h2>1. Glorious Purpose</h2>
-          <p>40 min</p>
+          <h2>{`${props.episode.episode_number}. ${props.episode.name}`}</h2>
+          <p>{`${props.episode.runtime} min`}</p>
         </div>
         <p>
-          Loki finds out The Variant's plans, but he has his own that will
-          forever alter both their destinies.
+          {props.episode.overview}
         </p>
       </div>
     </div>
