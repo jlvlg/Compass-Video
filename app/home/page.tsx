@@ -8,5 +8,7 @@ export const revalidate = 60;
 
 export default async function Home({}: Props) {
   const popularMedia = await tmdb.popular;
-  return <Banner popular={popularMedia[0]} />;
+  return <Banner popular={popularMedia[0]}
+  
+  />;
 }
