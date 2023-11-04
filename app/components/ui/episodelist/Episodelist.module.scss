@@ -1,0 +1,22 @@
+@import "@/styles/global.scss";
+
+.maincontent{
+    width: 100%;
+
+    h2{
+        padding-bottom: 2rem;
+        padding-left: 80px;
+        color: $neutral--100;
+        font-family: $montserrat;
+        font-size: 24px;
+    }
+}
+
+.episodelist{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4rem;
+    justify-content: center;
+    row-gap: 1rem;
+}

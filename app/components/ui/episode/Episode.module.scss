@@ -1,21 +1,8 @@
 @import "@/styles/global.scss";
 
 .card {
-    display: flex;
-    width: 630px;
-    height: 128px;
-    padding-right: 0px;
-    align-items: center;
-    gap: 17px;
-    flex-shrink: 0;
     border-radius: 8px;
     background: rgba($neutral-100, 0.10);
-}
-
-.card img {
-    width: 221px;
-    height: 128px;
-    flex-shrink: 0;
 }
 
 .info h2 {
@@ -24,6 +11,59 @@
     font-size: 15px;
 }
 
+.episodeimg{
+    display: flex;
+    align-items: center;
+}
+
+
+.containerinfor p {
+    color: var(--text-medium-emphasis, $neutral-200);
+    font-family: $montserrat;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .card{
+    width: 193px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-shrink: 0;
+        
+        img{
+            width: 193px;
+            height: 128px;
+            flex-shrink: 0;
+            flex-shrink: 0;
+            border-radius: 8px 8px 0 0;
+        }
+    }
+    .info{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+    }
+
+    .containerinfor{
+    display: flex;
+    padding: 24px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    }
+
+}
+
+@media screen and (min-width: 768px){
+    
 .info {
     display: flex;
     justify-content: space-between;
@@ -31,11 +71,6 @@
     align-content: center;
     align-self: stretch;
     flex-wrap: wrap;
-}
-
-.episodeimg{
-    display: flex;
-    align-items: center;
 }
 
 .containerinfor {
@@ -47,11 +82,21 @@
     padding-right: 1rem;
 }
 
-.containerinfor p {
-    color: var(--text-medium-emphasis, $neutral-200);
-    font-family: $montserrat;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px;
+
+.card {
+    display: flex;
+    width: 40%;
+    height: 128px;
+    padding-right: 0px;
+    align-items: center;
+    gap: 17px;
+    flex-shrink: 0;
+}
+
+.card img {
+    width: 221px;
+    height: 128px;
+    flex-shrink: 0;
+    border-radius: 8px 0 0 8px;
+}
 }
