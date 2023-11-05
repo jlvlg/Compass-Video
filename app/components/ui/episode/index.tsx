@@ -8,7 +8,18 @@ type Props = {
 }
 
 export default  function Episode(props: Props) {
+  let description = props.episode.overview;
+  let title = props.episode.name;
+  const maxLengthDescription = 150;
+  const maxLengthTitle = 39;
 
+  if (description.length > maxLengthDescription) {
+    description = description.slice(0, maxLengthDescription) + '...';
+  }
+
+  if (title.length > maxLengthTitle) {
+    title = title.slice(0, maxLengthTitle) + '...';
+  }
   return (
     <div className={style.card}>
       <div className={style.episodeimg}>
@@ -19,11 +30,11 @@ export default  function Episode(props: Props) {
       </div>
       <div className={style.containerinfor}>
         <div className={style.info}>
-          <h2>{`${props.episode.episode_number}. ${props.episode.name}`}</h2>
+          <h2>{`${props.episode.episode_number}. ${title}`}</h2>
           <p>{`${props.episode.runtime} min`}</p>
         </div>
         <p>
-          {props.episode.overview}
+          {description}
         </p>
       </div>
     </div>
