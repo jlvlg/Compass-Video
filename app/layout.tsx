@@ -2,6 +2,7 @@ import { Provider } from "@/store";
 import type { Metadata } from "next";
 import * as fonts from "@/styles/fonts";
 import Header from "./components/navbar/Header";
+import Footer from "./components/ui/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Compass Video",
