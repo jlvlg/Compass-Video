@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { actions, useDispatch } from "@/store";
 import Image from "next/image";
 import compass from "@/public/compass-negative.png";
-import Card from "./components/ui/card";
+import Card from "./components/card";
 import styles from "./Login.module.scss";
 import Button from "./components/button";
 import tmdb from "@/util/tmdb";

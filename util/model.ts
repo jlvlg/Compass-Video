@@ -1,4 +1,9 @@
-interface Media {
+export enum Type {
+  MOVIE,
+  SERIES,
+}
+
+export interface Media {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -9,15 +14,19 @@ interface Media {
   poster_path: string;
   vote_average: number;
   vote_count: number;
-  original_title: string;
-  title: string;
-  release_date: string;
+  original_name?: string;
+  original_title?: string;
+  title?: string;
+  release_date?: string;
+  name?: string;
+  first_air_date?: string;
+  video?: boolean;
+  origin_country?: string[];
+  type: Type;
 }
 
-interface Movie extends Media {
-  video: boolean;
-}
-
-interface Series extends Media {
-  origin_country: string[];
+export interface DetailedMedia extends Media {
+  genres: { id: number; name: string }[];
+  runtime?: number;
+  number_of_episodes?: number;
 }

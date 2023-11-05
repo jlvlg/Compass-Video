@@ -1,3 +1,5 @@
+import { Media, DetailedMedia, Type } from "./model";
+
 export class TMDB {
   static instance?: TMDB;
   baseURL = new URL("https://api.themoviedb.org/3/");
@@ -23,42 +25,80 @@ export class TMDB {
     return res.json();
   }
 
-  popularMedia(media: string) {
+  private popularMedia(media: string) {
     return this.get(`${media}/popular?language=en-US&page=1`).then(
       (data) => data.results
     );
   }
 
+  private extractCommon(res: any) {
+    return {
+      adult: res.adult,
+      backdrop_path: res.backdrop_path,
+      genre_ids: res.genre_ids,
+      id: res.id,
+      original_language: res.original_language,
+      overview: res.overview,
+      popularity: res.popularity,
+      poster_path: res.poster_path,
+      vote_average: res.vote_average,
+      vote_count: res.vote_count,
+      genres: res.genres,
+    };
+  }
+
+  async detailedMovie(movie: Media): Promise<DetailedMedia> {
+    const res = await this.get(`movie/${movie.id}?language=en-US`);
+
+    return {
+      ...this.extractCommon(res),
+      runtime: res.runtime,
+      type: Type.MOVIE,
+    };
+  }
+
+  async detailedMovies(movies: Media[]) {}
+
+  async detailedSeries(series: Media): Promise<DetailedMedia> {
+    const res = await this.get(`tv/${series.id}?language=en-US`);
+
+    return {
+      ...this.extractCommon(res),
+      number_of_episodes: res.number_of_episodes,
+      type: Type.MOVIE,
+    };
+  }
+
+  async detailedMedia(media: Media) {
+    switch (media.type) {
+      case Type.MOVIE:
+        return this.detailedMovie(media);
+      case Type.SERIES:
+        return this.detailedSeries(media);
+    }
+  }
+
   get popularMovies() {
     return (async () =>
-      (await this.popularMedia("movie")).map((movie: Movie) => ({
+      (await this.popularMedia("movie")).map((movie: Media) => ({
         ...movie,
-      })))() as Promise<Movie[]>;
+        type: Type.MOVIE,
+      })))() as Promise<Media[]>;
   }
 
   get popularSeries() {
     return (async () =>
-      (await this.popularMedia("tv")).map(
-        (
-          series: Omit<Series, "title" | "original_title" | "release_date"> & {
-            name: string;
-            original_name: string;
-            first_air_date: string;
-          }
-        ) => ({
-          ...series,
-          title: series.name,
-          original_title: series.original_name,
-          release_date: series.first_air_date,
-        })
-      ))() as Promise<Series[]>;
+      (await this.popularMedia("movie")).map((series: Media) => ({
+        ...series,
+        type: Type.SERIES,
+      })))() as Promise<Media[]>;
   }
 
   get popular() {
     return (async () =>
-      [...(await this.popularMovies), ...(await this.popularSeries)].sort(
-        (a, b) => b.popularity - a.popularity
-      ))();
+      [...(await this.popularMovies), ...(await this.popularSeries)]
+        .sort((a, b) => b.popularity - a.popularity)
+        .slice(0, 20))();
   }
 }
 

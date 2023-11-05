@@ -1,0 +1,17 @@
+@import "@/styles/global.scss";
+
+.header {
+  transition: 0.4s;
+  background-position: center;
+  background-size: cover;
+}
+
+.info {
+  padding-inline: 16px;
+  margin-block-start: 60px;
+  color: $text-high-emphasis;
+
+  h1 {
+    font: $typography-h1;
+  }
+}
