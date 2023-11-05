@@ -4,10 +4,14 @@ import styles from "./PlayerShow.module.scss";
 import PlayerControls from "./PlayerControls";
 
 const PlayerShow: React.FC = () => {
+  const goBack = () => {
+    window.history.back(); // Isso faz com que a página volte para a página anterior
+  };
+
   return (
     <div className={styles.playerShow}>
       <div className={styles.header}>
-        <button className={styles.backButton}>
+        <button className={styles.backButton} onClick={goBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="48"
@@ -26,7 +30,16 @@ const PlayerShow: React.FC = () => {
           <div className={styles.episode}>Filme 2016</div>
         </div>
       </div>
-      <img src="/deadpool.gif" alt="Meu GIF" className={styles.gif} />
+      <div className={styles.videoContainer}>
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/Ujs1Ud7k49M?enablejsapi=1&controls=0"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        ></iframe>
+      </div>
+
       <PlayerControls />
     </div>
   );

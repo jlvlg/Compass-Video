@@ -1,0 +1,45 @@
+.modal {
+    width: 589px;
+    height: 305px;
+    top: -360px; /* Ajuste conforme necessário */
+    left: -500px; /* Ajuste conforme necessário */
+    border-radius: 8px;
+    background: #101116F2;
+    border: 1px solid #353843;
+    position: absolute;
+    color: rgb(156, 156, 156);
+  }
+
+  .modal h1{
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .modal p.selected {
+    color: white;
+  }
+  
+  .audioSubtitleContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    height: 100%;
+  }
+  
+  .audioInfo {
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .subtitleInfo {
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .audioInfo p, .subtitleInfo p {
+    margin-bottom: 20px;
+  }
+
+  .modal p, .modal h1 {
+    cursor: pointer;
+  }

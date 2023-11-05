@@ -1,7 +1,7 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import * as fonts from "@/styles/fonts";
-import Header from "./components/navbar/Header";
+import Header from './components/navbar/Header'; 
 import Footer from "./components/ui/footer/Footer";
 import PlayerShow from "./components/player-show/PlayerShow";
 
@@ -15,15 +15,14 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <html
         className={`${fonts.montserrat.variable} ${fonts.lato.variable}`}
         lang="en"
-        style={{ blockSize: "100%" }}
-      >
+        style={{ blockSize: "100%" }}>
         <body style={{ margin: 0, blockSize: "100%" }}>
           <Header />
 
-          {children}
+          {children} *
 
           <Footer />
-        </body>
+          </body>
       </html>
     </Provider>
   );

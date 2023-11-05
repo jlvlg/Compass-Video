@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./PlayerControls.module.scss";
+import AudioSubtitleModal from "./AudioSubtitleModal";
 
 const PlayerControls: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -7,6 +8,11 @@ const PlayerControls: React.FC = () => {
   const [isModalEpisodiosVisible, setIsModalEpisodiosVisible] = useState(false);
   const [isModalLegendasVisible, setIsModalLegendasVisible] = useState(false);
   const [isModalTelaCheiaVisible, setIsModalTelaCheiaVisible] = useState(false);
+  const [isAudioSubtitleModalVisible, setIsAudioSubtitleModalVisible] = useState(false);
+
+  const toggleAudioSubtitleModal = () => {
+    setIsAudioSubtitleModalVisible(!isAudioSubtitleModalVisible);
+  };
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -99,8 +105,19 @@ const PlayerControls: React.FC = () => {
               onMouseLeave={toggleModalLoki}
             />
             {isModalLokiVisible && (
-              <div className={styles.modal}>
-                <p>Loki</p>
+              <div className={`${styles.modal} ${styles["modal-loki"]}`}>
+                <div className={styles.modalContent}>
+                  <img
+                    src="/caminho-da-imagem.jpg"
+                    alt="Imagem Loki"
+                    className={styles.modalImage}
+                  />
+                  <div className={styles.modalTextContainer}>
+                    <p className={styles.modalText}>Seguinte</p>
+                    <h1 className={styles.modalTitle}>Loki</h1>
+                    <p className={styles.modalText}>Seu texto aqui</p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -127,12 +144,15 @@ const PlayerControls: React.FC = () => {
               className={styles.controlIcon}
               onMouseEnter={toggleModalLegendas}
               onMouseLeave={toggleModalLegendas}
+              onClick={toggleAudioSubtitleModal}
             />
+            
             {isModalLegendasVisible && (
               <div className={styles.modal}>
                 <p>Legendas</p>
               </div>
             )}
+            {isAudioSubtitleModalVisible && <AudioSubtitleModal />}
           </div>
 
           <div className={styles.infoContainer}>

@@ -1,48 +1,54 @@
 /* pages/PlayerShow.module.scss */
 
 .playerShow {
-    width: 100%;
-    height: 80%;
-    position: relative;
-  }
-  
-  .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: flex-start;
-    background: rgba(0, 0, 0, 0); /* Fundo semi-transparente para o header */
-    padding: 20px;
-  }
-  
-  .backButton {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .headerInfo {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px; /* Espaço entre o botão e as informações */
-  }
-  
-  .title {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .episode {
-    color: white;
-    font-size: 14px;
-  }
-  
-  .gif {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0);
+  /* Fundo semi-transparente para o header */
+  padding: 20px;
+}
+
+.backButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  /* Espaço entre o botão e as informações */
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.episode {
+  color: white;
+  font-size: 14px;
+}
+
+.gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoContainer{
+  width: 100%;
+  height: 100%;
+}

@@ -123,3 +123,44 @@
   position: relative;
   display: inline-block;
 }
+
+.modal-loki {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #FFFFFF1F;
+  background-color: #121317;
+  background-color: rgba(18, 19, 23, 0.800); 
+  color: white;
+  left: -350%;
+  top: -8rem;
+}
+
+.modal-loki .modalContent {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.modalImage {
+  width: 100px; 
+  height: auto;
+}
+
+.modalTextContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px; 
+}
+
+.modalTitle {
+  color: white;
+  font-size: 18px;
+  margin-top: 8px; 
+  margin-bottom: 4px; 
+}
+
+.modalText {
+  color: white;
+  font-size: 14px;
+}
