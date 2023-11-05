@@ -32,16 +32,13 @@
 
 .playicon {
     position: absolute;
-    top: 50%;
-    left: 20%;
     transform: translate(-50%, -50%);
     display: none;
 }
 
 .card:hover .playicon {
     display: block;
-}
-  
+}  
   
 
 @media screen and (max-width: 768px) {
@@ -59,6 +56,11 @@
             flex-shrink: 0;
             border-radius: 8px 8px 0 0;
         }
+    }
+
+    .playicon{
+        top: 15%;
+        left: 50%;
     }
     .info{
         display: flex;
@@ -88,6 +90,11 @@
     align-content: center;
     align-self: stretch;
     flex-wrap: wrap;
+}
+
+.playicon{
+    top: 50%;
+    left: 20%;
 }
 
 .containerinfor {
