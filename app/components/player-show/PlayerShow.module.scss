@@ -1,9 +1,12 @@
-/* pages/PlayerShow.module.scss */
-
 .playerShow {
   width: 100%;
-  height: 80%;
+  height: 100vh; 
   position: relative;
+}
+
+.videoContainer {
+  width: 100%;
+  height: 100%;
 }
 
 .header {
@@ -13,8 +16,8 @@
   display: flex;
   align-items: flex-start;
   background: rgba(0, 0, 0, 0);
-  /* Fundo semi-transparente para o header */
   padding: 20px;
+  z-index: 1;
 }
 
 .backButton {
@@ -28,7 +31,6 @@
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  /* Espaço entre o botão e as informações */
 }
 
 .title {
@@ -46,9 +48,4 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.videoContainer{
-  width: 100%;
-  height: 100%;
 }

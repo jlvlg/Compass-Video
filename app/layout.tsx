@@ -19,7 +19,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <body style={{ margin: 0, blockSize: "100%" }}>
           <Header />
 
-          {children} *
+           {children} 
 
           <Footer />
           </body>

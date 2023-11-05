@@ -2,7 +2,7 @@
   display: block;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.678);
   padding: 10px;
 }
 
@@ -20,7 +20,13 @@
 .progressBackground {
   width: 109px;
   height: 4px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #02E7F5 0%, #02E7F5 109px, rgba(196, 196, 196, 0.30) 109px);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    #02e7f5 0%,
+    #02e7f5 109px,
+    rgba(196, 196, 196, 0.3) 109px
+  );
   border-radius: 2px;
   position: absolute;
   top: 0;
@@ -31,7 +37,7 @@
 .progressEllipse {
   width: 16px;
   height: 16px;
-  background: #02E7F5;
+  background: #02e7f5;
   border-radius: 100%;
   position: absolute;
   top: -5px;
@@ -89,7 +95,7 @@
   height: 30px;
   padding: 8px 8px;
   border-radius: 4px;
-  background: #F9F9F9;
+  background: #f9f9f9;
   color: black;
   position: absolute;
   top: -57px;
@@ -118,7 +124,6 @@
   top: -57px;
 }
 
-
 .infoContainer {
   position: relative;
   display: inline-block;
@@ -128,9 +133,9 @@
   width: 300px;
   height: auto;
   border-radius: 8px;
-  border: 1px solid #FFFFFF1F;
+  border: 1px solid #ffffff1f;
   background-color: #121317;
-  background-color: rgba(18, 19, 23, 0.800); 
+  background-color: rgba(18, 19, 23, 0.8);
   color: white;
   left: -350%;
   top: -8rem;
@@ -143,21 +148,21 @@
 }
 
 .modalImage {
-  width: 100px; 
+  width: 100px;
   height: auto;
 }
 
 .modalTextContainer {
   display: flex;
   flex-direction: column;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .modalTitle {
   color: white;
   font-size: 18px;
-  margin-top: 8px; 
-  margin-bottom: 4px; 
+  margin-top: 8px;
+  margin-bottom: 4px;
 }
 
 .modalText {

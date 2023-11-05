@@ -1,11 +1,118 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PlayerShow.module.scss";
 import PlayerControls from "./PlayerControls";
+import YouTube from "react-youtube";
 
-const PlayerShow: React.FC = () => {
+const ShowPlayer: React.FC = () => {
+  const [player, setPlayer] = useState<any>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [videoInfo, setVideoInfo] = useState({ title: "", description: "" });
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const videoId = "rcUO1OHg0gU";
+
   const goBack = () => {
-    window.history.back(); // Isso faz com que a página volte para a página anterior
+    window.history.back();
+  };
+
+  const togglePlay = () => {
+    if (player) {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const seekForward = (seconds: number) => {
+    if (player) {
+      const newTime = currentTime + seconds;
+      if (newTime < duration) {
+        player.seekTo(newTime, true);
+        setCurrentTime(newTime);
+      }
+    }
+  };
+
+  const backForward = (seconds: number) => {
+    if (player) {
+      const newTime = currentTime - seconds;
+      if (newTime > 0) {
+        player.seekTo(newTime, true);
+        setCurrentTime(newTime);
+      }
+    }
+  };
+
+  const toggleFullScreen = () => {
+    if (isFullScreen) {
+      document.exitFullscreen();
+    } else {
+      const playerElement = document.getElementById("player");
+      if (playerElement) {
+        playerElement.requestFullscreen();
+      }
+    }
+    setIsFullScreen(!isFullScreen);
+  };
+
+  const opts = {
+    width: "100%",
+    height: "866vh",
+    playerVars: {
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+    },
+  };
+
+  useEffect(() => {
+    if (player) {
+      setDuration(player.getDuration() - 1);
+      setCurrentTime(player.getCurrentTime());
+
+      fetchVideoInfo(videoId);
+
+      const timer = setInterval(() => {
+        setCurrentTime(player.getCurrentTime());
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [player, videoId]);
+
+  const fetchVideoInfo = (videoId: string) => {
+    const apiKey = "AIzaSyCdvi-PCCAClNngx1OTH-3uoxggXvEhNpA";
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.items && data.items.length > 0) {
+          const video = data.items[0].snippet;
+          let title = video.title;
+          const description =
+            video.description.length > 30
+              ? `${video.description.slice(0, 30)}...`
+              : video.description;
+
+          if (title.length > 25) {
+            title = `${title.slice(0, 24)}...`;
+          }
+
+          setVideoInfo({
+            title,
+            description,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar informações do vídeo", error);
+      });
   };
 
   return (
@@ -26,23 +133,28 @@ const PlayerShow: React.FC = () => {
           </svg>
         </button>
         <div className={styles.headerInfo}>
-          <div className={styles.title}>Deadpool</div>
-          <div className={styles.episode}>Filme 2016</div>
+          <div className={styles.title}>{videoInfo.title}</div>
+          <div className={styles.episode}>{videoInfo.description}</div>
         </div>
       </div>
-      <div className={styles.videoContainer}>
-        <iframe
-          width="100%"
-          height="100%"
-          src="https://www.youtube.com/embed/Ujs1Ud7k49M?enablejsapi=1&controls=0"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
-      </div>
-
-      <PlayerControls />
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        onReady={(event) => {
+          setPlayer(event.target);
+        }}
+        id="player"
+      />
+      <PlayerControls
+        pauseVideo={togglePlay}
+        seekForward={seekForward}
+        backForward={backForward}
+        duration={duration}
+        currentTime={currentTime}
+        toggleFullScreen={toggleFullScreen}
+      />
     </div>
   );
 };
 
-export default PlayerShow;
+export default ShowPlayer;

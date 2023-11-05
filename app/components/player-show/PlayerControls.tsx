@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PlayerControls.module.scss";
 import AudioSubtitleModal from "./AudioSubtitleModal";
 
-const PlayerControls: React.FC = () => {
+interface PlayerControlsProps {
+  pauseVideo: () => void;
+  seekForward: (seconds: number) => void;
+  backForward: (seconds: number) => void;
+  duration: number;
+  currentTime: number;
+  toggleFullScreen: () => void; // Adicione a função de tela cheia
+}
+
+const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
+  pauseVideo,
+  seekForward,
+  backForward,
+  duration,
+  currentTime,
+  toggleFullScreen,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalLokiVisible, setIsModalLokiVisible] = useState(false);
   const [isModalEpisodiosVisible, setIsModalEpisodiosVisible] = useState(false);
   const [isModalLegendasVisible, setIsModalLegendasVisible] = useState(false);
   const [isModalTelaCheiaVisible, setIsModalTelaCheiaVisible] = useState(false);
-  const [isAudioSubtitleModalVisible, setIsAudioSubtitleModalVisible] = useState(false);
-
-  const toggleAudioSubtitleModal = () => {
-    setIsAudioSubtitleModalVisible(!isAudioSubtitleModalVisible);
-  };
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progress, setProgress] = useState((currentTime / duration) * 100);
+  const [ellipseLeft, setEllipseLeft] = useState(progress);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -34,56 +48,86 @@ const PlayerControls: React.FC = () => {
     setIsModalTelaCheiaVisible(!isModalTelaCheiaVisible);
   };
 
+  const togglePlay = () => {
+    pauseVideo();
+    setIsPlaying(!isPlaying);
+  };
+
+  const seekForward10Seconds = () => {
+    seekForward(10);
+  };
+
+  const backForward10Seconds = () => {
+    backForward(10);
+  };
+
+  const [isAudioSubtitleModalVisible, setIsAudioSubtitleModalVisible] =
+    useState(false);
+
+  const toggleAudioSubtitleModal = () => {
+    setIsAudioSubtitleModalVisible(!isAudioSubtitleModalVisible);
+  };
+
+  useEffect(() => {
+    const newProgress = (currentTime / duration) * 100;
+    setProgress(newProgress);
+    setEllipseLeft(newProgress);
+  }, [currentTime, duration]);
+
   return (
     <div className={styles.playerControls}>
-      <div className={styles.progressBars}>
-        <div className={styles.progressBar}>
-          {/* Primeira barra de progresso */}
-          <div className={styles.progressBackground} />
-          <div className={styles.progressEllipse}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 12 12"
-              fill="none"
-            >
-              <circle />
-            </svg>
-          </div>
-        </div>
-        <div className={styles.progressBackground2}>
-          {/* Segunda barra de progresso */}
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressBackground}
+          style={{ width: `${progress}%` }}
+        />
+        <div
+          className={styles.progressEllipse}
+          style={{ left: `${ellipseLeft}%` }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 12 12"
+            fill="none"
+          >
+            <circle />
+          </svg>
         </div>
       </div>
-
       <div className={styles.controls}>
         <div className={styles.leftControls}>
           <img
             src="/icons/back-10segs.png"
             alt="Back 10 Seconds"
             className={styles.controlIcon}
+            onClick={backForward10Seconds}
           />
           <img
-            src="/icons/pause.png"
-            alt="Pause"
+            src={isPlaying ? "/icons/pause.png" : "/icons/play.png"}
+            alt={isPlaying ? "Pause" : "Play"}
             className={styles.controlIcon}
+            onClick={togglePlay}
           />
           <img
-            src="/icons/foward-10segs.png"
+            src="icons/foward-10segs.png"
             alt="Forward 10 Seconds"
             className={styles.controlIcon}
+            onClick={seekForward10Seconds}
           />
           <img
-            src="/icons/volume.png"
+            src="icons/volume.png"
             alt="Volume"
             id="volume"
             className={styles.controlIcon}
           />
-          <div className={styles.timerText}>10:00 / 52:20</div>
+          <div className={styles.timerText}>
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </div>
         </div>
         <div className={styles.rightControls}>
           <div className={styles.infoContainer}>
             <img
-              src="/icons/info.png"
+              src="icons/info.png"
               alt="Info"
               className={styles.controlIcon}
               onMouseEnter={toggleModal}
@@ -98,7 +142,7 @@ const PlayerControls: React.FC = () => {
 
           <div className={styles.infoContainer}>
             <img
-              src="/icons/skip.png"
+              src="icons/skip.png"
               alt="Loki"
               className={styles.controlIcon}
               onMouseEnter={toggleModalLoki}
@@ -146,7 +190,7 @@ const PlayerControls: React.FC = () => {
               onMouseLeave={toggleModalLegendas}
               onClick={toggleAudioSubtitleModal}
             />
-            
+
             {isModalLegendasVisible && (
               <div className={styles.modal}>
                 <p>Legendas</p>
@@ -162,6 +206,7 @@ const PlayerControls: React.FC = () => {
               className={styles.controlIcon}
               onMouseEnter={toggleModalTelaCheia}
               onMouseLeave={toggleModalTelaCheia}
+              onClick={toggleFullScreen}
             />
             {isModalTelaCheiaVisible && (
               <div className={styles.modal}>
@@ -175,4 +220,13 @@ const PlayerControls: React.FC = () => {
   );
 };
 
-export default PlayerControls;
+function formatTime(time: number) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    2,
+    "0"
+  )}`;
+}
+
+export default ShowPlayerControls;

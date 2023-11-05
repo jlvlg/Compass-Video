@@ -1,45 +1,75 @@
-.modal {
-    width: 589px;
-    height: 305px;
-    top: -360px; /* Ajuste conforme necessário */
-    left: -500px; /* Ajuste conforme necessário */
-    border-radius: 8px;
-    background: #101116F2;
-    border: 1px solid #353843;
-    position: absolute;
-    color: rgb(156, 156, 156);
-  }
+.modalSubtitle {
+  width: 589px;
+  height: 305px;
+  top: -328px;
+  left: -500px;
+  margin-right: 20px;
+  border-radius: 8px;
+  background: #101116f2;
+  border: 1px solid #353843;
+  position: absolute;
+  color: rgb(156, 156, 156);
+}
 
-  .modal h1{
-    color: white;
-    margin-bottom: 20px;
-  }
+.modalSubtitle h1 {
+  color: white;
+  margin-bottom: 20px;
+}
 
-  .modal p.selected {
-    color: white;
-  }
-  
-  .audioSubtitleContainer {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    height: 100%;
-  }
-  
-  .audioInfo {
-    width: 50%;
-    padding: 10px;
-  }
-  
-  .subtitleInfo {
-    width: 50%;
-    padding: 10px;
-  }
-  
-  .audioInfo p, .subtitleInfo p {
-    margin-bottom: 20px;
-  }
+.modalSubtitle p.selected {
+  color: white;
+}
 
-  .modal p, .modal h1 {
-    cursor: pointer;
-  }
+.audioSubtitleContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  height: 100%;
+}
+
+.audioInfo {
+  width: 50%;
+  padding: 10px;
+}
+
+.subtitleInfo {
+  width: 50%;
+  padding: 10px;
+}
+
+.audioInfo p,
+.subtitleInfo p {
+  margin-bottom: 20px;
+}
+
+.modalSubtitle p,
+.modalSubtitle h1 {
+  cursor: pointer;
+}
+
+.modalSubtitle h1 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.closeButton {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 20px;
+  left: 545px;
+  background: #101116F2;
+  border: #101116F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.closeButton img {
+  width: 100%;
+  height: 100%;
+}

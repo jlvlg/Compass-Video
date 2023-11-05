@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styles from "./AudioSubtitleModal.module.scss";
 
-const AudioSubtitleModal: React.FC = () => {
+const SubtitleModal: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   const [selectedTextAudio, setSelectedTextAudio] = useState<string | null>(
-    null
+    "English - Original"
   );
   const [selectedTextSubtitle, setSelectedTextSubtitle] = useState<
     string | null
-  >(null);
+  >("No");
 
   const handleTextClickAudio = (text: string) => {
     setSelectedTextAudio(text);
@@ -17,8 +19,19 @@ const AudioSubtitleModal: React.FC = () => {
     setSelectedTextSubtitle(text);
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  if (!isModalOpen) {
+    return null; // Não renderizar o modal se isModalOpen for false
+  }
+
   return (
-    <div className={styles.modal}>
+    <div className={styles.modalSubtitle} style={{ position: "absolute" }}>
+      <button className={styles.closeButton} onClick={handleCloseModal}>
+        <img src="/icons/close.png" alt="Close" />
+      </button>
       <div className={styles.audioSubtitleContainer}>
         <div className={styles.audioInfo}>
           <h1>Áudio</h1>
@@ -209,4 +222,4 @@ const AudioSubtitleModal: React.FC = () => {
   );
 };
 
-export default AudioSubtitleModal;
+export default SubtitleModal;
