@@ -1,17 +1,18 @@
 @import "@/styles/global.scss";
 
-.maincontent{
+.listcontent{
     width: 100%;
 
-    h2{
-        padding-bottom: 2rem;
-        padding-left: 80px;
-        color: $neutral--100;
-        font-family: $montserrat;
-        font-size: 24px;
-    }
+    
 }
 
+.listitle{
+    padding-bottom: 2rem;
+    padding-left: 80px;
+    color: $neutral--100;
+    font-family: $montserrat;
+    font-size: 24px;
+}
 .episodelist{
     width: 100%;
     display: flex;

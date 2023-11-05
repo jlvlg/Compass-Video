@@ -4,13 +4,14 @@ import styles from "./Episodelist.module.scss";
 
 type Props = {
   id_serie: number;
+  season_number: number;
 };
 
 export default async function Episodelist(props: Props) {
-  const data = await tmdb.getSeasonInfo(props.id_serie, 1);
+  const data = await tmdb.getSeasonInfo(props.id_serie, props.season_number);
   return (
-    <div className={styles.maincontent}>
-      <h2>Episodes</h2>
+    <div className={styles.listcontent}>
+      <h2 className={styles.listitle}>Episodes</h2>
       <div className={styles.episodelist}>
         {data &&
           data.episodes.length > 0 &&
