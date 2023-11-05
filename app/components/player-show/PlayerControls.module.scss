@@ -1,4 +1,3 @@
-/* PlayerControls.module.scss */
 .playerControls {
   display: block;
   align-items: center;
@@ -15,7 +14,7 @@
 
 .progressBar {
   position: relative;
-  margin-bottom: 8px; /* Espaçamento entre as barras */
+  margin-bottom: 8px;
 }
 
 .progressBackground {
@@ -31,7 +30,7 @@
 
 .progressEllipse {
   width: 16px;
-  height: 12px;
+  height: 16px;
   background: #02E7F5;
   border-radius: 100%;
   position: absolute;
@@ -48,8 +47,6 @@
   position: absolute;
 }
 
-
-/* Estilos para os ícones e o texto do timer */
 .controls {
   display: flex;
   justify-content: space-between;
@@ -70,7 +67,7 @@
   width: 37px;
   height: 37px;
   flex-shrink: 0;
-  margin-right: 10px; /* Espaçamento entre os ícones */
+  margin-right: 10px;
 }
 
 .timerText {
@@ -78,3 +75,51 @@
   font-size: 14px;
 }
 
+.rightControls .controlIcon {
+  transition: transform 300ms ease-in-out;
+  transform: scale(1);
+}
+
+.rightControls .controlIcon:hover {
+  transform: scale(1.1);
+}
+
+.modal {
+  width: 72px;
+  height: 30px;
+  padding: 8px 8px;
+  border-radius: 4px;
+  background: #F9F9F9;
+  color: black;
+  position: absolute;
+  top: -57px;
+  left: -40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modal-loki {
+  top: -57px;
+}
+
+.modal-episodios {
+  top: -57px;
+}
+
+.modal-legendas {
+  top: -57px;
+}
+
+.modal-tela-cheia {
+  top: -57px;
+}
+
+
+.infoContainer {
+  position: relative;
+  display: inline-block;
+}

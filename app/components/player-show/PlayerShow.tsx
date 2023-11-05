@@ -1,7 +1,7 @@
 "use client";
-import React from 'react';
-import styles from './PlayerShow.module.scss';
-import PlayerControls from './PlayerControls';
+import React from "react";
+import styles from "./PlayerShow.module.scss";
+import PlayerControls from "./PlayerControls";
 
 const PlayerShow: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const PlayerShow: React.FC = () => {
         </button>
         <div className={styles.headerInfo}>
           <div className={styles.title}>Deadpool</div>
-          <div className={styles.episode}>T1:E1 Un glorioso propósito</div>
+          <div className={styles.episode}>Filme 2016</div>
         </div>
       </div>
       <img src="/deadpool.gif" alt="Meu GIF" className={styles.gif} />
