@@ -18,13 +18,8 @@ export default async function Home({}: Props) {
 
   return (
     <div className={style.maincontent}>
-      <Header item={popular![0]} />
-      <Carousel
-        items={popular!}
-        title="Popular"
-        autoplay={3000}
-        updateBanner={true}
-      />
+      <Header item={popular![0]} autoUpdate />
+      <Carousel items={popular!} title="Popular" autoplay={3000} updateBanner />
       <Episodelist id_serie={1399} season_number={1} />
     </div>
   );
