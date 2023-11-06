@@ -1,7 +1,7 @@
 @import "@/styles/global.scss";
 
 .info {
-  padding-inline: 16px;
+  padding-inline: 80px;
   margin-block-start: 60px;
   max-inline-size: 720px;
   display: flex;
@@ -52,6 +52,9 @@
   color: $neutral-100;
   @include button($opacity-10, $neutral-100);
 
+  svg {
+    block-size: 24px;
+  }
   &.buttonPrimary {
     @include button($neutral-100, transparent);
     color: $neutral-600;
@@ -61,5 +64,9 @@
 @media (max-width: 768px) {
   .interact {
     flex-direction: column;
+  }
+
+  .header {
+    padding-inline: 16px;
   }
 }
