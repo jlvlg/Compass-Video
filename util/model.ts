@@ -1,6 +1,7 @@
 export enum Type {
   MOVIE,
   SERIES,
+  SEASON,
 }
 
 export interface Media {
