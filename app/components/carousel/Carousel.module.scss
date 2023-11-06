@@ -1,0 +1,77 @@
+@import "@/styles/global.scss";
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-block-end: 16px;
+  padding-inline: 80px;
+
+  ul {
+    position: static;
+    padding: 0;
+
+    button {
+      margin: 0;
+      opacity: unset;
+      margin-inline: 4px;
+      background: #c4c4c44d;
+      transition: background 0.2s linear;
+    }
+
+    :global(.is-active) {
+      background: $secondary;
+      transform: unset;
+    }
+  }
+}
+
+.carousel {
+  &:hover {
+    .arrow {
+      opacity: 1;
+    }
+  }
+}
+
+.arrow {
+  height: calc(100% - 40px);
+  top: calc(50% + 20px);
+  opacity: 0;
+  transition: opacity 0.2s;
+  width: 5%;
+  border-radius: 0;
+
+  &:global(.splide__arrow--prev) {
+    background: linear-gradient(to right, black, transparent);
+    left: 0;
+  }
+  &:global(.splide__arrow--next) {
+    background: linear-gradient(to left, black, transparent);
+    right: 0;
+  }
+
+  svg {
+    height: 3em;
+    width: 3em;
+    fill: white;
+  }
+}
+
+.image {
+  width: 240px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.title {
+  color: #ffffff;
+  margin: 0;
+  font: $typography-h4;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-inline: 16px;
+  }
+}

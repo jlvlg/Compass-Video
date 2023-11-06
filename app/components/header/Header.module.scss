@@ -1,0 +1,74 @@
+@import "@/styles/global.scss";
+
+.header {
+  z-index: -2;
+  transition: all 0.4s;
+  block-size: 982px;
+  background-position: center;
+  background-size: cover;
+  color: $text-high-emphasis;
+  position: relative;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset-block-end: 0;
+}
+
+.gradients {
+  z-index: -1;
+  inline-size: 100%;
+  block-size: 100%;
+  position: absolute;
+
+  :nth-child(1) {
+    inline-size: 100%;
+    block-size: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(26, 29, 41, 0) 15.81%,
+      rgba(26, 29, 41, 0.79) 64.73%,
+      #1a1d29 97.83%
+    );
+  }
+  :nth-child(2) {
+    inline-size: 100%;
+    block-size: 100%;
+    background: linear-gradient(
+      221deg,
+      rgba(26, 29, 41, 0) 49.29%,
+      rgba(26, 29, 41, 0.79) 77.96%,
+      #1a1d29 97.36%
+    );
+  }
+}
+
+.info {
+  padding-inline: 16px;
+  margin-block-start: 60px;
+  display: flex;
+  max-inline-size: 720px;
+  flex-direction: column;
+  gap: 20px;
+
+  h1 {
+    font: $typography-h1;
+  }
+}
+
+.release {
+  all: unset;
+  font: $typography-body-review;
+}
+
+.genres {
+  all: unset;
+  font: $typography-body-small;
+}
+
+.overview {
+  all: unset;
+  font: $typography-body-large;
+}

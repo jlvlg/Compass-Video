@@ -1,18 +1,26 @@
 import React from "react";
 import tmdb from "@/util/tmdb";
 import style from "./Home.module.scss";
-import Carousel from "../components/ui/carousel";
 import Episodelist from "../components/ui/episodelist";
+import Carousel from "../components/carousel";
+import Header from "../components/header";
 
 type Props = {};
 
 export const revalidate = 60;
 
 export default async function Home({}: Props) {
-  const popularMovies = await tmdb.popularMovies;
+  const popular = await tmdb.detailedMediaMultiple(await tmdb.popular);
+
   return (
     <div className={style.maincontent}>
-      <Carousel items={popularMovies} title="Popular" />
+      <Header item={popular![0]} />
+      <Carousel
+        items={popular!}
+        title="Popular"
+        autoplay={3000}
+        updateBanner={true}
+      />
       <Episodelist id_serie={1399} season_number={1} />
     </div>
   );
