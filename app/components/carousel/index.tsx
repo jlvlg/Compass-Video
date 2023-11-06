@@ -7,6 +7,7 @@ import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 import { Media } from "@/util/model";
 import { actions, useDispatch } from "@/store";
+import Link from "next/link";
 
 type Props = {
   title?: string;
@@ -97,14 +98,16 @@ export default function Carousel({
         <ul className="splide__list">
           {items.map((item) => (
             <li key={item.id} className="splide__slide">
-              <Image
-                className={styles.image}
-                priority={true}
-                src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
-                alt={item.title || item.name || "Poster"}
-                width={342}
-                height={513}
-              />
+              <Link href="/movies/${item">
+                <Image
+                  className={styles.image}
+                  priority={true}
+                  src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                  alt={item.title || item.name || "Poster"}
+                  width={342}
+                  height={513}
+                />
+              </Link>
             </li>
           ))}
         </ul>

@@ -4,6 +4,7 @@ import style from "./Home.module.scss";
 import Episodelist from "../components/ui/episodelist";
 import Carousel from "../components/carousel";
 import Header from "../components/header";
+import Link from "next/link";
 
 type Props = {};
 
@@ -14,13 +15,8 @@ export default async function Home({}: Props) {
 
   return (
     <div className={style.maincontent}>
-      <Header item={popular![0]} />
-      <Carousel
-        items={popular!}
-        title="Popular"
-        autoplay={3000}
-        updateBanner={true}
-      />
+      <Header item={popular![0]} autoUpdate />
+      <Carousel items={popular!} title="Popular" autoplay={3000} updateBanner />
       <Episodelist id_serie={1399} season_number={1} />
     </div>
   );
