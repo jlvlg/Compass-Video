@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./Header.module.scss";
 import { DetailedMedia } from "@/util/model";
-import NavBar from "../navbar/Header";
+import NavBar from "../navbar/index";
 import { useSelector } from "@/store";
 import useClamp from "@/util/hooks/useClamp";
 
@@ -28,7 +28,7 @@ export default function Header({ item, autoUpdate }: Props) {
         <div></div>
         <div></div>
       </div>
-      <NavBar />
+        <NavBar />
       <hgroup className={styles.info}>
         <h1>{item.title || item.name}</h1>
         <p className={styles.release}>

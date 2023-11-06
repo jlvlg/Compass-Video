@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Header.css";
+import "./index.css";
 import Image from "next/image";
 
 type SearchBoxProps = {
