@@ -3,7 +3,6 @@
 .header {
   z-index: -2;
   transition: all 0.4s;
-  block-size: 982px;
   background-position: center;
   background-size: cover;
   color: $text-high-emphasis;
@@ -24,6 +23,7 @@
   position: absolute;
 
   :nth-child(1) {
+    position: absolute;
     inline-size: 100%;
     block-size: 100%;
     background: linear-gradient(
@@ -34,6 +34,7 @@
     );
   }
   :nth-child(2) {
+    position: absolute;
     inline-size: 100%;
     block-size: 100%;
     background: linear-gradient(
@@ -51,6 +52,7 @@
   display: flex;
   max-inline-size: 720px;
   flex-direction: column;
+  block-size: 400px;
   gap: 20px;
 
   h1 {
@@ -70,5 +72,7 @@
 
 .overview {
   all: unset;
+  overflow: hidden;
   font: $typography-body-large;
+  line-height: 1.5em;
 }
