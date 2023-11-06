@@ -2,7 +2,6 @@ import Episodelist from "@/app/components/ui/episodelist";
 import styles from "../Tv.module.scss";
 import Header from "@/app/components/header";
 import tmdb from "@/util/tmdb";
-import { Media } from "@/util/model";
 
 type Props = {
   params: {
