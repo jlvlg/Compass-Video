@@ -8,7 +8,6 @@ const nextConfig = {
       { ...loaderRule, test: /\.svg$/i, resourceQuery: /url/ },
       {
         test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
         resourceQuery: { not: /url/ },
         use: ["@svgr/webpack"],
       }
