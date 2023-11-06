@@ -13,11 +13,11 @@ type Props = { item: DetailedMedia; autoUpdate?: boolean };
 
 export default function Header({ item, autoUpdate }: Props) {
   const dynamic = useSelector((state) => state.banner.media) || item;
+  if (autoUpdate) item = dynamic;
   const itemRelease = item.release_date || item.first_air_date;
   const itemDuration = item.runtime
     ? `${Math.floor(item.runtime / 60)} h ${item.runtime % 60} m`
     : `${item.number_of_episodes} Episodes`;
-  if (autoUpdate) item = dynamic;
 
   return (
     <header
