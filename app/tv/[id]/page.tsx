@@ -3,6 +3,7 @@
 import Carousel from "@/app/components/carousel"
 import tmdb from "@/util/tmdb";
 import { Media } from "@/util/model";
+import styles from "./Tv.module.scss"
 type Props = {
     params: {
         id: number;
@@ -10,12 +11,12 @@ type Props = {
 }
 
 export default async function Tv({params}: Props){
-    const popular = await tmdb.detailedMediaMultiple(await tmdb.popular);
-    const seriesdata = await tmdb.getSeriesInfo(params.id);
-    let seasons = seriesdata?.seasons;
+    const serie = await tmdb.getSerie(params.id);
+    let seasons = serie?.seasons;
 
     console.log(seasons)
-    return <div>
+    console.log(serie);
+    return <div className={styles.series__container}>
         <Carousel
         items={seasons!}
         title="Temporadas"
