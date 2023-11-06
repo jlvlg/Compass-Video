@@ -8,14 +8,13 @@ import "@splidejs/splide/css";
 import { Media } from "@/util/model";
 import { actions, useDispatch } from "@/store";
 import Link from "next/link";
+const defaultImagePoster = '/carouseldefault.png';
 
 type Props = {
   title?: string;
   items: Media[];
   autoplay?: number;
   updateBanner?: boolean;
-  isSeason?: boolean;
-  idSeason?: number;
 };
 
 export default function Carousel({
@@ -23,8 +22,6 @@ export default function Carousel({
   items,
   autoplay,
   updateBanner,
-  isSeason,
-  idSeason,
 }: Props) {
   const carouselRef = useRef(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -88,11 +85,11 @@ export default function Carousel({
     };
   }, []);
 
-  function BASE_URL_REF(index: Number, id: Number, isSeasonMedia: boolean | undefined){
-    if(isSeasonMedia){
-      return `/tv/${idSeason}/${index}`;
+  function getImage(path: string){
+    if(path){
+      return `https://image.tmdb.org/t/p/w342${path}`;
     }
-    return `/movie/${idSeason}/${id}`
+    return defaultImagePoster;
   }
 
   return (
@@ -101,20 +98,19 @@ export default function Carousel({
         className={styles.header}
         style={{
           paddingInlineEnd: (trackSize - 60) % 260,
-        }}
-      >
+        }}>
         <h2 className={styles.title}>{title}</h2>
         <ul className="splide__pagination"></ul>
       </header>
       <div ref={trackRef} className="splide__track">
         <ul className="splide__list">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <li key={item.id} className="splide__slide">
-              <Link href={BASE_URL_REF(index, item.id, isSeason)}>
+              <Link href="/movies/${item">
                 <Image
                   className={styles.image}
                   priority={true}
-                  src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                  src={getImage(item.poster_path)}
                   alt={item.title || item.name || "Poster"}
                   width={342}
                   height={513}
