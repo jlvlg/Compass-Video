@@ -7,6 +7,7 @@
   background-size: cover;
   color: $text-high-emphasis;
   position: relative;
+  padding-block-end: 100px;
 }
 
 .overlay {
@@ -46,33 +47,8 @@
   }
 }
 
-.info {
-  padding-inline: 16px;
-  margin-block-start: 60px;
-  display: flex;
-  max-inline-size: 720px;
-  flex-direction: column;
-  block-size: 400px;
-  gap: 20px;
-
-  h1 {
-    font: $typography-h1;
+@media (max-width: 768px) {
+  .header {
+    padding-block-end: 30px;
   }
-}
-
-.release {
-  all: unset;
-  font: $typography-body-review;
-}
-
-.genres {
-  all: unset;
-  font: $typography-body-small;
-}
-
-.overview {
-  all: unset;
-  overflow: hidden;
-  font: $typography-body-large;
-  line-height: 1.5em;
 }

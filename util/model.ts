@@ -1,7 +1,4 @@
-export enum Type {
-  MOVIE,
-  SERIES,
-}
+export type Type = "movie" | "series";
 
 export interface Media {
   adult: boolean;
@@ -36,7 +33,7 @@ interface Series extends Media {
   number_of_seasons: number;
 }
 
-interface Episode{
+interface Episode {
   id: number;
   name: string;
   still_path: string;
@@ -45,7 +42,7 @@ interface Episode{
   runtime: number;
 }
 
-interface Season{
-  episodes: Episode[],
-  season_number: number,
+interface Season {
+  episodes: Episode[];
+  season_number: number;
 }
