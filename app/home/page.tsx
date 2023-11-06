@@ -4,7 +4,6 @@ import style from "./Home.module.scss";
 import Episodelist from "../components/ui/episodelist";
 import Carousel from "../components/carousel";
 import Header from "../components/header";
-import Link from "next/link";
 
 type Props = {};
 
