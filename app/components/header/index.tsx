@@ -9,10 +9,11 @@ import Image from "next/image";
 import overlay1 from "@/public/overlay1.svg";
 import overlay2 from "@/public/overlay2.svg";
 
-type Props = { item: DetailedMedia };
+type Props = { item: DetailedMedia; autoUpdate?: boolean };
 
-export default function Header({ item }: Props) {
-  item = useSelector((state) => state.banner.media) || item;
+export default function Header({ item, autoUpdate }: Props) {
+  const dynamic = useSelector((state) => state.banner.media) || item;
+  if (autoUpdate) item = dynamic;
   const itemRelease = item.release_date || item.first_air_date;
   const itemDuration = item.runtime
     ? `${Math.floor(item.runtime / 60)} h ${item.runtime % 60} m`
