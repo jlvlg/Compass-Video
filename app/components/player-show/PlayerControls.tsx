@@ -117,12 +117,14 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             onClick={seekForward10Seconds}
           />
           <img
-            src={
-              isMuted ? "/icons/volume_mute.png" : "/icons/volume.png"
-            }
+            src={isMuted ? "/icons/volume_mute.png" : "/icons/volume.png"}
             alt={isMuted ? "Muted" : "Volume"}
             id="volume"
             className={styles.controlIcon}
+            style={{
+              width: isMuted ? "30px" : "36px",
+              height: isMuted ? "30px" : "36px",
+            }}
             onClick={() => setIsMuted(!isMuted)} // Alternar entre mudo e não mudo
           />
           <div className={styles.timerText}>

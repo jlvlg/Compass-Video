@@ -137,6 +137,18 @@ const ShowPlayer: React.FC = () => {
           <div className={styles.episode}>{videoInfo.description}</div>
         </div>
       </div>
+      <div className={styles.videoContainer}>
+      {/* Mova o componente PlayerControls aqui */}
+      <div className={styles.controlsContainer}>
+        <PlayerControls
+          pauseVideo={togglePlay}
+          seekForward={seekForward}
+          backForward={backForward}
+          duration={duration}
+          currentTime={currentTime}
+          toggleFullScreen={toggleFullScreen}
+        />
+      </div>
       <YouTube
         videoId={videoId}
         opts={opts}
@@ -145,14 +157,7 @@ const ShowPlayer: React.FC = () => {
         }}
         id="player"
       />
-      <PlayerControls
-        pauseVideo={togglePlay}
-        seekForward={seekForward}
-        backForward={backForward}
-        duration={duration}
-        currentTime={currentTime}
-        toggleFullScreen={toggleFullScreen}
-      />
+    </div>
     </div>
   );
 };

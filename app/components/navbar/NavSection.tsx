@@ -1,12 +1,14 @@
 import React from "react";
 import "./NavSection.css";
+import { useTabContext } from "./TabContext"; // Importe useTabContext
+
 
 interface NavSectionProps {
   icon: string;
   text: string;
   link: string;
-  isActive: boolean; // New prop for active state
-  onClick: () => void; // Callback function for handling clicks
+  isActive: boolean; 
+  onClick: () => void; 
 }
 
 const NavSection: React.FC<NavSectionProps> = ({
@@ -16,8 +18,17 @@ const NavSection: React.FC<NavSectionProps> = ({
   isActive,
   onClick,
 }) => {
+
+  const { activeTab, setActiveTab } = useTabContext(); 
+
   return (
-    <div className={`sections ${isActive ? "active" : ""}`}>
+    <div className={`sections ${isActive ? "active" : ""}`} 
+    onClick={() => {
+      setActiveTab(text); 
+      onClick();
+    }}
+    >
+      
       <img
         className={`logo ${isActive ? "active" : ""}`}
         src={icon}

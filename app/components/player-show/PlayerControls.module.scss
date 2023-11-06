@@ -4,9 +4,10 @@
   display: block;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.678);
+  background: black;
   padding: 10px;
-  margin-top: -0.45%;
+  margin-top: -0.60%;
+  width: 97%;
 }
 
 .progressBars {
@@ -175,6 +176,8 @@
 @media screen and (max-width: 768px) {
   .playerControls{
     width: auto;
+    background: transparent;
+    height: 2rem;
 
   }
 }
