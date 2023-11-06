@@ -1,4 +1,4 @@
-import { Media, DetailedMedia, Type } from "./model";
+import { Media, Season, Series, DetailedMedia, Type } from "./model";
 
 export class TMDB {
   static instance?: TMDB;
@@ -132,6 +132,41 @@ export class TMDB {
       return null;
     }
   }
+
+  async getSerie(id: number) {
+    try {
+      const res = await this.get(`tv/${id}?language=en-US`);
+      const seriedata: Series = {
+        ...this.extractCommon(res),
+        number_of_seasons: res.number_of_seasons,
+        seasons: res.seasons,
+        name: res.name,
+        origin_country: res.origin_country,
+        type: Type.SERIES,
+      };
+      return seriedata;
+    } catch (error) {
+      console.error("Error getSeasonInfo", error);
+      return null;
+    }
+  }
+
+  private similarMedia(media: string, id:number) {
+    return this.get(`${media}/${id}/similar?`).then(
+      (data) => data.results
+    );
+  }
+
+
+  async getSimilarSerie(id:number) {
+    return (async () =>
+      (await this.similarMedia("tv", id)).map((series: Media) => ({
+        ...series,
+        type: Type.SERIES,
+      })))() as Promise<Media[]>;
+  }
+
+
 }
 
 export default TMDB.getInstance();

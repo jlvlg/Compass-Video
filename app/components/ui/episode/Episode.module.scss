@@ -17,12 +17,13 @@
 }
 
 .containerinfor p {
-  color: var(--text-medium-emphasis, $neutral-200);
-  font-family: $montserrat;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px;
+    color: var(--text-medium-emphasis, $neutral-200);
+    font-family: $montserrat;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    margin: 0;
 }
 
 .card:hover {

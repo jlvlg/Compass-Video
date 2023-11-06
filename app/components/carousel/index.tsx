@@ -8,6 +8,7 @@ import "@splidejs/splide/css";
 import { Media } from "@/util/model";
 import { actions, useDispatch } from "@/store";
 import Link from "next/link";
+const defaultImagePoster = "/carouseldefault.png";
 
 type Props = {
   title?: string;
@@ -84,25 +85,32 @@ export default function Carousel({
     };
   }, []);
 
+  function getImage(path: string) {
+    if (path) {
+      return `https://image.tmdb.org/t/p/w342${path}`;
+    }
+    return defaultImagePoster;
+  }
   return (
     <section ref={carouselRef} className={`splide ${styles.carousel}`}>
       <header
         className={styles.header}
         style={{
           paddingInlineEnd: (trackSize - 60) % 260,
-        }}>
+        }}
+      >
         <h2 className={styles.title}>{title}</h2>
         <ul className="splide__pagination"></ul>
       </header>
       <div ref={trackRef} className="splide__track">
         <ul className="splide__list">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <li key={item.id} className="splide__slide">
-              <Link href="/movies/${item">
+              <Link href={`${item.type}/${item.id}`}>
                 <Image
                   className={styles.image}
                   priority={true}
-                  src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                  src={getImage(item.poster_path)}
                   alt={item.title || item.name || "Poster"}
                   width={342}
                   height={513}

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import style from "./Episode.module.scss";
+import { Episode } from "@/util/model";
 import PlayIcon from "@/public/icons/play.svg";
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -37,7 +38,7 @@ export default function Episode(props: Props) {
       <div className={style.containerinfor}>
         <div className={style.info}>
           <h2>{`${props.episode.episode_number}. ${title}`}</h2>
-          <p>{`${props.episode.runtime} min`}</p>
+          {props.episode.runtime && <p>{`${props.episode.runtime} min`}</p>}
         </div>
         <p>{description}</p>
       </div>

@@ -28,12 +28,22 @@ export interface DetailedMedia extends Media {
   number_of_episodes?: number;
 }
 
-interface Series extends Media {
+export interface Series extends Media {
   origin_country: string[];
-  number_of_seasons: number;
+  id: number;
+  number_of_seasons?: number;
+  seasons?: Series[];
+  name?: string;
 }
 
-interface Episode {
+export interface SeriesInfo{
+  id: number;
+  number_of_seasons: number;
+  seasons: Series[];
+  name: string;
+}
+
+export interface Episode{
   id: number;
   name: string;
   still_path: string;
@@ -42,7 +52,9 @@ interface Episode {
   runtime: number;
 }
 
-interface Season {
-  episodes: Episode[];
-  season_number: number;
+export interface Season{
+  episodes: Episode[],
+  season_number: number,
+  poster_path?: string,
+  name?: string;
 }
