@@ -150,6 +150,23 @@ export class TMDB {
       return null;
     }
   }
+
+  private similarMedia(media: string, id:number) {
+    return this.get(`${media}/${id}/similar?`).then(
+      (data) => data.results
+    );
+  }
+
+
+  async getSimilarSerie(id:number) {
+    return (async () =>
+      (await this.similarMedia("tv", id)).map((series: Media) => ({
+        ...series,
+        type: Type.SERIES,
+      })))() as Promise<Media[]>;
+  }
+
+
 }
 
 export default TMDB.getInstance();
