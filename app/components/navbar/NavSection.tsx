@@ -1,48 +1,31 @@
+"use client";
+
 import React from "react";
 import "./NavSection.css";
-import { useTabContext } from "./TabContext"; // Importe useTabContext
-
+import Link from "next/link";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 interface NavSectionProps {
   icon: string;
   text: string;
   link: string;
-  isActive: boolean; 
-  onClick: () => void; 
 }
 
-const NavSection: React.FC<NavSectionProps> = ({
-  icon,
-  text,
-  link,
-  isActive,
-  onClick,
-}) => {
-
-  const { activeTab, setActiveTab } = useTabContext(); 
+const NavSection: React.FC<NavSectionProps> = ({ icon, text, link }) => {
+  const isActive = usePathname() === link;
 
   return (
-    <div className={`sections ${isActive ? "active" : ""}`} 
-    onClick={() => {
-      setActiveTab(text); 
-      onClick();
-    }}
-    >
-      
+    <div className={`sections ${isActive ? "active" : ""}`}>
       <img
         className={`logo ${isActive ? "active" : ""}`}
         src={icon}
         alt="Logo"
       />
-      <a
-        href={link}
-        className={`nav-item ${isActive ? "active" : ""}`}
-        onClick={onClick}
-      >
+      <Link href={link} className={`nav-item ${isActive ? "active" : ""}`}>
         {text}
-      </a>
+      </Link>
     </div>
   );
 };
 
-export default NavSection;
+export default NavSection;
