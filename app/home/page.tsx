@@ -4,6 +4,10 @@ import style from "./Home.module.scss";
 import Episodelist from "../components/ui/episodelist";
 import Carousel from "../components/carousel";
 import Header from "../components/header";
+import Link from "next/link";
+import ShowPlayer from "../components/player-show/PlayerShow";
+import { useRouter } from "next/router";
+
 
 type Props = {};
 

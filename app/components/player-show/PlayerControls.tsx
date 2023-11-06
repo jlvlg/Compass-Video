@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PlayerControls.module.scss";
 import AudioSubtitleModal from "./AudioSubtitleModal";
+import "./layout.css";
 
 interface PlayerControlsProps {
   pauseVideo: () => void;
@@ -11,7 +12,7 @@ interface PlayerControlsProps {
   toggleFullScreen: () => void; // Adicione a função de tela cheia
 }
 
-const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
+const PlayerControls: React.FC<PlayerControlsProps> = ({
   pauseVideo,
   seekForward,
   backForward,
@@ -27,6 +28,7 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState((currentTime / duration) * 100);
   const [ellipseLeft, setEllipseLeft] = useState(progress);
+  const [isMuted, setIsMuted] = useState(false);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -115,10 +117,13 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
             onClick={seekForward10Seconds}
           />
           <img
-            src="icons/volume.png"
-            alt="Volume"
+            src={
+              isMuted ? "/icons/volume_mute.png" : "/icons/volume.png"
+            }
+            alt={isMuted ? "Muted" : "Volume"}
             id="volume"
             className={styles.controlIcon}
+            onClick={() => setIsMuted(!isMuted)} // Alternar entre mudo e não mudo
           />
           <div className={styles.timerText}>
             {formatTime(currentTime)} / {formatTime(duration)}
@@ -135,7 +140,11 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
             />
             {isModalVisible && (
               <div className={styles.modal}>
-                <p>Ajuda</p>
+                <img
+                  src="/player_help.png"
+                  alt="Ajuda"
+                  style={{ width: "75%" }}
+                />
               </div>
             )}
           </div>
@@ -176,7 +185,11 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
             />
             {isModalEpisodiosVisible && (
               <div className={styles.modal}>
-                <p>Episódios</p>
+                <img
+                  src="/player_episodes.png"
+                  alt="Ajuda"
+                  style={{ width: "100%" }}
+                />
               </div>
             )}
           </div>
@@ -193,7 +206,11 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
 
             {isModalLegendasVisible && (
               <div className={styles.modal}>
-                <p>Legendas</p>
+                <img
+                  src="/player_subtitles.png"
+                  alt="Ajuda"
+                  style={{ width: "100%" }}
+                />
               </div>
             )}
             {isAudioSubtitleModalVisible && <AudioSubtitleModal />}
@@ -210,7 +227,11 @@ const ShowPlayerControls: React.FC<PlayerControlsProps> = ({
             />
             {isModalTelaCheiaVisible && (
               <div className={styles.modal}>
-                <p>Tela cheia</p>
+                <img
+                  src="/player_expand.png"
+                  alt="Ajuda"
+                  style={{ width: "110%", height: "105%", marginLeft: " -55%" }}
+                />
               </div>
             )}
           </div>
@@ -229,4 +250,4 @@ function formatTime(time: number) {
   )}`;
 }
 
-export default ShowPlayerControls;
+export default PlayerControls;

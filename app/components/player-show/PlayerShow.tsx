@@ -96,12 +96,12 @@ const ShowPlayer: React.FC = () => {
           const video = data.items[0].snippet;
           let title = video.title;
           const description =
-            video.description.length > 30
-              ? `${video.description.slice(0, 30)}...`
+            video.description.length > 60
+              ? `${video.description.slice(0, 60)}...`
               : video.description;
 
-          if (title.length > 25) {
-            title = `${title.slice(0, 24)}...`;
+          if (title.length > 32) {
+            title = `${title.slice(0, 32)}...`;
           }
 
           setVideoInfo({
