@@ -1,0 +1,171 @@
+.playerControls {
+  display: block;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.678);
+  padding: 10px;
+}
+
+.progressBars {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.progressBar {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.progressBackground {
+  width: 109px;
+  height: 4px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    #02e7f5 0%,
+    #02e7f5 109px,
+    rgba(196, 196, 196, 0.3) 109px
+  );
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.progressEllipse {
+  width: 16px;
+  height: 16px;
+  background: #02e7f5;
+  border-radius: 100%;
+  position: absolute;
+  top: -5px;
+  left: 109px;
+  z-index: 2;
+}
+
+.progressBackground2 {
+  width: 99%;
+  height: 4px;
+  background: rgba(110, 109, 109, 0.486);
+  border-radius: 2px;
+  position: absolute;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.leftControls {
+  display: flex;
+  align-items: center;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+}
+
+.controlIcon {
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.timerText {
+  color: white;
+  font-size: 14px;
+}
+
+.rightControls .controlIcon {
+  transition: transform 300ms ease-in-out;
+  transform: scale(1);
+}
+
+.rightControls .controlIcon:hover {
+  transform: scale(1.1);
+}
+
+.modal {
+  width: 72px;
+  height: 30px;
+  padding: 8px 8px;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: black;
+  position: absolute;
+  top: -57px;
+  left: -40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modal-loki {
+  top: -57px;
+}
+
+.modal-episodios {
+  top: -57px;
+}
+
+.modal-legendas {
+  top: -57px;
+}
+
+.modal-tela-cheia {
+  top: -57px;
+}
+
+.infoContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.modal-loki {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ffffff1f;
+  background-color: #121317;
+  background-color: rgba(18, 19, 23, 0.8);
+  color: white;
+  left: -350%;
+  top: -8rem;
+}
+
+.modal-loki .modalContent {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.modalImage {
+  width: 100px;
+  height: auto;
+}
+
+.modalTextContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.modalTitle {
+  color: white;
+  font-size: 18px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.modalText {
+  color: white;
+  font-size: 14px;
+}

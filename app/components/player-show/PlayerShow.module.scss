@@ -1,0 +1,51 @@
+.playerShow {
+  width: 100%;
+  height: 100vh; 
+  position: relative;
+}
+
+.videoContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0);
+  padding: 20px;
+  z-index: 1;
+}
+
+.backButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.episode {
+  color: white;
+  font-size: 14px;
+}
+
+.gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

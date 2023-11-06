@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import * as fonts from "@/styles/fonts";
 import Header from './components/navbar/Header'; 
 import Footer from "./components/ui/footer/Footer";
+import PlayerShow from "./components/player-show/PlayerShow";
 
 export const metadata: Metadata = {
   title: "Compass Video",
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <body style={{ margin: 0, blockSize: "100%" }}>
           <Header />
 
-          {children}
+           {children} 
 
           <Footer />
           </body>
