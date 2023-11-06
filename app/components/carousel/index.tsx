@@ -7,12 +7,15 @@ import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 import { Media } from "@/util/model";
 import { actions, useDispatch } from "@/store";
+import Link from "next/link";
 
 type Props = {
   title?: string;
   items: Media[];
   autoplay?: number;
   updateBanner?: boolean;
+  isSeason?: boolean;
+  idSeason?: number;
 };
 
 export default function Carousel({
@@ -20,6 +23,8 @@ export default function Carousel({
   items,
   autoplay,
   updateBanner,
+  isSeason,
+  idSeason,
 }: Props) {
   const carouselRef = useRef(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -83,28 +88,38 @@ export default function Carousel({
     };
   }, []);
 
+  function BASE_URL_REF(index: Number, id: Number, isSeasonMedia: boolean | undefined){
+    if(isSeasonMedia){
+      return `/tv/${idSeason}/${index}`;
+    }
+    return `/movie/${idSeason}/${id}`
+  }
+
   return (
     <section ref={carouselRef} className={`splide ${styles.carousel}`}>
       <header
         className={styles.header}
         style={{
           paddingInlineEnd: (trackSize - 60) % 260,
-        }}>
+        }}
+      >
         <h2 className={styles.title}>{title}</h2>
         <ul className="splide__pagination"></ul>
       </header>
       <div ref={trackRef} className="splide__track">
         <ul className="splide__list">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <li key={item.id} className="splide__slide">
-              <Image
-                className={styles.image}
-                priority={true}
-                src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
-                alt={item.title || item.name || "Poster"}
-                width={342}
-                height={513}
-              />
+              <Link href={BASE_URL_REF(index, item.id, isSeason)}>
+                <Image
+                  className={styles.image}
+                  priority={true}
+                  src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                  alt={item.title || item.name || "Poster"}
+                  width={342}
+                  height={513}
+                />
+              </Link>
             </li>
           ))}
         </ul>
