@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import React from "react";
 import style from "./Episode.module.scss";
 import { Episode } from "@/util/model";
-const BASE_URL = "https://image.tmdb.org/t/p/w500"
-const playIcon = "/icons/play.svg";
+import PlayIcon from "@/public/icons/play.svg";
+const BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 type Props = {
   episode: Episode;
@@ -31,9 +32,7 @@ export default function Episode(props: Props) {
           alt="Capa do episódio"
           className={style.episodeimg}
         />
-        <div className={style.playicon}>
-          <img src={playIcon} alt="Play" className={style.playiconimg}/>
-        </div>
+        <PlayIcon className={style.playicon} />
       </div>
 
       <div className={style.containerinfor}>

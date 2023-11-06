@@ -1,21 +1,19 @@
+"use client";
+
 import React from "react";
 import "./NavSection.css";
+import Link from "next/link";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 interface NavSectionProps {
   icon: string;
   text: string;
   link: string;
-  isActive: boolean; // New prop for active state
-  onClick: () => void; // Callback function for handling clicks
 }
 
-const NavSection: React.FC<NavSectionProps> = ({
-  icon,
-  text,
-  link,
-  isActive,
-  onClick,
-}) => {
+const NavSection: React.FC<NavSectionProps> = ({ icon, text, link }) => {
+  const isActive = usePathname().startsWith(link);
+
   return (
     <div className={`sections ${isActive ? "active" : ""}`}>
       <img
@@ -23,15 +21,11 @@ const NavSection: React.FC<NavSectionProps> = ({
         src={icon}
         alt="Logo"
       />
-      <a
-        href={link}
-        className={`nav-item ${isActive ? "active" : ""}`}
-        onClick={onClick}
-      >
+      <Link href={link} className={`nav-item ${isActive ? "active" : ""}`}>
         {text}
-      </a>
+      </Link>
     </div>
   );
 };
 
-export default NavSection;
+export default NavSection;

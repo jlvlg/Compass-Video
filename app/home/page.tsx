@@ -4,6 +4,9 @@ import style from "./Home.module.scss";
 import Episodelist from "../components/ui/episodelist";
 import Carousel from "../components/carousel";
 import Header from "../components/header";
+import Link from "next/link";
+import ShowPlayer from "../components/player-show/PlayerShow";
+import { useRouter } from "next/router";
 
 type Props = {};
 
@@ -14,7 +17,11 @@ export default async function Home({}: Props) {
 
   return (
     <div className={style.maincontent}>
-      <Header item={popular![0]} autoUpdate />
+      <Header
+        item={popular![0]}
+        autoUpdate
+        buttons={["watch", "info", "controls"]}
+      />
       <Carousel items={popular!} title="Popular" updateBanner autoplay={3000} />
       <Episodelist id_serie={1399} season_number={1} />
     </div>

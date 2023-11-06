@@ -1,8 +1,4 @@
-export enum Type {
-  MOVIE,
-  SERIES,
-  SEASON,
-}
+export type Type = "movie" | "series";
 
 export interface Media {
   adult: boolean;

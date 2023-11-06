@@ -39,15 +39,18 @@ $typography-body-review: normal 16px $montserrat;
 $typography-body-small: normal min(14px, 4vw) $montserrat;
 $typography-caption: normal 12px $montserrat;
 
-@mixin button($color) {
-  background-color: $color;
-  transition: background 300ms;
+@mixin button($background, $border) {
+  background-color: $background;
+  border-color: $border;
+  transition: all 300ms;
 
   &:hover {
-    background-color: color.adjust($color, $lightness: 10%);
+    border-color: color.adjust($border, $lightness: -20%);
+    background-color: color.adjust($background, $lightness: -20%);
   }
 
   &:active {
-    background-color: color.adjust($color, $lightness: 20%);
+    border-color: color.adjust($border, $lightness: 20%);
+    background-color: color.adjust($background, $lightness: 20%);
   }
 }

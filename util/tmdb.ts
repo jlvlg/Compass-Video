@@ -57,7 +57,7 @@ export class TMDB {
       title: res.title,
       release_date: res.release_date,
       video: res.video,
-      type: Type.MOVIE,
+      type: "movie",
     };
   }
 
@@ -71,15 +71,15 @@ export class TMDB {
       first_air_date: res.first_air_date,
       origin_country: res.origin_country,
       number_of_episodes: res.number_of_episodes,
-      type: Type.MOVIE,
+      type: "series",
     };
   }
 
   async detailedMedia(media: Media) {
     switch (media.type) {
-      case Type.MOVIE:
+      case "movie":
         return this.detailedMovie(media);
-      case Type.SERIES:
+      case "series":
         return this.detailedSeries(media);
     }
   }
@@ -99,7 +99,7 @@ export class TMDB {
     return (async () =>
       (await this.popularMedia("movie")).map((movie: Media) => ({
         ...movie,
-        type: Type.MOVIE,
+        type: "movie",
       })))() as Promise<Media[]>;
   }
 
@@ -107,7 +107,7 @@ export class TMDB {
     return (async () =>
       (await this.popularMedia("tv")).map((series: Media) => ({
         ...series,
-        type: Type.SERIES,
+        type: "series",
       })))() as Promise<Media[]>;
   }
 

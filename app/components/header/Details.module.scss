@@ -1,0 +1,72 @@
+@import "@/styles/global.scss";
+
+.info {
+  padding-inline: 80px;
+  margin-block-start: 60px;
+  max-inline-size: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+
+  hgroup {
+    block-size: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h1 {
+      font: $typography-h1;
+    }
+  }
+}
+
+.interact {
+  display: flex;
+  gap: 24px 20px;
+}
+
+.release {
+  all: unset;
+  font: $typography-body-review;
+}
+
+.genres {
+  all: unset;
+  font: $typography-body-small;
+}
+
+.overview {
+  all: unset;
+  overflow: hidden;
+  font: $typography-body-large;
+  line-height: 1.5em;
+}
+
+.button {
+  text-transform: uppercase;
+  letter-spacing: 2.24px;
+  block-size: 48px;
+  max-inline-size: fit-content;
+  border: 1px solid;
+  color: $neutral-100;
+  @include button($opacity-10, $neutral-100);
+
+  svg {
+    block-size: 24px;
+  }
+  &.buttonPrimary {
+    @include button($neutral-100, transparent);
+    color: $neutral-600;
+  }
+}
+
+@media (max-width: 768px) {
+  .interact {
+    flex-direction: column;
+  }
+
+  .header {
+    padding-inline: 16px;
+  }
+}

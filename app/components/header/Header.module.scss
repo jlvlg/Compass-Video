@@ -1,13 +1,13 @@
 @import "@/styles/global.scss";
 
 .header {
-  z-index: -2;
+  z-index: 1;
   transition: all 0.4s;
-  block-size: 982px;
   background-position: center;
   background-size: cover;
   color: $text-high-emphasis;
   position: relative;
+  padding-block-end: 100px;
 }
 
 .overlay {
@@ -24,6 +24,7 @@
   position: absolute;
 
   :nth-child(1) {
+    position: absolute;
     inline-size: 100%;
     block-size: 100%;
     background: linear-gradient(
@@ -34,6 +35,7 @@
     );
   }
   :nth-child(2) {
+    position: absolute;
     inline-size: 100%;
     block-size: 100%;
     background: linear-gradient(
@@ -45,30 +47,8 @@
   }
 }
 
-.info {
-  padding-inline: 16px;
-  margin-block-start: 60px;
-  display: flex;
-  max-inline-size: 720px;
-  flex-direction: column;
-  gap: 20px;
-
-  h1 {
-    font: $typography-h1;
+@media (max-width: 768px) {
+  .header {
+    padding-block-end: 30px;
   }
-}
-
-.release {
-  all: unset;
-  font: $typography-body-review;
-}
-
-.genres {
-  all: unset;
-  font: $typography-body-small;
-}
-
-.overview {
-  all: unset;
-  font: $typography-body-large;
 }

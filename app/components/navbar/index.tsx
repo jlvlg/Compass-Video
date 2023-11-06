@@ -2,25 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import "./Header.css";
+import "./index.css";
 import Image from "next/image";
 import SearchBox from "./SearchBox";
 import UserMenu from "./UserMenu";
-
 import NavSection from "./NavSection";
 
 const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("Início");
 
   const openUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
-  };
-
-  const handleTabClick = (tabName: string) => {
-    setActiveTab(tabName);
   };
 
   const users = [
@@ -54,26 +48,12 @@ const Header: React.FC = () => {
           />
         </div>
         <div className="navLeft">
-          <NavSection
-            icon="/icons/home.png"
-            text="Início"
-            link="/"
-            isActive={activeTab === "Início"}
-            onClick={() => handleTabClick("Início")}
-          />
-          <NavSection
-            icon="/icons/tv.png"
-            text="Séries"
-            link="/series"
-            isActive={activeTab === "Séries"}
-            onClick={() => handleTabClick("Séries")}
-          />
+          <NavSection icon="/icons/home.png" text="Início" link="/home" />
+          <NavSection icon="/icons/tv.png" text="Séries" link="/series" />
           <NavSection
             icon="/icons/movie.png"
             text="Filmes"
-            link="/filmes"
-            isActive={activeTab === "Filmes"}
-            onClick={() => handleTabClick("Filmes")}
+            link="/playermedia"
           />
 
           <div className="centered-item">
@@ -81,8 +61,6 @@ const Header: React.FC = () => {
               icon="/icons/star.png"
               text="Celebridades"
               link="/celebridades"
-              isActive={activeTab === "Celebridades"}
-              onClick={() => handleTabClick("Celebridades")}
             />
           </div>
         </div>
