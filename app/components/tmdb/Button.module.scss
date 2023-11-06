@@ -1,0 +1,10 @@
+@import "@/styles/global.scss";
+
+.button {
+  border-radius: 100px;
+  border: 1px solid;
+  @include button($opacity-10, white);
+  padding-inline: 0;
+  inline-size: 48px;
+  block-size: 48px;
+}
