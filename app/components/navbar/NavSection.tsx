@@ -12,7 +12,7 @@ interface NavSectionProps {
 }
 
 const NavSection: React.FC<NavSectionProps> = ({ icon, text, link }) => {
-  const isActive = usePathname() === link;
+  const isActive = usePathname().startsWith(link);
 
   return (
     <div className={`sections ${isActive ? "active" : ""}`}>
