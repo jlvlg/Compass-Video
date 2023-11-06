@@ -8,13 +8,17 @@ type Props = {};
 export const revalidate = 60;
 
 export default async function Home({}: Props) {
-  const popular = await tmdb.popular;
-  const defaultBanner = await tmdb.detailedMovie(popular[0]);
+  const popular = await tmdb.detailedMediaMultiple(await tmdb.popular);
 
   return (
     <>
-      <Header item={defaultBanner} />
-      <Carousel items={popular} title="Popular" autoplay={1000} />
+      <Header item={popular![0]} />
+      <Carousel
+        items={popular!}
+        title="Popular"
+        autoplay={3000}
+        updateBanner={true}
+      />
     </>
   );
 }

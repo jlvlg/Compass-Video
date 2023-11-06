@@ -53,17 +53,23 @@ export class TMDB {
     return {
       ...this.extractCommon(res),
       runtime: res.runtime,
+      original_title: res.original_title,
+      title: res.title,
+      release_date: res.release_date,
+      video: res.video,
       type: Type.MOVIE,
     };
   }
-
-  async detailedMovies(movies: Media[]) {}
 
   async detailedSeries(series: Media): Promise<DetailedMedia> {
     const res = await this.get(`tv/${series.id}?language=en-US`);
 
     return {
       ...this.extractCommon(res),
+      original_name: res.original_name,
+      name: res.name,
+      first_air_date: res.first_air_date,
+      origin_country: res.origin_country,
       number_of_episodes: res.number_of_episodes,
       type: Type.MOVIE,
     };
@@ -78,6 +84,17 @@ export class TMDB {
     }
   }
 
+  async detailedMediaMultiple(medias: Media[]) {
+    // DON'T USE FOR MORE THAN 20 REQUESTS PER SECOND
+    const result = [];
+
+    for (const item of medias) {
+      result.push(await this.detailedMedia(item));
+    }
+
+    return result;
+  }
+
   get popularMovies() {
     return (async () =>
       (await this.popularMedia("movie")).map((movie: Media) => ({
@@ -88,7 +105,7 @@ export class TMDB {
 
   get popularSeries() {
     return (async () =>
-      (await this.popularMedia("movie")).map((series: Media) => ({
+      (await this.popularMedia("tv")).map((series: Media) => ({
         ...series,
         type: Type.SERIES,
       })))() as Promise<Media[]>;

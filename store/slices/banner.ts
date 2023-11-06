@@ -1,6 +1,6 @@
-import { DetailedMedia } from "./../../util/model";
-import { createListenerMiddleware, createSlice } from "@reduxjs/toolkit";
-import { StartListening } from "..";
+import { DetailedMedia, Media } from "./../../util/model";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import tmdb from "@/util/tmdb";
 
 const initialState: {
   media?: DetailedMedia;
@@ -12,11 +12,11 @@ const bannerSlice = createSlice({
   name: "banner",
   initialState,
   reducers: {
-    update: (state, { payload }: { payload: DetailedMedia }) => ({
-      media: payload,
-    }),
+    update: (state, { payload }) => {
+      state.media = payload;
+    },
   },
 });
 
-export const actions = bannerSlice.actions;
+export const actions = { ...bannerSlice.actions };
 export const reducer = bannerSlice.reducer;

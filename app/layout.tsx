@@ -15,8 +15,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         className={`${fonts.montserrat.variable} ${fonts.lato.variable}`}
         lang="en"
         style={{ blockSize: "100%" }}>
-        <body
-          style={{ margin: 0, blockSize: "100%", backgroundColor: "#1A1D29" }}>
+        <body style={{ margin: 0, backgroundColor: "#1A1D29" }}>
           {children}
         </body>
       </html>

@@ -5,10 +5,8 @@ import Image from "next/image";
 import styles from "./Carousel.module.scss";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
-import { DetailedMedia, Media, Type } from "@/util/model";
+import { Media } from "@/util/model";
 import { actions, useDispatch } from "@/store";
-import { Intersection } from "@splidejs/splide-extension-intersection";
-import tmdb from "@/util/tmdb";
 
 type Props = {
   title?: string;
@@ -39,16 +37,8 @@ export default function Carousel({
       type: autoplay ? "loop" : undefined,
       rewind: !autoplay,
       perMove: autoplay ? 1 : undefined,
-      autoplay: autoplay ? "pause" : undefined,
+      autoplay: !!autoplay,
       interval: autoplay,
-      intersection: {
-        inView: {
-          autoplay: !!autoplay,
-        },
-        outView: {
-          autoplay: false,
-        },
-      },
       fixedWidth: 240,
       padding: 80,
       gap: 20,
@@ -61,13 +51,11 @@ export default function Carousel({
           padding: 16,
         },
       },
-    }).mount({ Intersection }));
+    }).mount());
 
     if (updateBanner)
       instance.on("move", (index) => {
-        tmdb
-          .detailedMedia(items[index])
-          .then((res) => dispatch(actions.banner.update(res)));
+        dispatch(actions.banner.update(items[index]));
       });
 
     return () => {
