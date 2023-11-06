@@ -31,9 +31,12 @@ export interface DetailedMedia extends Media {
   number_of_episodes?: number;
 }
 
-interface Series extends Media {
+export interface Series extends Media {
   origin_country: string[];
-  number_of_seasons: number;
+  id: number;
+  number_of_seasons?: number;
+  seasons?: Series[];
+  name?: string;
 }
 
 export interface SeriesInfo{

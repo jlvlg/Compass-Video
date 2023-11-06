@@ -1,4 +1,4 @@
-import { Media, Season, SeriesInfo, DetailedMedia, Type } from "./model";
+import { Media, Season, Series, DetailedMedia, Type } from "./model";
 
 export class TMDB {
   static instance?: TMDB;
@@ -133,14 +133,16 @@ export class TMDB {
     }
   }
 
-  async getSeriesInfo(id: number) {
+  async getSerie(id: number) {
     try {
       const res = await this.get(`tv/${id}?language=en-US`);
-      const seriedata: SeriesInfo = {
-        id: res.id,
+      const seriedata: Series = {
+        ...this.extractCommon(res),
         number_of_seasons: res.number_of_seasons,
         seasons: res.seasons,
         name: res.name,
+        origin_country: res.origin_country,
+        type: Type.SERIES,
       };
       return seriedata;
     } catch (error) {
