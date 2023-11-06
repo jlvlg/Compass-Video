@@ -36,7 +36,14 @@ interface Series extends Media {
   number_of_seasons: number;
 }
 
-interface Episode{
+export interface SeriesInfo{
+  id: number;
+  number_of_seasons: number;
+  seasons: Series[];
+  name: string;
+}
+
+export interface Episode{
   id: number;
   name: string;
   still_path: string;
@@ -45,7 +52,9 @@ interface Episode{
   runtime: number;
 }
 
-interface Season{
+export interface Season{
   episodes: Episode[],
   season_number: number,
+  poster_path?: string,
+  name?: string;
 }

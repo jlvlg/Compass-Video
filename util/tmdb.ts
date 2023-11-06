@@ -1,4 +1,4 @@
-import { Media, DetailedMedia, Type } from "./model";
+import { Media, Season, SeriesInfo, DetailedMedia, Type } from "./model";
 
 export class TMDB {
   static instance?: TMDB;
@@ -118,7 +118,7 @@ export class TMDB {
         .slice(0, 20))();
   }
 
-  async getSeasonInfo(seriesId: number, seasonNumber: number){
+  async getSeasonInfo(seriesId: number, seasonNumber: number) {
     const path = `tv/${seriesId}/season/${seasonNumber}?language=en-US`;
     try {
       const response = await this.get(path);
@@ -132,8 +132,22 @@ export class TMDB {
       return null;
     }
   }
-  
-  
+
+  async getSeriesInfo(id: number) {
+    try {
+      const res = await this.get(`tv/${id}?language=en-US`);
+      const seriedata: SeriesInfo = {
+        id: res.id,
+        number_of_seasons: res.number_of_seasons,
+        seasons: res.seasons,
+        name: res.name,
+      };
+      return seriedata;
+    } catch (error) {
+      console.error("Error getSeasonInfo", error);
+      return null;
+    }
+  }
 }
 
 export default TMDB.getInstance();
