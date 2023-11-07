@@ -8,11 +8,26 @@ import SearchBox from "./SearchBox";
 import UserMenu from "./UserMenu";
 import NavSection from "./NavSection";
 
-
 const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+  const [selectedUsername, setSelectedUsername] = useState<string | null>(null);
+
+  const handleAvatarChange = (newAvatar: string) => {
+    setSelectedAvatar(newAvatar);
+  
+    if (selectedAvatar === null) {
+      setSelectedUsername("João Carlos");
+    }
+  
+    closeUserMenu();
+  };
+
+  const closeUserMenu = () => {
+    setIsUserMenuOpen(false);
+  };
 
   const openUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
@@ -21,7 +36,10 @@ const Header: React.FC = () => {
   const users = [
     { avatar: "/avatar1.png", username: "Leslie Alexander" },
     { avatar: "/avatar2.png", username: "Ronald Richards" },
-    { avatar: "/avatar3.png", username: "Criar perfil" },
+    {
+      avatar: selectedAvatar ? "/avatar.png" : "/avatar3.png",
+      username: selectedAvatar ? "João Carlos" : "Criar perfil",
+    },
   ];
 
   const openSearch = () => {
@@ -86,7 +104,7 @@ const Header: React.FC = () => {
 
           <div className="userAvatar" onClick={openUserMenu}>
             <Image
-              src="/avatar.png"
+              src={selectedAvatar || "/avatar.png"}
               width={48}
               height={48}
               alt="Picture of the author"
@@ -94,7 +112,8 @@ const Header: React.FC = () => {
             <UserMenu
               users={users}
               isOpen={isUserMenuOpen}
-              onClose={openUserMenu}
+              onClose={closeUserMenu}
+              onAvatarChange={handleAvatarChange}
             />
           </div>
         </div>

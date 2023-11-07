@@ -10,11 +10,17 @@ type UserMenuProps = {
   users: User[];
   isOpen: boolean;
   onClose: () => void;
+  onAvatarChange: (newAvatar: string) => void;
 };
 
-const UserMenu: React.FC<UserMenuProps> = ({ users, isOpen, onClose }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ users, isOpen, onClose, onAvatarChange }) => {
   const handleMenuItemClick = (menuItem: string) => {
-    console.log("Clicou em: ${menuItem}");
+    console.log(`Clicou em: ${menuItem}`);
+    onClose();
+  };
+
+  const handleAvatarClick = (newAvatar: string) => {
+    onAvatarChange(newAvatar);
     onClose();
   };
 
@@ -36,7 +42,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ users, isOpen, onClose }) => {
         <div className="user-menu">
           <div className="user-section">
             {users.map((user, index) => (
-              <div className="user-item" key={index}>
+              <div className="user-item" key={index} onClick={() => handleAvatarClick(user.avatar)}>
                 <img
                   src={user.avatar}
                   alt="User Avatar"

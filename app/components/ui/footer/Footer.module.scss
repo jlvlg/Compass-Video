@@ -1,3 +1,5 @@
+@import "@/styles/global.scss";
+
 .footerSite {
   display: flex;
   color: white;
@@ -22,11 +24,11 @@
 }
 
 .navFooter {
-  font-family: 'Montserrat';
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  font: $typography-body-review;
 }
 
 .navFooter a {
