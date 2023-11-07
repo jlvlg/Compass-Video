@@ -129,6 +129,33 @@ export class TMDB {
         .slice(0, 20))();
   }
 
+  private async getSeriesList(ref: string, type: string) {
+    const series = await this.get(`${type}/${ref}?language=en-US&page=1`).then(
+      (data) => data.results
+    );
+    return (async () =>
+      (await series).map((series: Media) => ({
+        ...series,
+        type: "series",
+      })))() as Promise<Media[]>;
+  }
+
+  get airingTodaySeries(){
+    return this.getSeriesList("tv","airing_today");
+  }
+
+  get onTheAirSeries(){
+    return this.getSeriesList("tv","on_the_air")
+  }
+
+  get topRatedSeries(){
+    return this.getSeriesList("tv","top_rated")
+  }
+  
+
+  
+  
+
   async getSerie(id: number) {
     try {
       const res = await this.get(`tv/${id}?language=en-US`);
