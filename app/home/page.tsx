@@ -23,7 +23,7 @@ export default async function Home({}: Props) {
         buttons={["watch", "info", "controls"]}
       />
       <Carousel items={popular!} title="Popular" updateBanner autoplay={3000} />
-      <Episodelist id_serie={1399} season_number={1} />
+      <Episodelist id={1399} season_number={1} />
     </div>
   );
 }

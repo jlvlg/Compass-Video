@@ -1,11 +1,10 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./Carousel.module.scss";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
-import { Media } from "@/util/model";
+import { Episode, Media, Season } from "@/util/model";
 import { actions, useDispatch } from "@/store";
 import Link from "next/link";
 const defaultImagePoster = "/carouseldefault.png";
@@ -15,6 +14,7 @@ type Props = {
   items: Media[];
   autoplay?: number;
   updateBanner?: boolean;
+  idSeason?: number;
 };
 
 export default function Carousel({
@@ -22,12 +22,14 @@ export default function Carousel({
   items,
   autoplay,
   updateBanner,
+  idSeason,
 }: Props) {
   const carouselRef = useRef(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const splide = useRef<Splide | undefined>();
   const [trackSize, setTrackSize] = useState(0);
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     if (!carouselRef.current) return;
@@ -91,6 +93,19 @@ export default function Carousel({
     }
     return defaultImagePoster;
   }
+
+  function getLink(type: string, id:number, season:number){
+    if(type === "movie" || type === "series"){
+      return `/${type}/${id}`
+    }else{
+      return `${idSeason}/${season}`
+    }
+  }
+
+  if(items.length > 50){
+    items = items.slice(-50);
+  }
+  
   return (
     <section ref={carouselRef} className={`splide ${styles.carousel}`}>
       <header
@@ -104,9 +119,9 @@ export default function Carousel({
       </header>
       <div ref={trackRef} className="splide__track">
         <ul className="splide__list">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <li key={item.id} className="splide__slide">
-              <Link href={`${item.type}/${item.id}`}>
+              <Link href={getLink(item.type, item.id,item.season_number!)}>
                 <Image
                   className={styles.image}
                   priority={true}

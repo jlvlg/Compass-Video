@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import styles from "./PlayerControls.module.scss";
 import AudioSubtitleModal from "./AudioSubtitleModal";
@@ -110,7 +111,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             onClick={togglePlay}
           />
           <img
-            src="icons/foward-10segs.png"
+            src="/icons/foward-10segs.png"
             alt="Forward 10 Seconds"
             className={styles.controlIcon}
             onClick={seekForward10Seconds}
@@ -129,7 +130,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         <div className={styles.rightControls}>
           <div className={styles.infoContainer}>
             <img
-              src="icons/info.png"
+              src="/icons/info.png"
               alt="Info"
               className={styles.controlIcon}
               onMouseEnter={toggleModal}
@@ -148,7 +149,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 
           <div className={styles.infoContainer}>
             <img
-              src="icons/skip.png"
+              src="/icons/skip.png"
               alt="Loki"
               className={styles.controlIcon}
               onMouseEnter={toggleModalLoki}
