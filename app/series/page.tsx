@@ -1,9 +1,14 @@
 import Header from "../components/header";
 import Carousel from "../components/carousel";
 import tmdb from "@/util/tmdb";
+import styles from "./Series.module.scss"
 export default async function page() {
-  const series = await tmdb.detailedMediaMultiple(await tmdb.popularSeries);
-  const topseries = await tmdb.detailedSeries(series[0]);
+  const airingtoday = await tmdb.detailedMediaMultiple(await tmdb.airingTodaySeries);
+  const popular = await tmdb.detailedMediaMultiple(await tmdb.popularSeries);
+  const toprated = await tmdb.detailedMediaMultiple(await tmdb.topRatedSeries);
+  const ontheair = await tmdb.detailedMediaMultiple(await tmdb.onTheAirSeries);
+  const topseries = await tmdb.detailedSeries(toprated[0]);
+  
   return (
     <div>
       <Header
@@ -11,7 +16,27 @@ export default async function page() {
         autoUpdate
         buttons={["watch", "info", "controls"]}
       />
-      <Carousel items={series} title="Popular" updateBanner autoplay={3000} />
+      <div className={styles.content}>
+      <Carousel
+        items={airingtoday}
+        title="Lançamentos"
+        updateBanner
+      />
+      <Carousel 
+      items={popular} 
+      title="Populares" 
+      updateBanner  />
+      <Carousel
+        items={ontheair}
+        title="Estão no ar"
+        updateBanner
+      />
+      <Carousel
+        items={toprated}
+        title="Mais bem avaliados"
+        updateBanner
+      />
+      </div>
     </div>
   );
 }
