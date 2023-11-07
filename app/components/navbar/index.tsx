@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     setSelectedAvatar(newAvatar);
   
     if (selectedAvatar === null) {
-      setSelectedUsername("João Carlos");
+      setSelectedUsername("David Anderson");
     }
   
     closeUserMenu();
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
     { avatar: "/avatar2.png", username: "Ronald Richards" },
     {
       avatar: selectedAvatar ? "/avatar.png" : "/avatar3.png",
-      username: selectedAvatar ? "João Carlos" : "Criar perfil",
+      username: selectedAvatar ? "David Anderson" : "Criar perfil",
     },
   ];
 

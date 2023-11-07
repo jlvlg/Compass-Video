@@ -49,7 +49,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0;
+    padding: 2rem;
     font-family: 'Montserrat';
 }
 
@@ -99,7 +99,7 @@
 @media (max-width: 768px) {
     .headerContainer {
         display: flex;
-        width: 91.7%;
+        width: 100%;
         padding: 1rem;
         flex-direction: column;
         align-items: center;
@@ -153,7 +153,7 @@
     .centeredItem {
         display: flex;
         text-align: center;
-        width: 14rem;
+        width: 21rem;
 
         align-items: center;
     }
@@ -191,6 +191,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-right: 15%;
     }
 
     .navItem {
