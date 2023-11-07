@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./Carousel.module.scss";
@@ -120,7 +119,7 @@ export default function Carousel({
       </header>
       <div ref={trackRef} className="splide__track">
         <ul className="splide__list">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <li key={item.id} className="splide__slide">
               <Link href={getLink(item.type, item.id,item.season_number!)}>
                 <Image
