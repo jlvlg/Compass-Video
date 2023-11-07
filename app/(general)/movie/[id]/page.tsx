@@ -13,7 +13,7 @@ export default async function page({ params }: Props) {
     id: params.id,
     type: "movie",
   } as Media;
-  const movie = await tmdb.detailedMovie(media);
+  const movie = await tmdb.detailedMovie(media.id);
   const similares = await tmdb.getSimilarMovie(params.id);
   return (
     <div className={styles.movie__container}>

@@ -1,5 +1,5 @@
-import Header from "../components/header";
-import Carousel from "../components/carousel";
+import Header from "@/app/components/header";
+import Carousel from "@/app/components/carousel";
 import tmdb from "@/util/tmdb";
 import styles from "./Series.module.scss"
 export default async function page() {
@@ -7,7 +7,7 @@ export default async function page() {
   const popular = await tmdb.detailedMediaMultiple(await tmdb.popularSeries);
   const toprated = await tmdb.detailedMediaMultiple(await tmdb.topRatedSeries);
   const ontheair = await tmdb.detailedMediaMultiple(await tmdb.onTheAirSeries);
-  const topseries = await tmdb.detailedSeries(toprated[0]);
+  const topseries = await tmdb.detailedSeries(toprated[0].id);
   
   return (
     <div>

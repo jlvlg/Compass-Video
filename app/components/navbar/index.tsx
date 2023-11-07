@@ -70,7 +70,7 @@ export default function Navbar({}: Props) {
         <Navlink href="/series" icon={tv} current={active}>
           Séries
         </Navlink>
-        <Navlink href="/movies" icon={movie} current={active}>
+        <Navlink href="/movie" icon={movie} current={active}>
           Filmes
         </Navlink>
         <Navlink href="/stars" icon={star} current={active}>
