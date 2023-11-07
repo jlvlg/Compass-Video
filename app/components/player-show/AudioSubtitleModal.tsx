@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./AudioSubtitleModal.module.scss";
-import './layout.css'
 
 const SubtitleModal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);

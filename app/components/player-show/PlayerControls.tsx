@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PlayerControls.module.scss";
 import AudioSubtitleModal from "./AudioSubtitleModal";
-import "./layout.css";
 
 interface PlayerControlsProps {
   pauseVideo: () => void;
