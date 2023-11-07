@@ -1,0 +1,94 @@
+@import "@/styles/global.scss";
+
+.toplevel {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  inline-size: 100%;
+  align-items: center;
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    #0e1012 -50.62%,
+    rgba(14, 16, 18, 0) 100%
+  );
+  padding-inline: 32px;
+  padding-block: 16px;
+  max-block-size: 300px;
+  gap: 16px 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  block-size: 73px;
+  inline-size: 200px;
+  margin-inline-end: 8px;
+}
+
+.navlink {
+  all: unset;
+  color: white;
+  font: $typography-body-review;
+  display: flex;
+  align-items: center;
+  padding-inline: 16px;
+  text-wrap: nowrap;
+  padding-block: 8px;
+  gap: 8px;
+  cursor: pointer;
+
+  svg {
+    block-size: 24px;
+    inline-size: 24px;
+  }
+
+  &:hover {
+    color: $secondary;
+  }
+}
+
+.active {
+  color: $secondary;
+}
+
+.navright {
+  display: flex;
+  justify-content: center;
+  margin-inline-start: auto;
+}
+
+.navleft {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-inline-end: auto;
+}
+
+.avatar {
+  all: unset;
+  margin-inline-start: 8px;
+  cursor: pointer;
+
+  img {
+    block-size: 48px;
+    inline-size: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .navright {
+    flex-basis: 100%;
+    margin-inline-start: 0;
+  }
+  .navleft {
+    order: 1;
+    margin-inline-end: 0;
+  }
+
+  .avatar {
+    order: 1;
+  }
+}

@@ -1,12 +1,9 @@
 import React from "react";
 import tmdb from "@/util/tmdb";
 import style from "./Home.module.scss";
-import Episodelist from "../components/ui/episodelist";
-import Carousel from "../components/carousel";
-import Header from "../components/header";
-import Link from "next/link";
-import ShowPlayer from "../components/player-show/PlayerShow";
-import { useRouter } from "next/router";
+import Episodelist from "../../components/ui/episodelist";
+import Carousel from "../../components/carousel";
+import Header from "../../components/header";
 
 type Props = {};
 
@@ -23,7 +20,6 @@ export default async function Home({}: Props) {
         buttons={["watch", "info", "controls"]}
       />
       <Carousel items={popular!} title="Popular" updateBanner autoplay={3000} />
-      <Episodelist id={1399} season_number={1} />
     </div>
   );
 }

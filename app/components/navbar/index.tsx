@@ -1,127 +1,117 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import "./index.css";
+import compass from "@/public/compass.png";
 import Image from "next/image";
-import SearchBox from "./SearchBox";
-import UserMenu from "./UserMenu";
-import NavSection from "./NavSection";
+import Link from "next/link";
+import { useState } from "react";
+import styles from "./Navbar.module.scss";
+import Navlink from "./Navlink";
+import home from "@/public/icons/home.svg";
+import tv from "@/public/icons/tv.svg";
+import movie from "@/public/icons/movie.svg";
+import star from "@/public/icons/star.svg";
+import plus from "@/public/icons/plus2.svg";
+import Search from "@/public/icons/search.svg";
+import avatar from "@/public/avatar.png";
+import { usePathname, useRouter } from "next/navigation";
+import SearchBar from "./SearchBar";
+import useLogin from "@/util/hooks/useLogin";
 
-const Header: React.FC = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
-  const [selectedUsername, setSelectedUsername] = useState<string | null>(null);
+type Props = {};
 
-  const handleAvatarChange = (newAvatar: string) => {
-    setSelectedAvatar(newAvatar);
-  
-    if (selectedAvatar === null) {
-      setSelectedUsername("David Anderson");
-    }
-  
-    closeUserMenu();
-  };
+export default function Navbar({}: Props) {
+  const sessionId = useLogin();
+  const active = usePathname();
+  const router = useRouter();
+  const [isSearchOpen, setIsSearchBarOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filter, setFilter] = useState("Tudo");
 
-  const closeUserMenu = () => {
-    setIsUserMenuOpen(false);
-  };
+  function openFilter() {
+    setIsFilterOpen(true);
+  }
 
-  const openUserMenu = () => {
-    setIsUserMenuOpen(!isUserMenuOpen);
-  };
+  function closeFilter() {
+    setIsFilterOpen(false);
+  }
 
-  const users = [
-    { avatar: "/avatar1.png", username: "Leslie Alexander" },
-    { avatar: "/avatar2.png", username: "Ronald Richards" },
-    {
-      avatar: selectedAvatar ? "/avatar.png" : "/avatar3.png",
-      username: selectedAvatar ? "David Anderson" : "Criar perfil",
-    },
-  ];
+  function openSearchBar() {
+    setIsSearchBarOpen(true);
+    closeFilter();
+  }
 
-  const openSearch = () => {
-    setIsSearchOpen(true);
-  };
+  function closeSearchBar() {
+    setIsSearchBarOpen(false);
+    closeFilter();
+  }
 
-  const closeSearch = () => {
-    setIsSearchOpen(false);
-  };
+  function filterSelect(option: string) {
+    setFilter(option);
+    closeFilter();
+  }
 
-  const handleSearch = (term: string) => {
-    console.log("Termo de pesquisa:", term);
-    setSearchTerm(term);
-  };
+  function onSearch(value: string) {
+    router.replace(`/search?value=${value}&filter=${filter}`);
+  }
 
   return (
-    <header className="headerContainer">
-      <nav className="nav">
-        <div className="navImage">
-          <Link href={"/home"}>
-            <Image
-              src="/compass_logo.png"
-              width={200}
-              height={68}
-              alt="compassLogo"
-            />
-          </Link>
-        </div>
-        <div className="navLeft">
-          <NavSection icon="/icons/home.png" text="Início" link="/home" />
-          <NavSection icon="/icons/tv.png" text="Séries" link="/series" />
-          <NavSection
-            icon="/icons/movie.png"
-            text="Filmes"
-            link="/playermedia"
+    <nav className={styles.toplevel}>
+      <Link
+        href="/home"
+        className={`${styles.logo} ${
+          active.startsWith("/home") ? styles.active : ""
+        }`}>
+        <Image src={compass} alt="Compass Logo" />
+      </Link>
+      <div className={styles.navleft}>
+        <Navlink href="/home" icon={home} current={active}>
+          Início
+        </Navlink>
+        <Navlink href="/series" icon={tv} current={active}>
+          Séries
+        </Navlink>
+        <Navlink href="/movies" icon={movie} current={active}>
+          Filmes
+        </Navlink>
+        <Navlink href="/stars" icon={star} current={active}>
+          Celebridades
+        </Navlink>
+      </div>
+      <div className={styles.navright}>
+        {isSearchOpen ? (
+          <SearchBar
+            filter={filter}
+            onClose={closeSearchBar}
+            openFilter={openFilter}
+            closeFilter={closeFilter}
+            onSelect={filterSelect}
+            isFilterOpen={isFilterOpen}
+            onSearch={onSearch}
           />
-
-          <div className="centeredItem">
-            <NavSection
-              icon="/icons/star.png"
-              text="Celebridades"
-              link="/celebridades"
-            />
-          </div>
-        </div>
-        <div className="navRight">
-          {isSearchOpen ? (
-            <SearchBox onSearch={handleSearch} onClose={closeSearch} />
-          ) : (
-            <div className="searchButton" onClick={openSearch}>
-              <img className="logo" src="/icons/serach.png" alt="Logo" />
-              <p className="navItem">Buscar</p>
-            </div>
-          )}
-
-          {!isSearchOpen && (
-            <>
-              <img className="logo" src="/icons/plus.png" alt="Logo" />
-              <a href="/minha-lista" className="navItem">
+        ) : (
+          <>
+            <button
+              className={`${styles.navlink} ${styles.search}`}
+              onClick={openSearchBar}>
+              <Search /> Buscar
+            </button>
+            {sessionId && (
+              <Navlink href="/watchlist" icon={plus} current={active}>
                 Minha lista
-              </a>
-            </>
-          )}
-
-          <div className="userAvatar" onClick={openUserMenu}>
-            <Image
-              src={selectedAvatar || "/avatar.png"}
-              width={48}
-              height={48}
-              alt="Picture of the author"
-            />
-            <UserMenu
-              users={users}
-              isOpen={isUserMenuOpen}
-              onClose={closeUserMenu}
-              onAvatarChange={handleAvatarChange}
-            />
-          </div>
-        </div>
-      </nav>
-    </header>
+              </Navlink>
+            )}
+          </>
+        )}
+        {sessionId ? (
+          <button className={styles.avatar}>
+            <Image src={avatar} alt="Avatar" />
+          </button>
+        ) : (
+          <Link href="/" className={styles.navlink}>
+            Login
+          </Link>
+        )}
+      </div>
+    </nav>
   );
-};
-
-export default Header;
+}

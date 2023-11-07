@@ -6,7 +6,6 @@
   justify-content: space-between;
   margin-block-end: 16px;
   padding-inline: 80px;
-  overflow: hidden;
 
   ul {
     position: static;
@@ -28,6 +27,7 @@
 }
 
 .carousel {
+  overflow: hidden;
   &:hover {
     .arrow {
       opacity: 1;

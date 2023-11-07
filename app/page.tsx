@@ -1,32 +1,30 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { actions, useDispatch } from "@/store";
+import compass from "@/public/compass.png";
+import tmdb from "@/util/tmdb";
 import Image from "next/image";
-import compass from "@/public/compass-negative.png";
-import Card from "./components/card";
+import { useRouter } from "next/navigation";
 import styles from "./Login.module.scss";
 import Button from "./components/button";
-import tmdb from "@/util/tmdb";
-import { useRouter } from "next/navigation";
+import Card from "./components/card";
+import Link from "next/link";
+import { actions, useDispatch, useSelector } from "@/store";
+import { useEffect } from "react";
+import useLogin from "@/util/hooks/useLogin";
 
 type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 
-export default function Login({ searchParams }: Props) {
+export default function LoginPage({ searchParams }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
+  useLogin();
 
   useEffect(() => {
-    const localSessionId = localStorage.getItem("sessionId");
-
     if (searchParams["request_token"]) {
       dispatch(actions.users.login(searchParams["request_token"]));
-      router.push("/home");
-    } else if (localSessionId) {
-      dispatch(actions.users.login(localSessionId));
-      router.push("/home");
+      router.replace("/home");
     }
-  }, [dispatch, searchParams, router]);
+  }, [dispatch, router, searchParams]);
 
   async function authenticate() {
     try {
@@ -52,7 +50,7 @@ export default function Login({ searchParams }: Props) {
           Iniciar sessão com TMDB
         </Button>
         <p className={styles.guest}>
-          Não tem conta? <a>Acesse como convidado</a>
+          Não tem conta? <Link href="/home">Acesse como convidado</Link>
         </p>
         <Image src={compass} alt="Compass Logo" className={styles.compass} />
       </Card>
