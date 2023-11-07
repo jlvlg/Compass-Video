@@ -1,7 +1,7 @@
-export type Type = "movie" | "series";
+export type Type = "movie" | "series" | "season";
 
 export interface Media {
-  adult: boolean;
+  adult?: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
@@ -19,6 +19,8 @@ export interface Media {
   first_air_date?: string;
   video?: boolean;
   origin_country?: string[];
+  season_number?: number;
+  show_id?: number;
   type: Type;
 }
 
@@ -26,6 +28,7 @@ export interface DetailedMedia extends Media {
   genres: { id: number; name: string }[];
   runtime?: number;
   number_of_episodes?: number;
+  episodes?: Episode[];
 }
 
 export interface Series extends Media {
@@ -50,11 +53,10 @@ export interface Episode{
   overview: string;
   episode_number: number;
   runtime: number;
+  type: Type;
 }
 
-export interface Season{
+export interface Season extends Media{
   episodes: Episode[],
-  season_number: number,
-  poster_path?: string,
-  name?: string;
+  _id:number,
 }
