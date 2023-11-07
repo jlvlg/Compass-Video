@@ -40,12 +40,14 @@ const Header: React.FC = () => {
     <header className="header-container">
       <nav className="nav">
         <div className="navImage">
-          <Image
-            src="/compass_logo.png"
-            width={200}
-            height={68}
-            alt="compassLogo"
-          />
+          <Link href={"/home"}>
+            <Image
+              src="/compass_logo.png"
+              width={200}
+              height={68}
+              alt="compassLogo"
+            />
+          </Link>
         </div>
         <div className="navLeft">
           <NavSection icon="/icons/home.png" text="Início" link="/home" />
