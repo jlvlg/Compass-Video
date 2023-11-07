@@ -17,14 +17,17 @@ type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 export default function LoginPage({ searchParams }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  useLogin();
+  const { values, actions } = useLogin();
 
   useEffect(() => {
-    if (searchParams["request_token"]) {
-      dispatch(actions.users.login(searchParams["request_token"]));
-      router.replace("/home");
+    if (values.user) {
+      router.push("/home");
+    } else {
+      if (searchParams["request_token"]) {
+        dispatch(actions.login(searchParams["request_token"] as string));
+      }
     }
-  }, [dispatch, router, searchParams]);
+  }, [actions, dispatch, router, searchParams, values.user]);
 
   async function authenticate() {
     try {
@@ -50,7 +53,10 @@ export default function LoginPage({ searchParams }: Props) {
           Iniciar sessão com TMDB
         </Button>
         <p className={styles.guest}>
-          Não tem conta? <Link href="/home">Acesse como convidado</Link>
+          Não tem conta?{" "}
+          <button onClick={() => dispatch(actions.loginAsGuest())}>
+            Acesse como convidado
+          </button>
         </p>
         <Image src={compass} alt="Compass Logo" className={styles.compass} />
       </Card>
