@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css";
+import "./UserMenu.css";
 
 type User = {
   avatar: string;
@@ -14,13 +14,13 @@ type UserMenuProps = {
 
 const UserMenu: React.FC<UserMenuProps> = ({ users, isOpen, onClose }) => {
   const handleMenuItemClick = (menuItem: string) => {
-    console.log(`Clicou em: ${menuItem}`);
+    console.log("Clicou em: ${menuItem}");
     onClose();
   };
 
   return (
     isOpen && (
-      <div className="svg" style={{position:'absolute'}}>
+      <div className="svg" style={{ position: "absolute" }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"

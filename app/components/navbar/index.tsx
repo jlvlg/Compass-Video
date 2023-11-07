@@ -8,6 +8,7 @@ import SearchBox from "./SearchBox";
 import UserMenu from "./UserMenu";
 import NavSection from "./NavSection";
 
+
 const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,7 +38,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="header-container">
+    <header className="headerContainer">
       <nav className="nav">
         <div className="navImage">
           <Image
@@ -56,7 +57,7 @@ const Header: React.FC = () => {
             link="/playermedia"
           />
 
-          <div className="centered-item">
+          <div className="centeredItem">
             <NavSection
               icon="/icons/star.png"
               text="Celebridades"
@@ -68,22 +69,22 @@ const Header: React.FC = () => {
           {isSearchOpen ? (
             <SearchBox onSearch={handleSearch} onClose={closeSearch} />
           ) : (
-            <div className="search-button" onClick={openSearch}>
+            <div className="searchButton" onClick={openSearch}>
               <img className="logo" src="/icons/serach.png" alt="Logo" />
-              <p className="nav-item">Buscar</p>
+              <p className="navItem">Buscar</p>
             </div>
           )}
 
           {!isSearchOpen && (
             <>
               <img className="logo" src="/icons/plus.png" alt="Logo" />
-              <a href="/minha-lista" className="nav-item">
+              <a href="/minha-lista" className="navItem">
                 Minha lista
               </a>
             </>
           )}
 
-          <div className="user-avatar" onClick={openUserMenu}>
+          <div className="userAvatar" onClick={openUserMenu}>
             <Image
               src="/avatar.png"
               width={48}

@@ -1,13 +1,13 @@
 .playerControls {
   margin: 0;
-  padding: 0;
   display: block;
   align-items: center;
   justify-content: space-between;
   background: black;
   padding: 10px;
   margin-top: -0.60%;
-  width: 97%;
+  width: auto;
+
 }
 
 .progressBars {
@@ -19,6 +19,7 @@
 .progressBar {
   position: relative;
   margin-bottom: 8px;
+  
 }
 
 .progressBackground {
@@ -47,6 +48,7 @@
   top: -5px;
   left: 109px;
   z-index: 2;
+  
 }
 
 .progressBackground2 {
@@ -55,22 +57,26 @@
   background: rgba(110, 109, 109, 0.486);
   border-radius: 2px;
   position: absolute;
+  
 }
 
 .controls {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  
 }
 
 .leftControls {
   display: flex;
   align-items: center;
+  
 }
 
 .rightControls {
   display: flex;
   align-items: center;
+  
 }
 
 .controlIcon {
@@ -78,6 +84,7 @@
   height: 37px;
   flex-shrink: 0;
   margin-right: 10px;
+  
 }
 
 .timerText {
@@ -108,10 +115,13 @@
   z-index: 2;
   font-size: 14px;
   font-weight: 600;
+  
 }
 
 .modal-loki {
-  top: -57px;
+  top: 10%;
+  margin: 0;
+  padding: 0;
 }
 
 .modal-episodios {
@@ -170,14 +180,22 @@
 .modalText {
   color: white;
   font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
 
 @media screen and (max-width: 768px) {
-  .playerControls{
-    width: auto;
-    background: transparent;
-    height: 2rem;
+  .playerControls {
+    width: 99%;
+  }
 
+  .controlIcon {
+    width: 20px;
+    height: 22px;
+  }
+
+  .modal-loki{
+    left: -750%;
   }
 }

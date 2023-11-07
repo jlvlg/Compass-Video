@@ -21,7 +21,7 @@ const NavSection: React.FC<NavSectionProps> = ({ icon, text, link }) => {
         src={icon}
         alt="Logo"
       />
-      <Link href={link} className={`nav-item ${isActive ? "active" : ""}`}>
+      <Link href={link} className={`navItem ${isActive ? "active" : ""}`}>
         {text}
       </Link>
     </div>
