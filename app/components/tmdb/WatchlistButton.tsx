@@ -5,6 +5,6 @@ import styles from "./Button.module.scss";
 
 type Props = {};
 
-export function WishlistButton({}: Props) {
+export function WatchlistButton({}: Props) {
   return <Button Icon={icon} className={styles.button} />;
 }
