@@ -16,21 +16,17 @@ export default async function Tv({ params }: Props) {
     let seasons = serie?.seasons;
     return (
       <div className={styles.series__container}>
-        <Header item={seriedetails} />
-       <div className={styles.carouselseasons}>
-       <Carousel
-          items={seasons!}
-          title="Temporadas"
+        <Header
+          item={seriedetails}
+          buttons={["watch", "trailer", "controls"]}
         />
-       </div>
+        <div className={styles.carouselseasons}>
+          <Carousel items={seasons!} title="Temporadas" idSeason={params.id} />
+        </div>
         <div className={styles.carouselsimilares}>
-            <Carousel
-          items={sililarSerie!}
-          title="Similares"
-        />
+          <Carousel items={sililarSerie!} title="Similares" />
         </div>
       </div>
     );
   }
 }
-

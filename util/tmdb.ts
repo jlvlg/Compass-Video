@@ -1,4 +1,4 @@
-import { Media, Season, Series, DetailedMedia, Type } from "./model";
+import { Media, Season, Series, DetailedMedia, Type, Episode } from "./model";
 
 export class TMDB {
   static instance?: TMDB;
@@ -75,12 +75,23 @@ export class TMDB {
     };
   }
 
+  async detailedSeason(season: Media): Promise<DetailedMedia> {
+    const res = await this.get(`tv/${season.id}/season/${season.season_number}?language=en-US`);
+    return {
+      ...this.extractCommon(res),
+      episodes: res.episodes,
+      type: "season",
+    };
+  }
+
   async detailedMedia(media: Media) {
     switch (media.type) {
       case "movie":
         return this.detailedMovie(media);
       case "series":
         return this.detailedSeries(media);
+      case "season":
+        return this.detailedSeason(media);
     }
   }
 
@@ -118,20 +129,48 @@ export class TMDB {
         .slice(0, 20))();
   }
 
-  async getSeasonInfo(seriesId: number, seasonNumber: number) {
-    const path = `tv/${seriesId}/season/${seasonNumber}?language=en-US`;
-    try {
-      const response = await this.get(path);
-      const seasonData: Season = {
-        episodes: response.episodes,
-        season_number: response.season_number,
-      };
-      return seasonData;
-    } catch (error) {
-      console.error("Error getSeasonInfo", error);
-      return null;
+  private async getMediaList(type: string, ref: string) {
+    const mediadata = await this.get(`${type}/${ref}?language=en-US&page=1`).then(
+      (data) => data.results
+    );
+    let typeMedia = "movie"
+    if(type === "tv"){
+      typeMedia = "series"
     }
+    return (async () =>
+      (await mediadata).map((media: Media) => ({
+        ...media,
+        type: typeMedia,
+      })))() as Promise<Media[]>;
   }
+
+  get airingTodaySeries(){
+    return this.getMediaList("tv","airing_today");
+  }
+
+  get onTheAirSeries(){
+    return this.getMediaList("tv","on_the_air")
+  }
+
+  get topRatedSeries(){
+    return this.getMediaList("tv","top_rated")
+  }
+
+  get airingTodayMovie(){
+    return this.getMediaList("movie","now_playing");
+  }
+
+  get onTheAirMovie(){
+    return this.getMediaList("movie","upcoming")
+  }
+
+  get topRatedMovie(){
+    return this.getMediaList("movie","top_rated")
+  }
+  
+
+  
+  
 
   async getSerie(id: number) {
     try {
@@ -142,7 +181,7 @@ export class TMDB {
         seasons: res.seasons,
         name: res.name,
         origin_country: res.origin_country,
-        type: Type.SERIES,
+        type: "series",
       };
       return seriedata;
     } catch (error) {
@@ -162,7 +201,15 @@ export class TMDB {
     return (async () =>
       (await this.similarMedia("tv", id)).map((series: Media) => ({
         ...series,
-        type: Type.SERIES,
+        type: "series",
+      })))() as Promise<Media[]>;
+  }
+
+  async getSimilarMovie(id:number) {
+    return (async () =>
+      (await this.similarMedia("movie", id)).map((series: Media) => ({
+        ...series,
+        type: "movie",
       })))() as Promise<Media[]>;
   }
 
