@@ -1,13 +1,10 @@
-
 .sections {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  width: 15%;
+  margin-top: -5px;
 }
 
-.sections:hover .nav-item,
-.sections:hover .logo {
+.sections:hover .nav-item {
   color: #02e7f5;
 }
 
@@ -31,15 +28,7 @@
   }
 }
 
-
-.sections {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 15%;
-}
-
-.sections:hover .nav-item,
+.sections:hover .navItem,
 .sections:hover .logo {
   color: #02e7f5;
 }

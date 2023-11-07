@@ -1,7 +1,7 @@
 import { Provider } from "@/store";
 import type { Metadata } from "next";
 import * as fonts from "@/styles/fonts";
-import Header from "./components/navbar/index";
+import Header from "./components/navbar";
 import Footer from "./components/ui/footer/Footer";
 import PlayerShow from "./components/player-show/PlayerShow";
 

@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "./Header.module.scss";
 import { DetailedMedia } from "@/util/model";
-import NavBar from "../navbar/index";
+import NavBar from "../navbar";
 import { useSelector } from "@/store";
 import Details from "./Details";
 

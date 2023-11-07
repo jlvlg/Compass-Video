@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./index.css";
-import Image from "next/image";
+import "./SearchBox.css";
+
 
 type SearchBoxProps = {
   onSearch: (term: string) => void;
@@ -43,12 +43,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, onClose }) => {
 
       <div className="select-nav" id="select" onClick={handleSelectClick}>
         <div className="selected-option">
-          <div className="selected-icon">
-            {selectedOption} {/* Texto */}
-          </div>
+          <div className="selected-icon">{selectedOption}</div>
           <span className="arrow-icon">
-            {" "}
-            {/* Elemento para a seta */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1rem"
@@ -76,10 +72,10 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, onClose }) => {
 
       <div className="search-icons">
         <div className="search-icon" onClick={handleSearch}>
-          <Image src="/icons/serach.png" alt="Buscar" width={24} height={24} />
+          <img src="/icons/serach.png" alt="Buscar" width={24} height={24} />
         </div>
         <div className="close-icon" onClick={handleClose}>
-          <Image src="/icons/close.png" alt="Fechar" width={24} height={24} />
+          <img src="/icons/close.png" alt="Fechar" width={24} height={24} />
         </div>
       </div>
     </div>
