@@ -120,10 +120,6 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             alt={isMuted ? "Muted" : "Volume"}
             id="volume"
             className={styles.controlIcon}
-            style={{
-              width: isMuted ? "30px" : "36px",
-              height: isMuted ? "30px" : "36px",
-            }}
             onClick={() => setIsMuted(!isMuted)} // Alternar entre mudo e não mudo
           />
           <div className={styles.timerText}>

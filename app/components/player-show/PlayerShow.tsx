@@ -4,6 +4,7 @@ import styles from "./PlayerShow.module.scss";
 import PlayerControls from "./PlayerControls";
 import YouTube from "react-youtube";
 
+
 const ShowPlayer: React.FC = () => {
   const [player, setPlayer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -12,7 +13,7 @@ const ShowPlayer: React.FC = () => {
   const [videoInfo, setVideoInfo] = useState({ title: "", description: "" });
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const videoId = "rcUO1OHg0gU";
+  const videoId = "kBTpF8oYxL4";
 
   const goBack = () => {
     window.history.back();
@@ -121,8 +122,7 @@ const ShowPlayer: React.FC = () => {
         <button className={styles.backButton} onClick={goBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="48"
-            height="48"
+
             viewBox="0 0 48 48"
             fill="none"
           >
@@ -138,7 +138,6 @@ const ShowPlayer: React.FC = () => {
         </div>
       </div>
       <div className={styles.videoContainer}>
-      {/* Mova o componente PlayerControls aqui */}
       <div className={styles.controlsContainer}>
         <PlayerControls
           pauseVideo={togglePlay}
