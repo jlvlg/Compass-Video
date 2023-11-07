@@ -2,10 +2,10 @@
 
 .info {
   padding-inline: 80px;
-  margin-block-start: 60px;
   max-inline-size: 720px;
   display: flex;
   flex-direction: column;
+  padding-block-start: 300px;
   align-items: flex-start;
   gap: 32px;
 
@@ -50,7 +50,14 @@
   max-inline-size: fit-content;
   border: 1px solid;
   color: $neutral-100;
-  @include button($opacity-10, $neutral-100);
+  background-color: $opacity-10;
+  transition: all 300ms;
+
+  &:hover {
+    background-color: $neutral-300;
+    border-color: $neutral-300;
+    color: black;
+  }
 
   svg {
     block-size: 24px;
@@ -66,7 +73,7 @@
     flex-direction: column;
   }
 
-  .header {
+  .info {
     padding-inline: 16px;
   }
 }

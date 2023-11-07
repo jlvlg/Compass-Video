@@ -1,0 +1,93 @@
+@import "@/styles/global.scss";
+
+.searchbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 5vw;
+  position: static;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: $neutral-600;
+  padding-inline: 16px;
+  padding-block: 12px;
+  font: $typography-lato;
+  color: rgba(255, 255, 255, 0.4);
+
+  input {
+    all: unset;
+    inline-size: 200px;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  button {
+    all: unset;
+    display: flex;
+    color: white;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      block-size: 24px;
+      inline-size: 24px;
+    }
+
+    &.select {
+      display: flex;
+      border-radius: 4px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      gap: 10px;
+      padding: 12px;
+      position: relative;
+
+      svg {
+        block-size: 16px;
+        inline-size: 16px;
+      }
+    }
+  }
+}
+
+.filter {
+  position: absolute;
+  inset-block-start: calc(100% + 12px);
+  inset-inline-start: 50%;
+  block-size: 0px;
+  padding-inline: 8px;
+  padding-block: 0;
+  transform: translateX(-50%);
+  transition: all 300ms;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 8px;
+  background: $neutral-100;
+
+  button {
+    color: black;
+    padding-inline: 24px;
+    padding-block: 8px;
+    line-height: 24px;
+
+    &:hover {
+      background-color: white;
+    }
+  }
+
+  &.filterOpen {
+    padding-block: 8px;
+    block-size: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .searchbar {
+    flex-wrap: wrap;
+  }
+}

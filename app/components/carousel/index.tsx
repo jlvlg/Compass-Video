@@ -97,8 +97,7 @@ export default function Carousel({
         className={styles.header}
         style={{
           paddingInlineEnd: (trackSize - 60) % 260,
-        }}
-      >
+        }}>
         <h2 className={styles.title}>{title}</h2>
         <ul className="splide__pagination"></ul>
       </header>
@@ -106,7 +105,9 @@ export default function Carousel({
         <ul className="splide__list">
           {items.map((item, index) => (
             <li key={item.id} className="splide__slide">
-              <Link href={`${item.type}/${item.id}`}>
+              <Link
+                href={`${item.type}/${item.id}`}
+                as={`${item.type}/${item.id}`}>
                 <Image
                   className={styles.image}
                   priority={true}

@@ -1,105 +1,117 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import "./index.css";
+import compass from "@/public/compass.png";
 import Image from "next/image";
-import SearchBox from "./SearchBox";
-import UserMenu from "./UserMenu";
-import NavSection from "./NavSection";
+import Link from "next/link";
+import { useState } from "react";
+import styles from "./Navbar.module.scss";
+import Navlink from "./Navlink";
+import home from "@/public/icons/home.svg";
+import tv from "@/public/icons/tv.svg";
+import movie from "@/public/icons/movie.svg";
+import star from "@/public/icons/star.svg";
+import plus from "@/public/icons/plus2.svg";
+import Search from "@/public/icons/search.svg";
+import avatar from "@/public/avatar.png";
+import { usePathname, useRouter } from "next/navigation";
+import SearchBar from "./SearchBar";
+import useLogin from "@/util/hooks/useLogin";
 
-const Header: React.FC = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+type Props = {};
 
-  const openUserMenu = () => {
-    setIsUserMenuOpen(!isUserMenuOpen);
-  };
+export default function Navbar({}: Props) {
+  const sessionId = useLogin();
+  const active = usePathname();
+  const router = useRouter();
+  const [isSearchOpen, setIsSearchBarOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filter, setFilter] = useState("Tudo");
 
-  const users = [
-    { avatar: "/avatar1.png", username: "Leslie Alexander" },
-    { avatar: "/avatar2.png", username: "Ronald Richards" },
-    { avatar: "/avatar3.png", username: "Criar perfil" },
-  ];
+  function openFilter() {
+    setIsFilterOpen(true);
+  }
 
-  const openSearch = () => {
-    setIsSearchOpen(true);
-  };
+  function closeFilter() {
+    setIsFilterOpen(false);
+  }
 
-  const closeSearch = () => {
-    setIsSearchOpen(false);
-  };
+  function openSearchBar() {
+    setIsSearchBarOpen(true);
+    closeFilter();
+  }
 
-  const handleSearch = (term: string) => {
-    console.log("Termo de pesquisa:", term);
-    setSearchTerm(term);
-  };
+  function closeSearchBar() {
+    setIsSearchBarOpen(false);
+    closeFilter();
+  }
+
+  function filterSelect(option: string) {
+    setFilter(option);
+    closeFilter();
+  }
+
+  function onSearch(value: string) {
+    router.replace(`/search?value=${value}&filter=${filter}`);
+  }
 
   return (
-    <header className="header-container">
-      <nav className="nav">
-        <div className="navImage">
-          <Image
-            src="/compass_logo.png"
-            width={200}
-            height={68}
-            alt="compassLogo"
+    <nav className={styles.toplevel}>
+      <Link
+        href="/home"
+        className={`${styles.logo} ${
+          active.startsWith("/home") ? styles.active : ""
+        }`}>
+        <Image src={compass} alt="Compass Logo" />
+      </Link>
+      <div className={styles.navleft}>
+        <Navlink href="/home" icon={home} current={active}>
+          Início
+        </Navlink>
+        <Navlink href="/series" icon={tv} current={active}>
+          Séries
+        </Navlink>
+        <Navlink href="/movies" icon={movie} current={active}>
+          Filmes
+        </Navlink>
+        <Navlink href="/stars" icon={star} current={active}>
+          Celebridades
+        </Navlink>
+      </div>
+      <div className={styles.navright}>
+        {isSearchOpen ? (
+          <SearchBar
+            filter={filter}
+            onClose={closeSearchBar}
+            openFilter={openFilter}
+            closeFilter={closeFilter}
+            onSelect={filterSelect}
+            isFilterOpen={isFilterOpen}
+            onSearch={onSearch}
           />
-        </div>
-        <div className="navLeft">
-          <NavSection icon="/icons/home.png" text="Início" link="/home" />
-          <NavSection icon="/icons/tv.png" text="Séries" link="/series" />
-          <NavSection
-            icon="/icons/movie.png"
-            text="Filmes"
-            link="/playermedia"
-          />
-
-          <div className="centered-item">
-            <NavSection
-              icon="/icons/star.png"
-              text="Celebridades"
-              link="/celebridades"
-            />
-          </div>
-        </div>
-        <div className="navRight">
-          {isSearchOpen ? (
-            <SearchBox onSearch={handleSearch} onClose={closeSearch} />
-          ) : (
-            <div className="search-button" onClick={openSearch}>
-              <img className="logo" src="/icons/serach.png" alt="Logo" />
-              <p className="nav-item">Buscar</p>
-            </div>
-          )}
-
-          {!isSearchOpen && (
-            <>
-              <img className="logo" src="/icons/plus.png" alt="Logo" />
-              <a href="/minha-lista" className="nav-item">
+        ) : (
+          <>
+            <button
+              className={`${styles.navlink} ${styles.search}`}
+              onClick={openSearchBar}>
+              <Search /> Buscar
+            </button>
+            {sessionId && (
+              <Navlink href="/watchlist" icon={plus} current={active}>
                 Minha lista
-              </a>
-            </>
-          )}
-
-          <div className="user-avatar" onClick={openUserMenu}>
-            <Image
-              src="/avatar.png"
-              width={48}
-              height={48}
-              alt="Picture of the author"
-            />
-            <UserMenu
-              users={users}
-              isOpen={isUserMenuOpen}
-              onClose={openUserMenu}
-            />
-          </div>
-        </div>
-      </nav>
-    </header>
+              </Navlink>
+            )}
+          </>
+        )}
+        {sessionId ? (
+          <button className={styles.avatar}>
+            <Image src={avatar} alt="Avatar" />
+          </button>
+        ) : (
+          <Link href="/" className={styles.navlink}>
+            Login
+          </Link>
+        )}
+      </div>
+    </nav>
   );
-};
-
-export default Header;
+}

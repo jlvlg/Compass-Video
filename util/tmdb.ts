@@ -47,8 +47,8 @@ export class TMDB {
     };
   }
 
-  async detailedMovie(movie: Media): Promise<DetailedMedia> {
-    const res = await this.get(`movie/${movie.id}?language=en-US`);
+  async detailedMovie(id: number): Promise<DetailedMedia> {
+    const res = await this.get(`movie/${id}?language=en-US`);
 
     return {
       ...this.extractCommon(res),
@@ -61,8 +61,8 @@ export class TMDB {
     };
   }
 
-  async detailedSeries(series: Media): Promise<DetailedMedia> {
-    const res = await this.get(`tv/${series.id}?language=en-US`);
+  async detailedSeries(id: number): Promise<DetailedMedia> {
+    const res = await this.get(`tv/${id}?language=en-US`);
 
     return {
       ...this.extractCommon(res),
@@ -78,9 +78,9 @@ export class TMDB {
   async detailedMedia(media: Media) {
     switch (media.type) {
       case "movie":
-        return this.detailedMovie(media);
+        return this.detailedMovie(media.id);
       case "series":
-        return this.detailedSeries(media);
+        return this.detailedSeries(media.id);
     }
   }
 
@@ -118,6 +118,39 @@ export class TMDB {
         .slice(0, 20))();
   }
 
+  newMedia(path: string) {
+    return this.get(
+      `discover/${path}?include_video=true&language=en-US&page=1&sort_by=primary_release_date.desc`
+    ).then((data) => data.results);
+  }
+
+  get newMovies() {
+    return (async () =>
+      (await this.newMedia("movie")).map((movie: Media) => ({
+        ...movie,
+        type: "movie",
+      })))() as Promise<Media[]>;
+  }
+
+  get newSeries() {
+    return (async () =>
+      (await this.newMedia("series")).map((series: Media) => ({
+        ...series,
+        type: "series",
+      })))() as Promise<Media[]>;
+  }
+
+  get fresh() {
+    return (async () =>
+      [...(await this.newMovies), ...(await this.newSeries)]
+        .sort(
+          (a, b) =>
+            new Date(a.release_date || a.first_air_date!).getTime() -
+            new Date(a.release_date || a.first_air_date!).getTime()
+        )
+        .slice(0, 20))();
+  }
+
   async getSeasonInfo(seriesId: number, seasonNumber: number) {
     const path = `tv/${seriesId}/season/${seasonNumber}?language=en-US`;
     try {
@@ -151,22 +184,17 @@ export class TMDB {
     }
   }
 
-  private similarMedia(media: string, id:number) {
-    return this.get(`${media}/${id}/similar?`).then(
-      (data) => data.results
-    );
+  private similarMedia(media: string, id: number) {
+    return this.get(`${media}/${id}/similar?`).then((data) => data.results);
   }
 
-
-  async getSimilarSerie(id:number) {
+  async getSimilarSerie(id: number) {
     return (async () =>
       (await this.similarMedia("tv", id)).map((series: Media) => ({
         ...series,
         type: Type.SERIES,
       })))() as Promise<Media[]>;
   }
-
-
 }
 
 export default TMDB.getInstance();

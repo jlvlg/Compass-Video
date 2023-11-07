@@ -3,11 +3,17 @@
 .button {
   border-radius: 100px;
   border: 1px solid;
-  @include button($opacity-10, white);
   padding-inline: 0;
   inline-size: 48px;
   block-size: 48px;
   svg {
     block-size: 24px;
+  }
+
+  transition: all 300ms;
+  &:hover {
+    background-color: $neutral-300;
+    border-color: $neutral-300;
+    color: black;
   }
 }
