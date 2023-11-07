@@ -129,27 +129,43 @@ export class TMDB {
         .slice(0, 20))();
   }
 
-  private async getSeriesList(ref: string, type: string) {
-    const series = await this.get(`${type}/${ref}?language=en-US&page=1`).then(
+  private async getMediaList(type: string, ref: string) {
+    const mediadata = await this.get(`${type}/${ref}?language=en-US&page=1`).then(
       (data) => data.results
     );
+    let typeMedia = "movie"
+    if(type === "tv"){
+      typeMedia = "series"
+    }
     return (async () =>
-      (await series).map((series: Media) => ({
-        ...series,
-        type: "series",
+      (await mediadata).map((media: Media) => ({
+        ...media,
+        type: typeMedia,
       })))() as Promise<Media[]>;
   }
 
   get airingTodaySeries(){
-    return this.getSeriesList("tv","airing_today");
+    return this.getMediaList("tv","airing_today");
   }
 
   get onTheAirSeries(){
-    return this.getSeriesList("tv","on_the_air")
+    return this.getMediaList("tv","on_the_air")
   }
 
   get topRatedSeries(){
-    return this.getSeriesList("tv","top_rated")
+    return this.getMediaList("tv","top_rated")
+  }
+
+  get airingTodayMovie(){
+    return this.getMediaList("movie","now_playing");
+  }
+
+  get onTheAirMovie(){
+    return this.getMediaList("movie","upcoming")
+  }
+
+  get topRatedMovie(){
+    return this.getMediaList("movie","top_rated")
   }
   
 
