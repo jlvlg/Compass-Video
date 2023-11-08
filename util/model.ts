@@ -60,8 +60,8 @@ export interface Episode{
 export interface Person{
   id: number;
   name: string;
-  profile_path: string;  
-  known_for: Media[];
+  profile_path: string;
+  popularity: number;  
 }
 
 export interface Season extends Media{

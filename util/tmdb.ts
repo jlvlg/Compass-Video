@@ -218,30 +218,46 @@ export class TMDB {
   }
 
   async getSerie(id: number) {
-      const res = await this.get(`tv/${id}?language=en-US`);
-      const seriedata: Series = {
-        ...this.extractCommon(res),
-        number_of_seasons: res.number_of_seasons,
-        seasons: res.seasons,
-        name: res.name,
-        origin_country: res.origin_country,
-        type: "series",
-      };
-      return seriedata;
+    const res = await this.get(`tv/${id}?language=en-US`);
+    const seriedata: Series = {
+      ...this.extractCommon(res),
+      number_of_seasons: res.number_of_seasons,
+      seasons: res.seasons,
+      name: res.name,
+      origin_country: res.origin_country,
+      type: "series",
+    };
+    return seriedata;
+  }
+
+  async getCreditsActor(id: number) {
+    const data = await this.get(`person/${id}/combined_credits?language=en-US`);
+    const credits = data.cast.map((media: Media) => ({
+      ...this.extractCommon(media),
+      type: media.media_type === "tv" ? "series" : media.media_type,
+    }));
+    return credits
+      .sort((a: Media, b: Media) => b.popularity - a.popularity)
+      .slice(0, 20);
   }
 
   async getPeopleList(): Promise<Person[]> {
-    const data = await this.get(`trending/person/day?language=en-US`);
-    return data.results.map((person: Person) => ({
+    const data = await this.get(`trending/person/week?language=en-US`);
+    const people = data.results.map((person: Person) => ({
       id: person.id,
       name: person.name || "",
       profile_path: person.profile_path || "",
-      known_for: person.known_for.map((media: Media) => ({
-        ...media,
-        type: media.media_type === "tv" ? "series" : media.media_type || "",
-      })),
+      popularity: person.popularity,
     }));
-  } 
+
+    return people.slice(4, 8);  
+    //.sort((a: Media, b: Media) => b.popularity - a.popularity)
+  
+  }
+
+  async getKeyVideo(id:number, type:string){
+    return this.get(`${type}/${id}/videos?language=en-US`).then((data) => data.results);
+  }
 
   private similarMedia(media: string, id: number) {
     return this.get(`${media}/${id}/similar?`).then((data) => data.results);
