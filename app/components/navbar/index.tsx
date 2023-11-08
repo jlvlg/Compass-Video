@@ -1,7 +1,7 @@
 "use client";
 
 import compass from "@/public/compass.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./Navbar.module.scss";
@@ -12,7 +12,7 @@ import movie from "@/public/icons/movie.svg";
 import star from "@/public/icons/star.svg";
 import plus from "@/public/icons/plus2.svg";
 import Search from "@/public/icons/search.svg";
-import avatar from "@/public/avatar.png";
+import avatarImage from "@/public/avatar.png";
 import { usePathname, useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 import useLogin from "@/util/hooks/useLogin";
@@ -20,12 +20,21 @@ import useLogin from "@/util/hooks/useLogin";
 type Props = {};
 
 export default function Navbar({}: Props) {
-  const sessionId = useLogin();
+  const { values, actions } = useLogin();
   const active = usePathname();
   const router = useRouter();
   const [isSearchOpen, setIsSearchBarOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filter, setFilter] = useState("Tudo");
+  let avatar: string | StaticImageData = avatarImage;
+  if (values.user?.avatar?.gravatar.hash) {
+    avatar = `https://gravatar.com/avatar/${values.user.avatar.gravatar.hash}?s=45`;
+    if (values.user.avatar.tmdb.avatar_path) {
+      avatar += `?d=${encodeURIComponent(
+        `https://image.tmdb.org/t/p/w45${values.user.avatar.tmdb.avatar_path}`
+      )}`;
+    }
+  }
 
   function openFilter() {
     setIsFilterOpen(true);
@@ -95,21 +104,19 @@ export default function Navbar({}: Props) {
               onClick={openSearchBar}>
               <Search /> Buscar
             </button>
-            {sessionId && (
+            {values.user && (
               <Navlink href="/watchlist" icon={plus} current={active}>
                 Minha lista
               </Navlink>
             )}
           </>
         )}
-        {sessionId ? (
+        {values.user ? (
           <button className={styles.avatar}>
-            <Image src={avatar} alt="Avatar" />
+            <Image src={avatar} alt="Avatar" width={45} height={45} />
           </button>
         ) : (
-          <Link href="/" className={styles.navlink}>
-            Login
-          </Link>
+          <Navlink href="/">Login</Navlink>
         )}
       </div>
     </nav>
