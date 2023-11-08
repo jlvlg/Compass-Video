@@ -9,7 +9,8 @@ interface PlayerControlsProps {
   backForward: (seconds: number) => void;
   duration: number;
   currentTime: number;
-  toggleFullScreen: () => void; // Adicione a função de tela cheia
+  toggleFullScreen: () => void; 
+  
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -21,7 +22,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   toggleFullScreen,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalLokiVisible, setIsModalLokiVisible] = useState(false);
+  const [isModalnextModalVisible, setIsModalnextModalVisible] = useState(false);
   const [isModalEpisodiosVisible, setIsModalEpisodiosVisible] = useState(false);
   const [isModalLegendasVisible, setIsModalLegendasVisible] = useState(false);
   const [isModalTelaCheiaVisible, setIsModalTelaCheiaVisible] = useState(false);
@@ -29,13 +30,15 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   const [progress, setProgress] = useState((currentTime / duration) * 100);
   const [ellipseLeft, setEllipseLeft] = useState(progress);
   const [isMuted, setIsMuted] = useState(false);
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
 
-  const toggleModalLoki = () => {
-    setIsModalLokiVisible(!isModalLokiVisible);
+  const toggleModalnextModal = () => {
+    setIsModalnextModalVisible(!isModalnextModalVisible);
   };
 
   const toggleModalEpisodios = () => {
@@ -150,23 +153,23 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           <div className={styles.infoContainer}>
             <img
               src="/icons/skip.png"
-              alt="Loki"
+              alt="nextModal"
               className={styles.controlIcon}
-              onMouseEnter={toggleModalLoki}
-              onMouseLeave={toggleModalLoki}
+              onMouseEnter={toggleModalnextModal}
+              onMouseLeave={toggleModalnextModal}
             />
-            {isModalLokiVisible && (
-              <div className={`${styles.modal} ${styles["modal-loki"]}`}>
+            {isModalnextModalVisible && (
+              <div className={`${styles.modal} ${styles["modal-nextModal"]}`}>
                 <div className={styles.modalContent}>
                   <img
                     src="/caminho-da-imagem.jpg"
-                    alt="Imagem Loki"
+                    alt="Imagem nextModal"
                     className={styles.modalImage}
                   />
                   <div className={styles.modalTextContainer}>
                     <p className={styles.modalText}>Seguinte</p>
-                    <h1 className={styles.modalTitle}>Loki</h1>
-                    <p className={styles.modalText}>Seu texto aqui</p>
+                    <h1 className={styles.modalTitle}>Gran Turismo 2</h1>
+                    <p className={styles.modalText}>Racing simulator</p>
                   </div>
                 </div>
               </div>

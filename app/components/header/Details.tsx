@@ -24,14 +24,15 @@ export default function Details({ item, buttons }: Props) {
 
   const buttonElements = {
     watch: (
-      <Button
-        key="watch"
-        Real={Link}
-        href="/playermedia"
-        className={`${styles.button} ${styles.buttonPrimary}`}
-        Icon={play}>
-        Ver Agora
-      </Button>
+      <Link href={`/playermedia?id=${item.id}&type=${item.type}`} passHref>
+        <Button
+          key="watch"
+          className={`${styles.button} ${styles.buttonPrimary}`}
+          Icon={play}
+        >
+          Ver Agora
+        </Button>
+      </Link>
     ),
     trailer: (
       <Button

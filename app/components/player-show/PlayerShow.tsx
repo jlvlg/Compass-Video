@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./PlayerShow.module.scss";
 import PlayerControls from "./PlayerControls";
 import YouTube from "react-youtube";
-
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const ShowPlayer: React.FC = () => {
   const [player, setPlayer] = useState<any>(null);
@@ -13,7 +14,10 @@ const ShowPlayer: React.FC = () => {
   const [videoInfo, setVideoInfo] = useState({ title: "", description: "" });
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const videoId = "kBTpF8oYxL4";
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const type = searchParams.get("type");
+  const [videoKey, setVideoKey] = useState("");
 
   const goBack = () => {
     window.history.back();
@@ -58,8 +62,8 @@ const ShowPlayer: React.FC = () => {
       if (playerElement) {
         playerElement.requestFullscreen();
       }
+      setIsFullScreen(!isFullScreen);
     }
-    setIsFullScreen(!isFullScreen);
   };
 
   const opts = {
@@ -73,48 +77,69 @@ const ShowPlayer: React.FC = () => {
   };
 
   useEffect(() => {
-    if (player) {
-      setDuration(player.getDuration() - 1);
-      setCurrentTime(player.getCurrentTime());
+    if (id && type) {
+      const tmdbApiKey = "b1680b745ac5fd212cd60b69989756f8";
+      const baseUrl =
+        type === "movie"
+          ? `https://api.themoviedb.org/3/movie/${id}/videos`
+          : `https://api.themoviedb.org/3/tv/${id}/videos`;
+      const url = `${baseUrl}?api_key=${tmdbApiKey}`;
 
-      fetchVideoInfo(videoId);
-
-      const timer = setInterval(() => {
-        setCurrentTime(player.getCurrentTime());
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [player, videoId]);
-
-  const fetchVideoInfo = (videoId: string) => {
-    const apiKey = "AIzaSyCdvi-PCCAClNngx1OTH-3uoxggXvEhNpA";
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.items && data.items.length > 0) {
-          const video = data.items[0].snippet;
-          let title = video.title;
-          const description =
-            video.description.length > 60
-              ? `${video.description.slice(0, 60)}...`
-              : video.description;
-
-          if (title.length > 32) {
-            title = `${title.slice(0, 32)}...`;
+      const fetchVideoKey = async () => {
+        try {
+          const response = await axios.get(url);
+          if (response.data.results && response.data.results.length > 0) {
+            const trailerKey = response.data.results[0].key;
+            setVideoKey(trailerKey);
           }
-
-          setVideoInfo({
-            title,
-            description,
-          });
+        } catch (error) {
+          console.error("Erro ao buscar a chave do vídeo:", error);
         }
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar informações do vídeo", error);
-      });
+      };
+
+      fetchVideoKey();
+    }
+  }, [id, type]);
+
+  
+  const fetchVideoInfo = (videoId: string) => {
+    const youtubeApiKey = "AIzaSyCsiIoSbBzikcXperTPTEG_cDGa3W8ynzc";
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${youtubeApiKey}`;
+    
+    axios
+    .get(apiUrl)
+    .then((response) => {
+      const data = response.data;
+      if (data.items && data.items.length > 0) {
+        const video = data.items[0].snippet;
+        let title = video.title;
+        const description =
+        video.description.length > 60
+        ? `${video.description.slice(0, 60)}...`
+        : video.description;
+        
+        if (title.length > 32) {
+          title = `${title.slice(0, 32)}...`;
+        }
+        
+        setVideoInfo({
+          title,
+          description,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar informações do vídeo", error);
+    });
+    
+    
   };
+  
+  useEffect(() => {
+    if (videoKey !== null) {
+      fetchVideoInfo(videoKey);
+    }
+  }, [videoKey]);
 
   return (
     <div className={styles.playerShow}>
@@ -122,7 +147,6 @@ const ShowPlayer: React.FC = () => {
         <button className={styles.backButton} onClick={goBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-
             viewBox="0 0 48 48"
             fill="none"
           >
@@ -138,25 +162,25 @@ const ShowPlayer: React.FC = () => {
         </div>
       </div>
       <div className={styles.videoContainer}>
-      <div className={styles.controlsContainer}>
-        <PlayerControls
-          pauseVideo={togglePlay}
-          seekForward={seekForward}
-          backForward={backForward}
-          duration={duration}
-          currentTime={currentTime}
-          toggleFullScreen={toggleFullScreen}
+        <div className={styles.controlsContainer}>
+          <PlayerControls
+            pauseVideo={togglePlay}
+            seekForward={seekForward}
+            backForward={backForward}
+            duration={duration}
+            currentTime={currentTime}
+            toggleFullScreen={toggleFullScreen}
+          />
+        </div>
+        <YouTube
+          videoId={videoKey}
+          opts={opts}
+          onReady={(event) => {
+            setPlayer(event.target);
+          }}
+          id="player"
         />
       </div>
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onReady={(event) => {
-          setPlayer(event.target);
-        }}
-        id="player"
-      />
-    </div>
     </div>
   );
 };

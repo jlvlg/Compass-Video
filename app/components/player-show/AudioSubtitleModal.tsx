@@ -128,96 +128,109 @@ const SubtitleModal: React.FC = () => {
           </p>
         </div>
         <div className={styles.subtitleInfo}>
-          <h1>Legendas</h1>
-          <p
-            onClick={() => handleTextClickSubtitle("No")}
-            style={{
-              color:
-                selectedTextSubtitle === "No" ? "white" : "rgb(156, 156, 156)",
-            }}
-          >
-            {selectedTextSubtitle === "No" && (
-              <img
-                src="/icons/done.png"
-                alt="Selected"
-                style={{ width: "14px", height: "11px" }}
-              />
-            )}{" "}
-            No
-          </p>
-          <p
-            onClick={() => handleTextClickSubtitle("English CC")}
-            style={{
-              color:
-                selectedTextSubtitle === "English CC"
-                  ? "white"
-                  : "rgb(156, 156, 156)",
-            }}
-          >
-            {selectedTextSubtitle === "English CC" && (
-              <img
-                src="/icons/done.png"
-                alt="Selected"
-                style={{ width: "14px", height: "11px" }}
-              />
-            )}{" "}
-            English CC
-          </p>
-          <p
-            onClick={() => handleTextClickSubtitle("Español")}
-            style={{
-              color:
-                selectedTextSubtitle === "Español"
-                  ? "white"
-                  : "rgb(156, 156, 156)",
-            }}
-          >
-            {selectedTextSubtitle === "Español" && (
-              <img
-                src="/icons/done.png"
-                alt="Selected"
-                style={{ width: "14px", height: "11px" }}
-              />
-            )}{" "}
-            Español
-          </p>
-          <p
-            onClick={() => handleTextClickSubtitle("Português (Brasil)")}
-            style={{
-              color:
-                selectedTextSubtitle === "Português (Brasil)"
-                  ? "white"
-                  : "rgb(156, 156, 156)",
-            }}
-          >
-            {selectedTextSubtitle === "Português (Brasil)" && (
-              <img
-                src="/icons/done.png"
-                alt="Selected"
-                style={{ width: "14px", height: "11px" }}
-              />
-            )}{" "}
-            Português (Brasil)
-          </p>
-          <p
-            onClick={() => handleTextClickSubtitle("Italiano")}
-            style={{
-              color:
-                selectedTextSubtitle === "Italiano"
-                  ? "white"
-                  : "rgb(156, 156, 156)",
-            }}
-          >
-            {selectedTextSubtitle === "Italiano" && (
-              <img
-                src="/icons/done.png"
-                alt="Selected"
-                style={{ width: "14px", height: "11px" }}
-              />
-            )}{" "}
-            Italiano
-          </p>
-        </div>
+  <h1>Legendas</h1>
+  <p
+    onClick={() => handleTextClickSubtitle("No")}
+    style={{
+      color:
+        selectedTextSubtitle === "No" ? "white" : "rgb(156, 156, 156)",
+    }}
+  >
+    {selectedTextSubtitle === "No" && (
+      <img
+        src="/icons/done.png"
+        alt="Selected"
+        style={{ width: "14px", height: "11px" }}
+      />
+    )}{" "}
+    No
+  </p>
+  <p
+    onClick={() => handleTextClickSubtitle("English CC")}
+    style={{
+      color:
+        selectedTextSubtitle === "English CC" ? "white" : "rgb(156, 156, 156)",
+    }}
+  >
+    {selectedTextSubtitle === "English CC" && (
+      <img
+        src="/icons/done.png"
+        alt="Selected"
+        style={{ width: "14px", height: "11px" }}
+      />
+    )}{" "}
+    English CC
+  </p>
+  <p
+    onClick={() => handleTextClickSubtitle("Español")}
+    style={{
+      color:
+        selectedTextSubtitle === "Español" ? "white" : "rgb(156, 156, 156)",
+    }}
+  >
+    {selectedTextSubtitle === "Español" && (
+      <img
+        src="/icons/done.png"
+        alt="Selected"
+        style={{ width: "14px", height: "11px" }}
+      />
+    )}{" "}
+    Español
+  </p>
+    <p
+      onClick={() => handleTextClickSubtitle("Español (Latinoamericano)")}
+      style={{
+        color:
+          selectedTextSubtitle === "Español (Latinoamericano)"
+            ? "white"
+            : "rgb(156, 156, 156)",
+      }}
+    >
+      {selectedTextSubtitle === "Español (Latinoamericano)" && (
+        <img
+          src="/icons/done.png"
+          alt="Selected"
+          style={{ width: "14px", height: "11px" }}
+        />
+      )}{" "}
+      Español (Latinoamericano)
+    </p>
+  <p
+    onClick={() => handleTextClickSubtitle("Português (Brasil)")}
+    style={{
+      color:
+        selectedTextSubtitle === "Português (Brasil)"
+          ? "white"
+          : "rgb(156, 156, 156)",
+    }}
+  >
+    {selectedTextSubtitle === "Português (Brasil)" && (
+      <img
+        src="/icons/done.png"
+        alt="Selected"
+        style={{ width: "14px", height: "11px" }}
+      />
+    )}{" "}
+    Português (Brasil)
+  </p>
+  <p
+    onClick={() => handleTextClickSubtitle("Italiano")}
+    style={{
+      color:
+        selectedTextSubtitle === "Italiano" ? "white" : "rgb(156, 156, 156)",
+    }}
+  >
+    {selectedTextSubtitle === "Italiano" && (
+      <img
+        src="/icons/done.png"
+        alt="Selected"
+        style={{ width: "14px", height: "11px" }}
+      />
+    )}{" "}
+    Italiano
+  </p>
+</div>
+
       </div>
     </div>
   );
