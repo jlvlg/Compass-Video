@@ -24,6 +24,7 @@ export default function Details({ item, buttons }: Props) {
 
   const buttonElements = {
     watch: (
+
       <Link href={`/playermedia?id=${item.id}&type=${item.type}`} passHref>
         <Button
           key="watch"
@@ -38,8 +39,10 @@ export default function Details({ item, buttons }: Props) {
       <Button
         key="trailer"
         Real={Link}
-        href="/playermedia"
-        className={`${styles.button}`}>
+        href={`/playermedia?id=${item.id}&type=${item.type}`}
+        passHref
+        className={`${styles.button}`}
+      >
         Trailer
       </Button>
     ),
@@ -49,7 +52,8 @@ export default function Details({ item, buttons }: Props) {
         Real={Link}
         href={`${item.type}/${item.id}`}
         className={styles.button}
-        Icon={info}>
+        Icon={info}
+      >
         Mais Informações
       </Button>
     ),

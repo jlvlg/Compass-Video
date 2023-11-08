@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./PlayerShow.module.scss";
 import PlayerControls from "./PlayerControls";
 import YouTube from "react-youtube";
@@ -10,14 +10,40 @@ const ShowPlayer: React.FC = () => {
   const [player, setPlayer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [presentTime, setPresentTime] = useState(0);
+
   const [videoInfo, setVideoInfo] = useState({ title: "", description: "" });
   const [isFullScreen, setIsFullScreen] = useState(false);
-
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const type = searchParams.get("type");
   const [videoKey, setVideoKey] = useState("");
+
+  const [videoThumbnail, setVideoThumbnail] = useState<string | null>(null);
+
+  const currentRefTime = useRef(presentTime);
+
+  const updateTime = () => {
+    if (player) {
+      currentRefTime.current = player.getCurrentTime();
+      setPresentTime(currentRefTime.current);
+    }
+  };
+
+  useEffect(() => {
+    if (player) {
+      setDuration(player.getDuration() - 4);
+      setPresentTime(player.getCurrentTime());
+    }
+  }, [player]);
+
+  useEffect(() => {
+    const timer = setInterval(updateTime, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [player]);
 
   const goBack = () => {
     window.history.back();
@@ -36,20 +62,20 @@ const ShowPlayer: React.FC = () => {
 
   const seekForward = (seconds: number) => {
     if (player) {
-      const newTime = currentTime + seconds;
+      const newTime = presentTime + seconds;
       if (newTime < duration) {
         player.seekTo(newTime, true);
-        setCurrentTime(newTime);
+        setPresentTime(newTime);
       }
     }
   };
 
   const backForward = (seconds: number) => {
     if (player) {
-      const newTime = currentTime - seconds;
+      const newTime = presentTime - seconds;
       if (newTime > 0) {
         player.seekTo(newTime, true);
-        setCurrentTime(newTime);
+        setPresentTime(newTime);
       }
     }
   };
@@ -101,43 +127,34 @@ const ShowPlayer: React.FC = () => {
     }
   }, [id, type]);
 
-  
-  const fetchVideoInfo = (videoId: string) => {
+  const fetchVideoThumbnail = (videoId: string) => {
     const youtubeApiKey = "AIzaSyCsiIoSbBzikcXperTPTEG_cDGa3W8ynzc";
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${youtubeApiKey}`;
-    
+
     axios
-    .get(apiUrl)
-    .then((response) => {
-      const data = response.data;
-      if (data.items && data.items.length > 0) {
-        const video = data.items[0].snippet;
-        let title = video.title;
-        const description =
-        video.description.length > 60
-        ? `${video.description.slice(0, 60)}...`
-        : video.description;
-        
-        if (title.length > 32) {
-          title = `${title.slice(0, 32)}...`;
+      .get(apiUrl)
+      .then((response) => {
+        const data = response.data;
+        if (data.items && data.items.length > 0) {
+          const videoSnippet = data.items[0].snippet;
+          if (videoSnippet.thumbnails && videoSnippet.thumbnails.medium) {
+            const thumbnailUrl = videoSnippet.thumbnails.medium.url;
+            setVideoThumbnail(thumbnailUrl);
+            setVideoInfo({
+              title: videoSnippet.title.slice(0, 35),
+              description: videoSnippet.description.slice(0, 60),
+            });
+          }
         }
-        
-        setVideoInfo({
-          title,
-          description,
-        });
-      }
-    })
-    .catch((error) => {
-      console.error("Erro ao buscar informações do vídeo", error);
-    });
-    
-    
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar informações da miniatura do vídeo", error);
+      });
   };
-  
+
   useEffect(() => {
     if (videoKey !== null) {
-      fetchVideoInfo(videoKey);
+      fetchVideoThumbnail(videoKey);
     }
   }, [videoKey]);
 
@@ -168,8 +185,9 @@ const ShowPlayer: React.FC = () => {
             seekForward={seekForward}
             backForward={backForward}
             duration={duration}
-            currentTime={currentTime}
+            currentTime={presentTime}
             toggleFullScreen={toggleFullScreen}
+            videoThumbnail={videoThumbnail}
           />
         </div>
         <YouTube
