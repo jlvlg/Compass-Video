@@ -19,6 +19,8 @@ const ShowPlayer: React.FC = () => {
   const type = searchParams.get("type");
   const [videoKey, setVideoKey] = useState("");
 
+  const [videoThumbnail, setVideoThumbnail] = useState<string | null>(null);
+
   const currentRefTime = useRef(presentTime);
 
   const updateTime = () => {
@@ -125,7 +127,7 @@ const ShowPlayer: React.FC = () => {
     }
   }, [id, type]);
 
-  const fetchVideoInfo = (videoId: string) => {
+  const fetchVideoThumbnail = (videoId: string) => {
     const youtubeApiKey = "AIzaSyCsiIoSbBzikcXperTPTEG_cDGa3W8ynzc";
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${youtubeApiKey}`;
 
@@ -134,31 +136,25 @@ const ShowPlayer: React.FC = () => {
       .then((response) => {
         const data = response.data;
         if (data.items && data.items.length > 0) {
-          const video = data.items[0].snippet;
-          let title = video.title;
-          const description =
-            video.description.length > 60
-              ? `${video.description.slice(0, 60)}...`
-              : video.description;
-
-          if (title.length > 32) {
-            title = `${title.slice(0, 32)}...`;
+          const videoSnippet = data.items[0].snippet;
+          if (videoSnippet.thumbnails && videoSnippet.thumbnails.medium) {
+            const thumbnailUrl = videoSnippet.thumbnails.medium.url;
+            setVideoThumbnail(thumbnailUrl);
+            setVideoInfo({
+              title: videoSnippet.title.slice(0, 35),
+              description: videoSnippet.description.slice(0, 60),
+            });
           }
-
-          setVideoInfo({
-            title,
-            description,
-          });
         }
       })
       .catch((error) => {
-        console.error("Erro ao buscar informações do vídeo", error);
+        console.error("Erro ao buscar informações da miniatura do vídeo", error);
       });
   };
 
   useEffect(() => {
     if (videoKey !== null) {
-      fetchVideoInfo(videoKey);
+      fetchVideoThumbnail(videoKey);
     }
   }, [videoKey]);
 
@@ -191,6 +187,7 @@ const ShowPlayer: React.FC = () => {
             duration={duration}
             currentTime={presentTime}
             toggleFullScreen={toggleFullScreen}
+            videoThumbnail={videoThumbnail}
           />
         </div>
         <YouTube
