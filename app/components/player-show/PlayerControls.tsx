@@ -9,7 +9,8 @@ interface PlayerControlsProps {
   backForward: (seconds: number) => void;
   duration: number;
   currentTime: number;
-  toggleFullScreen: () => void; // Adicione a função de tela cheia
+  toggleFullScreen: () => void; 
+  
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -29,6 +30,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   const [progress, setProgress] = useState((currentTime / duration) * 100);
   const [ellipseLeft, setEllipseLeft] = useState(progress);
   const [isMuted, setIsMuted] = useState(false);
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
