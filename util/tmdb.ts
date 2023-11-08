@@ -31,6 +31,28 @@ export class TMDB {
     );
   }
 
+  private trendingMedia(type: string) {
+    return this.get(`trending/${type}/week?language=en-US`).then(
+      (data) => data.results
+    );
+  }
+
+  get trendingMovies() {
+    return (async () =>
+      (await this.trendingMedia("movie")).map((movie: Media) => ({
+        ...movie,
+        type: "movie",
+      })))() as Promise<Media[]>;
+  }
+
+  get trendingSeries() {
+    return (async () =>
+      (await this.trendingMedia("tv")).map((movie: Media) => ({
+        ...movie,
+        type: "series",
+      })))() as Promise<Media[]>;
+  }
+
   async post(path: string, body: any) {
     const url = new URL(path, this.baseURL);
     const res = await fetch(url, {
