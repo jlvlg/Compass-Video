@@ -1,4 +1,4 @@
-export type Type = "movie" | "series" | "season";
+export type Type = "movie" | "series" | "season" | "collection";
 
 export interface Media {
   adult?: boolean;
@@ -30,6 +30,7 @@ export interface DetailedMedia extends Media {
   runtime?: number;
   number_of_episodes?: number;
   episodes?: Episode[];
+  parts?: Media[];
 }
 
 export interface Series extends Media {
@@ -67,4 +68,8 @@ export interface Person{
 export interface Season extends Media{
   episodes: Episode[],
   id:number,
+}
+
+export interface Collection extends Media{
+  parts: Media[],
 }

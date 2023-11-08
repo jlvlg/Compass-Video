@@ -95,7 +95,7 @@ export default function Carousel({
   }
 
   function getLink(type: string, id:number, season:number){
-    if(type === "movie" || type === "series"){
+    if(type === "movie" || type === "series" || type === "collection"){
       return `/${type}/${id}`
     }else{
       return `${idSeason}/${season}`
@@ -120,7 +120,7 @@ export default function Carousel({
         <ul className="splide__list">
           {items.map((item, index) => (
             <li key={item.type + item.id + index} className="splide__slide">
-              <Link href={getLink(item.type, item.id,item.season_number!)}>
+              <Link href={getLink(item.type || item.media_type, item.id,item.season_number!)}>
                 <Image
                   className={styles.image}
                   priority={true}
