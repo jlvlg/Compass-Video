@@ -11,15 +11,12 @@ const randomNumber = Math.floor(Math.random() * 19);
 export default async function ActorCredits() {
   const actors = await tmdb.getPeopleList();
   const firstActor = await tmdb.getCreditsActor(actors[0].id);
-
   let media;
   const actorMedias: Media[][] = [];
   for (let i = 0; i < actors.length; i++) {
     media = await tmdb.getCreditsActor(actors[i].id);
     actorMedias.push(media);
   }
-
-
   function getImage(path: string) {
     if (path) {
       return `https://image.tmdb.org/t/p/w342${path}`;
@@ -30,7 +27,6 @@ export default async function ActorCredits() {
   return (
     <div className={styles.maincontent}>
       <Header item={await tmdb.detailedMedia(firstActor[randomNumber])} autoUpdate buttons={["watch", "info", "controls"]}/>
-      
       {actorMedias.map((item: Media[], index) => (
         <div key={index} className={styles.content}>
           <Carousel items={item} title="Conhecido(a) por"/>

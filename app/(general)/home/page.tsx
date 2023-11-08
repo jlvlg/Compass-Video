@@ -21,8 +21,8 @@ export default async function Home({}: Props) {
         buttons={["watch", "info", "controls"]}
       />
       <Carousel items={popular} title="Coleções de Hallowen" updateBanner autoplay={3500}/>
-      <Carousel items={trendingSeries!} title="Séries em alta" updateBanner autoplay={3500}/>
-      <Carousel items={trendingMovies} title="Filmes em alta" updateBanner autoplay={3500}/>
+      <Carousel items={trendingSeries!} title="Séries em alta"/>
+      <Carousel items={trendingMovies} title="Filmes em alta"/>
     </div>
   );
 }

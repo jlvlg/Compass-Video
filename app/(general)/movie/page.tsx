@@ -29,19 +29,13 @@ export default async function page() {
         <Carousel
           items={popular}
           title="Populares"
-          autoplay={3000}
-          updateBanner
         />
         <Carousel 
         items={ontheair} 
-        title="Estão no ar" 
-        updateBanner
-        autoplay={3000} />
+        title="Estão no ar"  />
         <Carousel
           items={toprated}
-          autoplay={3000}
           title="Mais bem avaliados"
-          updateBanner
         />
       </div>
     </div>

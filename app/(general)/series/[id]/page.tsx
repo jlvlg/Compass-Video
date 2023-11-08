@@ -24,10 +24,13 @@ export default async function Tv({ params }: Props) {
           <Carousel items={seasons!} title="Temporadas" idSeason={params.id} />
         </div>
         <div className={styles.carouselsimilares}>
-          <Carousel items={sililarSerie!} title="Similares" />
+          {sililarSerie.length ? (
+            <Carousel title="Similares" items={sililarSerie} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
   }
 }
-
