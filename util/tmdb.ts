@@ -122,6 +122,18 @@ export class TMDB {
     };
   }
 
+  async detailedCollection(id: number): Promise<DetailedMedia> {
+    const res = await this.get(`collection/${id}?language=en-US`);
+    return {
+      ...this.extractCommon(res),
+      parts: res.parts,
+      original_name: res.original_name,
+      name: res.name,
+      release_date: "",
+      type: "collection",
+    };
+  }
+
   async detailedMedia(media: Media) {
     switch (media.type) {
       case "movie":
@@ -130,6 +142,8 @@ export class TMDB {
         return this.detailedSeries(media.id);
       case "season":
         return this.detailedSeason(media);
+      case "collection":
+        return this.detailedCollection(media.id);
     }
   }
 
@@ -302,7 +316,7 @@ export class TMDB {
       })))() as Promise<Media[]>;
   }
 
-  async search(type: string, value: string) {
+  async search(type: string, value: string ): Promise<Media[]> {
     switch (type) {
       case "Tudo":
         type = "multi";
@@ -327,7 +341,7 @@ export class TMDB {
       )
     ).results;
 
-    return res.map((item: any) => {
+    return res.map((item: Media | Person) => {
       if (type === "multi") {
         return item;
       } else {

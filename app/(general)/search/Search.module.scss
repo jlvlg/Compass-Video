@@ -1,0 +1,36 @@
+@import "@/styles/global.scss";
+
+.maincontent {
+  padding-top: 8%;
+  padding-left: 5%;
+  padding-right: 5%;
+
+  p {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: Work Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.titlesearch{
+    font-weight: 400;
+    font: $typography-h4;
+    color: white;
+  }
+
+  .actorimage {
+    width: 238px;
+    height: auto;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .results{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+  }
