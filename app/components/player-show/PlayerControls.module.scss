@@ -115,6 +115,7 @@
   font-size: 14px;
   font-weight: 600;
   
+  
 }
 
 .modal-nextModal {
@@ -141,15 +142,15 @@
 }
 
 .modal-nextModal {
-  width: 300px;
+  width: 24rem;
   height: auto;
   border-radius: 8px;
   border: 1px solid #ffffff1f;
   background-color: #121317;
   background-color: rgba(18, 19, 23, 0.8);
   color: white;
-  left: -350%;
-  top: -8rem;
+  left: -450%;
+  top: -10rem;
 }
 
 .modal-nextModal .modalContent {
@@ -158,13 +159,16 @@
   padding: 8px;
 }
 
+.modalContent{
+  width: 100%;
+}
+
 .modalImage {
-  width: 100px;
+  width: 50%;
   height: auto;
 }
 
 .modalTextContainer {
-  display: flex;
   flex-direction: column;
   margin-left: 10px;
 }
