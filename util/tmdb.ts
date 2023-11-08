@@ -1,4 +1,4 @@
-import { Media, Season, Series, DetailedMedia, Type, Episode } from "./model";
+import { Media, Series, DetailedMedia, Person } from "./model";
 
 export class TMDB {
   static instance?: TMDB;
@@ -218,7 +218,6 @@ export class TMDB {
   }
 
   async getSerie(id: number) {
-    try {
       const res = await this.get(`tv/${id}?language=en-US`);
       const seriedata: Series = {
         ...this.extractCommon(res),
@@ -229,11 +228,20 @@ export class TMDB {
         type: "series",
       };
       return seriedata;
-    } catch (error) {
-      console.error("Error getSeasonInfo", error);
-      return null;
-    }
   }
+
+  async getPeopleList(): Promise<Person[]> {
+    const data = await this.get(`trending/person/day?language=en-US`);
+    return data.results.map((person: Person) => ({
+      id: person.id,
+      name: person.name || "",
+      profile_path: person.profile_path || "",
+      known_for: person.known_for.map((media: Media) => ({
+        ...media,
+        type: media.media_type === "tv" ? "series" : media.media_type || "",
+      })),
+    }));
+  } 
 
   private similarMedia(media: string, id: number) {
     return this.get(`${media}/${id}/similar?`).then((data) => data.results);

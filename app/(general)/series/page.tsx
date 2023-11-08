@@ -13,7 +13,7 @@ export default async function page() {
     <div>
       <Header
         item={topseries}
-        autoUpdate
+        autoUpdate={true}
         buttons={["watch", "info", "controls"]}
       />
       <div className={styles.content}>
@@ -21,20 +21,24 @@ export default async function page() {
         items={airingtoday}
         title="Lançamentos"
         updateBanner
+        autoplay={3000}
       />
       <Carousel 
       items={popular} 
       title="Populares" 
-      updateBanner  />
+      updateBanner
+      autoplay={3000}  />
       <Carousel
         items={ontheair}
         title="Estão no ar"
         updateBanner
+        autoplay={3000}
       />
       <Carousel
         items={toprated}
         title="Mais bem avaliados"
         updateBanner
+        autoplay={3000}
       />
       </div>
     </div>

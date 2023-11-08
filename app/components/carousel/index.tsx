@@ -120,8 +120,7 @@ export default function Carousel({
         <ul className="splide__list">
           {items.map((item) => (
             <li key={item.id} className="splide__slide">
-              <Link href={getLink(item.type, item.id,item.season_number!)}
-                as={getLink(item.type, item.id,item.season_number!)}>
+              <Link href={getLink(item.type, item.id,item.season_number!)}>
                 <Image
                   className={styles.image}
                   priority={true}
