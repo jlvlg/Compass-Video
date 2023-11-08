@@ -31,10 +31,10 @@ export default function Episode(props: Props) {
     }
     return episodeImageDefault;
   }
-
+  const linkplayer = `/playermedia?id=507089&type=movie`; // id fixo devido a milhares de episodios nao terem videos associados
   return (
     <div className={style.card}>
-      <Link href={`${props.episode.id}/play`}>
+      <Link href={linkplayer}> 
         <div className={style.imgcontainer}>
           <img
             src={getImage(props.episode.still_path)}
