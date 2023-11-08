@@ -272,13 +272,14 @@ export class TMDB {
       popularity: person.popularity,
     }));
 
-    return people.slice(4, 8);  
+    return people.slice(4, 8);
     //.sort((a: Media, b: Media) => b.popularity - a.popularity)
-  
   }
 
-  async getKeyVideo(id:number, type:string){
-    return this.get(`${type}/${id}/videos?language=en-US`).then((data) => data.results);
+  async getKeyVideo(id: number, type: string) {
+    return this.get(`${type}/${id}/videos?language=en-US`).then(
+      (data) => data.results
+    );
   }
 
   private similarMedia(media: string, id: number) {
@@ -299,6 +300,40 @@ export class TMDB {
         ...series,
         type: "movie",
       })))() as Promise<Media[]>;
+  }
+
+  async search(type: string, value: string) {
+    switch (type) {
+      case "Tudo":
+        type = "multi";
+        break;
+      case "Filmes":
+        type = "movie";
+        break;
+      case "Coleções":
+        type = "collection";
+        break;
+      case "Séries":
+        type = "tv";
+        break;
+      case "Celebridades":
+        type = "person";
+        break;
+    }
+
+    const res = (
+      await this.get(
+        `search/${type}?query=${value}&include_adult=false&language=en-US&page=1`
+      )
+    ).results;
+
+    return res.map((item: any) => {
+      if (type === "multi") {
+        return item;
+      } else {
+        return { ...item, media_type: type };
+      }
+    });
   }
 }
 
