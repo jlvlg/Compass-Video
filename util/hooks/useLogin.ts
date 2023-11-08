@@ -6,7 +6,7 @@ export default function useLogin() {
   const users = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(actions.users.loadSessions());
+    dispatch(actions.users.loadUsers());
   }, [dispatch]);
 
   return { values: { ...users }, actions: { ...actions.users } };

@@ -25,6 +25,7 @@ export default function LoginPage({ searchParams }: Props) {
     } else {
       if (searchParams["request_token"]) {
         dispatch(actions.login(searchParams["request_token"] as string));
+        router.replace("/");
       }
     }
   }, [actions, dispatch, router, searchParams, values.user]);
@@ -49,9 +50,9 @@ export default function LoginPage({ searchParams }: Props) {
         <p className={styles.subtitle}>
           Acesse sua conta para ver nossos títulos
         </p>
-        <Button className={styles.button} onClick={authenticate}>
+        <button className={styles.button} onClick={authenticate}>
           Iniciar sessão com TMDB
-        </Button>
+        </button>
         <p className={styles.guest}>
           Não tem conta?{" "}
           <button onClick={() => dispatch(actions.loginAsGuest())}>

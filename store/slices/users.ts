@@ -14,99 +14,122 @@ enum sessionType {
 }
 
 export interface User {
-  session: string;
+  session: Session;
   avatar?: { gravatar: { hash?: string }; tmdb: { avatar_path?: string } };
   id?: number;
   username?: string;
 }
 
 interface Session {
-  session: string;
+  id: string;
   type: sessionType;
+  expires_at?: string;
 }
 
 const initialState: {
   user?: User;
-  sessions: Session[];
+  users: User[];
   status: connection;
 } = {
   user: undefined,
-  sessions: [],
+  users: [],
   status: connection.IDLE,
 };
 
-function loadSessions(): Thunk {
-  return (dispatch, getState) => {
+function loadUsers(): Thunk {
+  return async (dispatch, getState) => {
+    dispatch(actions.setStatus(connection.LOADING));
+
     const sessions: Session[] = JSON.parse(
       localStorage.getItem("sessions") || "[]"
     );
-    dispatch(actions.setSessions(sessions));
 
-    if (sessions.length && !getState().users.user) {
-      if (sessions[0].type === sessionType.USER)
-        dispatch(actions.loadUserDetails(sessions[0].session));
-      else dispatch(actions.setUser({ session: sessions[0].session }));
+    const users = [];
+    for (const session of sessions) {
+      if (session.type === sessionType.USER) {
+        users.push(await loadUserDetails(session));
+      } else {
+        if (Date.now() < new Date(session.expires_at!).getTime()) {
+          users.push({ session });
+        } else {
+          removeFromStorage(session);
+        }
+      }
     }
+    dispatch(actions.setUsers(users));
+    dispatch(actions.setUser(users[0]));
+
+    dispatch(actions.setStatus(connection.IDLE));
   };
 }
 
-function saveSession(session: Session): Thunk {
+function saveUser(user: User): Thunk {
   return (dispatch, getState) => {
     if (
       !getState()
-        .users.sessions.map((i) => i.session)
-        .includes(session.session)
+        .users.users.map((i) => i.session.id)
+        .includes(user.session.id) &&
+      !getState()
+        .users.users.map((i) => i.id)
+        .includes(user.id)
     ) {
-      dispatch(actions.setSessions(getState().users.sessions.concat(session)));
+      dispatch(actions.setUsers(getState().users.users.concat(user)));
       localStorage.setItem(
         "sessions",
-        JSON.stringify(getState().users.sessions)
+        JSON.stringify(getState().users.users.map((i) => i.session))
       );
     }
   };
 }
 
-function loadUserDetails(session: string): Thunk {
-  return async (dispatch) => {
-    const details = await tmdb.get(`account/account_id?session_id=${session}`);
-    dispatch(
-      actions.setUser({
-        session,
-        avatar: details.avatar,
-        id: details.id,
-        username: details.username,
-      })
-    );
+async function loadUserDetails(session: Session) {
+  const details = await tmdb.get(`account/account_id?session_id=${session.id}`);
+
+  return {
+    session,
+    avatar: details.avatar,
+    id: details.id,
+    username: details.username,
   };
 }
 
 function login(request_token: string): Thunk {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       dispatch(actions.setStatus(connection.LOADING));
-      const session = await tmdb.post("authentication/session/new", {
+      const res = await tmdb.post("authentication/session/new", {
         request_token,
       });
-      dispatch(actions.loadUserDetails(session));
-      dispatch(actions.saveSession(session));
+      const session = { id: res.session_id, type: sessionType.USER };
+      const user = await loadUserDetails(session);
+      dispatch(actions.setUser(user));
+      dispatch(actions.saveUser(user));
       dispatch(actions.setStatus(connection.IDLE));
     } catch (error) {
       dispatch(actions.setStatus(connection.ERROR));
     }
   };
 }
+[{ id: "5d9ff8253300ec7ae8a960e9ad8ef9d9ddedbe69", type: 1 }];
 
-function hardLogout(): Thunk {
+function removeFromStorage(session: Session) {
+  const sessions: Session[] = JSON.parse(
+    localStorage.getItem("sessions") || "[]"
+  );
+  localStorage.setItem(
+    "sessions",
+    JSON.stringify(sessions.filter((i) => i.id !== session.id))
+  );
+}
+
+function hardLogout(session: Session): Thunk {
   return (dispatch, getState) => {
-    const index = getState()
-      .users.sessions.map((i) => i.session)
-      .findIndex((item) => item === getState().users.user?.session);
-    const newSessions = getState()
-      .users.sessions.slice(0, index)
-      .concat(getState().users.sessions.slice(index + 1));
+    const newUsers = getState().users.users.filter(
+      (i) => i.session.id !== session.id
+    );
 
-    localStorage.setItem("sessions", JSON.stringify(newSessions));
-    dispatch(actions.setSessions(newSessions));
+    removeFromStorage(session);
+    dispatch(actions.setUsers(newUsers));
     dispatch(actions.softLogout());
   };
 }
@@ -115,9 +138,14 @@ function loginAsGuest(): Thunk {
   return async (dispatch) => {
     try {
       dispatch(actions.setStatus(connection.LOADING));
-      const session = await tmdb.get("authentication/guest_session/new");
+      const res = await tmdb.get("authentication/guest_session/new");
+      const session = {
+        id: res.guest_session_id,
+        type: sessionType.GUEST,
+        expires_at: res.expires_at,
+      };
       dispatch(actions.setUser({ session }));
-      dispatch(actions.saveSession(session));
+      dispatch(actions.saveUser({ session }));
       dispatch(actions.setStatus(connection.IDLE));
     } catch (error) {
       dispatch(actions.setStatus(connection.ERROR));
@@ -132,8 +160,11 @@ const usersSlice = createSlice({
     setUser: (state, { payload }: { payload: User }) => {
       state.user = payload;
     },
-    setSessions: (state, { payload }: { payload: Session[] }) => {
-      state.sessions = payload;
+    setUsers: (state, { payload }: { payload: User[] }) => {
+      state.users = payload;
+    },
+    appendUser: (state, { payload }: { payload: User }) => {
+      state.users.push(payload);
     },
     setStatus: (state, { payload }: { payload: connection }) => {
       state.status = payload;
@@ -146,11 +177,10 @@ const usersSlice = createSlice({
 
 export const actions = {
   ...usersSlice.actions,
-  loadSessions,
-  saveSession,
+  loadUsers,
+  saveUser,
   login,
   hardLogout,
-  loadUserDetails,
   loginAsGuest,
 };
 export const reducer = usersSlice.reducer;
