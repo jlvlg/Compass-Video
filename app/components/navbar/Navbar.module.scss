@@ -69,15 +69,20 @@
 
 .avatar {
   all: unset;
+  position: relative;
   margin-inline-start: 8px;
   cursor: pointer;
   block-size: 48px;
 
-  img {
+  img,
+  svg {
     block-size: 48px;
     border-radius: 50%;
-    border: 2px solid var(--accent-200, #02e7f5);
     inline-size: auto;
+
+    &.avatarimg {
+      border: 2px solid var(--accent-200, #02e7f5);
+    }
   }
 }
 
