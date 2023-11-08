@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import styles from "./PlayerControls.module.scss";
 import AudioSubtitleModal from "./AudioSubtitleModal";
@@ -10,7 +9,7 @@ interface PlayerControlsProps {
   duration: number;
   currentTime: number;
   toggleFullScreen: () => void; 
-  
+
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -65,7 +64,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   const backForward10Seconds = () => {
     backForward(10);
   };
-
+  
   const [isAudioSubtitleModalVisible, setIsAudioSubtitleModalVisible] =
     useState(false);
 
@@ -124,7 +123,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             alt={isMuted ? "Muted" : "Volume"}
             id="volume"
             className={styles.controlIcon}
-            onClick={() => setIsMuted(!isMuted)} // Alternar entre mudo e não mudo
+            onClick={() => setIsMuted(!isMuted)} 
           />
           <div className={styles.timerText}>
             {formatTime(currentTime)} / {formatTime(duration)}
