@@ -12,10 +12,12 @@ import movie from "@/public/icons/movie.svg";
 import star from "@/public/icons/star.svg";
 import plus from "@/public/icons/plus2.svg";
 import Search from "@/public/icons/search.svg";
-import avatarImage from "@/public/avatar.png";
+import avatarImage from "@/public/default-avatar/1.png";
 import { usePathname, useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 import useLogin from "@/util/hooks/useLogin";
+import SwitchUser from "./SwitchUser";
+import { User } from "@/store/slices/users";
 
 type Props = {};
 
@@ -26,6 +28,7 @@ export default function Navbar({}: Props) {
   const [isSearchOpen, setIsSearchBarOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filter, setFilter] = useState("Tudo");
+  const [isUsersOpen, setIsUsersOpen] = useState(false);
   let avatar: string | StaticImageData = avatarImage;
   if (values.user?.avatar?.gravatar.hash) {
     avatar = `https://gravatar.com/avatar/${values.user.avatar.gravatar.hash}?s=45`;
@@ -36,17 +39,8 @@ export default function Navbar({}: Props) {
     }
   }
 
-  function openFilter() {
-    setIsFilterOpen(true);
-  }
-
   function closeFilter() {
     setIsFilterOpen(false);
-  }
-
-  function openSearchBar() {
-    setIsSearchBarOpen(true);
-    closeFilter();
   }
 
   function closeSearchBar() {
@@ -91,8 +85,8 @@ export default function Navbar({}: Props) {
           <SearchBar
             filter={filter}
             onClose={closeSearchBar}
-            openFilter={openFilter}
-            closeFilter={closeFilter}
+            openFilter={() => setIsFilterOpen(true)}
+            closeFilter={() => setIsFilterOpen(false)}
             onSelect={filterSelect}
             isFilterOpen={isFilterOpen}
             onSearch={onSearch}
@@ -101,7 +95,7 @@ export default function Navbar({}: Props) {
           <>
             <button
               className={`${styles.navlink} ${styles.search}`}
-              onClick={openSearchBar}>
+              onClick={() => setIsSearchBarOpen(true)}>
               <Search /> Buscar
             </button>
             {values.user && (
@@ -112,9 +106,20 @@ export default function Navbar({}: Props) {
           </>
         )}
         {values.user ? (
-          <button className={styles.avatar}>
-            <Image src={avatar} alt="Avatar" width={45} height={45} />
-          </button>
+          <>
+            <button
+              className={styles.avatar}
+              onClick={() => setIsUsersOpen((prev) => !prev)}>
+              <Image
+                src={avatar}
+                alt="Avatar"
+                width={45}
+                height={45}
+                className={styles.avatarimg}
+              />
+            </button>
+            <SwitchUser isOpen={isUsersOpen} />
+          </>
         ) : (
           <Navlink href="/">Login</Navlink>
         )}

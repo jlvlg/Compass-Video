@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import tmdb from "@/util/tmdb";
 import { Thunk } from "..";
 
-export enum connection {
+export enum status {
   IDLE,
   LOADING,
   ERROR,
@@ -29,16 +29,16 @@ interface Session {
 const initialState: {
   user?: User;
   users: User[];
-  status: connection;
+  status: status;
 } = {
   user: undefined,
   users: [],
-  status: connection.IDLE,
+  status: status.IDLE,
 };
 
 function loadUsers(): Thunk {
   return async (dispatch, getState) => {
-    dispatch(actions.setStatus(connection.LOADING));
+    dispatch(actions.setStatus(status.LOADING));
 
     const sessions: Session[] = JSON.parse(
       localStorage.getItem("sessions") || "[]"
@@ -59,7 +59,7 @@ function loadUsers(): Thunk {
     dispatch(actions.setUsers(users));
     dispatch(actions.setUser(users[0]));
 
-    dispatch(actions.setStatus(connection.IDLE));
+    dispatch(actions.setStatus(status.IDLE));
   };
 }
 
@@ -96,7 +96,7 @@ async function loadUserDetails(session: Session) {
 function login(request_token: string): Thunk {
   return async (dispatch, getState) => {
     try {
-      dispatch(actions.setStatus(connection.LOADING));
+      dispatch(actions.setStatus(status.LOADING));
       const res = await tmdb.post("authentication/session/new", {
         request_token,
       });
@@ -104,9 +104,9 @@ function login(request_token: string): Thunk {
       const user = await loadUserDetails(session);
       dispatch(actions.setUser(user));
       dispatch(actions.saveUser(user));
-      dispatch(actions.setStatus(connection.IDLE));
+      dispatch(actions.setStatus(status.IDLE));
     } catch (error) {
-      dispatch(actions.setStatus(connection.ERROR));
+      dispatch(actions.setStatus(status.ERROR));
     }
   };
 }
@@ -122,13 +122,13 @@ function removeFromStorage(session: Session) {
   );
 }
 
-function hardLogout(session: Session): Thunk {
+function hardLogout(): Thunk {
   return (dispatch, getState) => {
     const newUsers = getState().users.users.filter(
-      (i) => i.session.id !== session.id
+      (i) => i.session.id !== getState().users.user?.session.id
     );
 
-    removeFromStorage(session);
+    removeFromStorage(getState().users.user!.session);
     dispatch(actions.setUsers(newUsers));
     dispatch(actions.softLogout());
   };
@@ -137,7 +137,7 @@ function hardLogout(session: Session): Thunk {
 function loginAsGuest(): Thunk {
   return async (dispatch) => {
     try {
-      dispatch(actions.setStatus(connection.LOADING));
+      dispatch(actions.setStatus(status.LOADING));
       const res = await tmdb.get("authentication/guest_session/new");
       const session = {
         id: res.guest_session_id,
@@ -146,10 +146,16 @@ function loginAsGuest(): Thunk {
       };
       dispatch(actions.setUser({ session }));
       dispatch(actions.saveUser({ session }));
-      dispatch(actions.setStatus(connection.IDLE));
+      dispatch(actions.setStatus(status.IDLE));
     } catch (error) {
-      dispatch(actions.setStatus(connection.ERROR));
+      dispatch(actions.setStatus(status.ERROR));
     }
+  };
+}
+
+function switchUser(user: User): Thunk {
+  return (dispatch) => {
+    dispatch(actions.setUser(user));
   };
 }
 
@@ -166,7 +172,7 @@ const usersSlice = createSlice({
     appendUser: (state, { payload }: { payload: User }) => {
       state.users.push(payload);
     },
-    setStatus: (state, { payload }: { payload: connection }) => {
+    setStatus: (state, { payload }: { payload: status }) => {
       state.status = payload;
     },
     softLogout: (state) => {
@@ -182,6 +188,7 @@ export const actions = {
   login,
   hardLogout,
   loginAsGuest,
+  switchUser,
 };
 export const reducer = usersSlice.reducer;
 
