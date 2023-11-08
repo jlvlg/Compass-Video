@@ -8,8 +8,8 @@ interface PlayerControlsProps {
   backForward: (seconds: number) => void;
   duration: number;
   currentTime: number;
-  toggleFullScreen: () => void; 
-
+  toggleFullScreen: () => void;
+  videoThumbnail: string | null; // Adicione a prop para a miniatura do vídeo
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -19,6 +19,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   duration,
   currentTime,
   toggleFullScreen,
+  videoThumbnail, // Adicione a prop da miniatura
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalnextModalVisible, setIsModalnextModalVisible] = useState(false);
@@ -29,8 +30,6 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   const [progress, setProgress] = useState((currentTime / duration) * 100);
   const [ellipseLeft, setEllipseLeft] = useState(progress);
   const [isMuted, setIsMuted] = useState(false);
-  const [videoTitle, setVideoTitle] = useState("");
-  const [videoDescription, setVideoDescription] = useState("");
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -64,7 +63,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   const backForward10Seconds = () => {
     backForward(10);
   };
-  
+
   const [isAudioSubtitleModalVisible, setIsAudioSubtitleModalVisible] =
     useState(false);
 
@@ -123,7 +122,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             alt={isMuted ? "Muted" : "Volume"}
             id="volume"
             className={styles.controlIcon}
-            onClick={() => setIsMuted(!isMuted)} 
+            onClick={() => setIsMuted(!isMuted)}
           />
           <div className={styles.timerText}>
             {formatTime(currentTime)} / {formatTime(duration)}
@@ -160,11 +159,13 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
             {isModalnextModalVisible && (
               <div className={`${styles.modal} ${styles["modal-nextModal"]}`}>
                 <div className={styles.modalContent}>
-                  <img
-                    src="/caminho-da-imagem.jpg"
-                    alt="Imagem nextModal"
-                    className={styles.modalImage}
-                  />
+                  {videoThumbnail && ( 
+                    <img
+                      src={videoThumbnail}
+                      alt="Imagem nextModal"
+                      className={styles.modalImage}
+                    />
+                  )}
                   <div className={styles.modalTextContainer}>
                     <p className={styles.modalText}>Seguinte</p>
                     <h1 className={styles.modalTitle}>Gran Turismo 2</h1>
